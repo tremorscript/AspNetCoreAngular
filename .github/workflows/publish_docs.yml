@@ -19,8 +19,12 @@ jobs:
       run: ls
     - name: Generate Site
       run: cd docs-site && npx antora antora-playbook.yml
+    - name: List directory contents after generation
+      run: ls
+    - name: List directory contents inside docs-site
+      run: ls ./docs-site    
     - name: Publish to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: docs_site/build/site
+        publish_dir: docs-site/build/site
