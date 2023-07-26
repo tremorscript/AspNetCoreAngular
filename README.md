@@ -223,3 +223,7 @@ Set-Item -path env:AzureAppPass -value passwordhere
 From powershell:
 ./deploy-azure.ps1
 ```
+
+# Developer Documentation website
+
+[https://tremorscript.github.io/AspNetCoreAngular](https://tremorscript.github.io/AspNetCoreAngular){:target="_blank"}
