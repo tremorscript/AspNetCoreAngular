@@ -236,3 +236,4 @@ ModelManifest.xml
 
 **/.angular/cache
 **/.idea
+**/build
