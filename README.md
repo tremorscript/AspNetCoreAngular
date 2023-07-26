@@ -226,4 +226,4 @@ From powershell:
 
 # Developer Documentation website
 
-[https://tremorscript.github.io/AspNetCoreAngular](https://tremorscript.github.io/AspNetCoreAngular){:target="_blank"}
+[https://tremorscript.github.io/AspNetCoreAngular](https://tremorscript.github.io/AspNetCoreAngular)
