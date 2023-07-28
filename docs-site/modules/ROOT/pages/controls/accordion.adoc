@@ -1,0 +1,5 @@
+= Accordion 
+:navtitle: Accordion
+:title: Accordion
+
+This is the accordion control.
