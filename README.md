@@ -13,20 +13,22 @@
 - [Identity Server 4](http://identityserver.io/)
 - [Angular 15](https://angular.io/)
 - [Angular CLI 15](https://cli.angular.io/)
-- Secure - with CSP and custom security headers
+- Secure - with [Custom Security Policy (CSP) and custom security headers](https://github.com/andrewlock/NetEscapades.AspNetCore.SecurityHeaders)
 - [SignalR](https://github.com/aspnet/SignalR/)
 - [SASS](http://sass-lang.com/)
 - Best [practices](https://angular.io/docs/ts/latest/guide/style-guide.html) for Angular code organisation.
 - [Clean Architecture](https://github.com/jasontaylordev/CleanArchitecture) inspired from Jason Taylor.
+- Angular application inspired from [asadsahi](https://github.com/asadsahi/AspNetCoreSpa) and [gothinkster](https://github.com/gothinkster/realworld).
 - [PWA support](https://developers.google.com/web/progressive-web-apps/)
 - Fast Unit Testing with [Jest](https://facebook.github.io/jest/).
-- E2E testing with [Protractor](http://www.protractortest.org).l
+- E2E testing with [Playwirght](https://playwright.dev/).
 - [Compodoc](https://compodoc.github.io/compodoc/) for Angular documentation
-- Login and Registration functionality using [Identity Server implicit flow](http://identityserver.io/)
-- Extensible User/Role identity implementation
-- Social logins support with token based authentication, using [Identity Server](http://identityserver.io/)
 - Angular dynamic forms for reusable and DRY code.
-- [Swagger](http://swagger.io/) as Api explorer (Visit url **https://127.0.0.1:5005/swagger** OR whatever port visual studio has launched the website.). More [details](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)
+- [Swagger](http://swagger.io/) as Api explorer.
+
+## Developer Documentation
+
+https://tremorscript.github.io/AspNetCoreAngular/ (In Progress)
 
 ## Pre-requisites
 
