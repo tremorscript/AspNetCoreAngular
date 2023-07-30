@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ExamplesRoutingModule } from './examples-routing.module';
-import { ExampleComponentComponent } from './example-component/example-component.component';
+import { TestExamplesComponent } from './test-examples/test-examples.component';
 
 
 @NgModule({
   declarations: [
-    ExampleComponentComponent
+    TestExamplesComponent
   ],
   imports: [
     CommonModule,

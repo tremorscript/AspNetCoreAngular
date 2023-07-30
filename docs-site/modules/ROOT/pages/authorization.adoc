@@ -1,5 +1,268 @@
 = Authentication and Authorization 
 :navtitle: Authentication and Authorization 
 :title: Authentication and Authorization 
+:toclevels: 4
 
-TBD
+== Source Code
+
+=== AuthInterceptor
+
+The `AuthInterceptor` is quite simple. If it receives an error response, it navigates to the `LoginComponent`.
+
+[source,ts]
+----
+export class AuthInterceptor implements HttpInterceptor {
+  constructor(private router: Router) {}
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(req).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) { // <1>
+          this.router.navigate(['/authentication/login']); // <2>
+        }
+        return throwError(error);
+      }),
+    );
+  }
+}
+----
+<1> Check for error status 401.
+<2> Navigate to `LoginComponent`. The route is defined in `shared.module.ts`.
+
+=== AuthorizeService
+
+The `AuthorizeService` is the service class that handles the `IUser` object and general authorization tasks like sign-in and sign-out.
+
+==== private variables
+
+[source,ts]
+----
+  private _user: IUser; // <1>
+  private popUpDisabled = true; // <2>
+  private userManager: UserManager; // <3>
+  private userSubject: BehaviorSubject<IUser | null> = new BehaviorSubject(null); // <4>
+----
+<1> `IUser` is an interface that extends from the `User` class of the `oidc-client-ts` library. It has 2 properties - the name of the user and a list of roles attached to the user.
+<2> If you would like to enable authentication using a popup then enable this flag. It is disabled by default because users generally do not have popups enabled.
+<3> `UserManager` is the class provided by the `oidc-client-ts` library that manages the `User` object. It provides the methods that help add a user, remove a user, sign-in a user etc.. https://authts.github.io/oidc-client-ts/classes/UserManager.html[A complete list of all the methods provided by UserManager.^]
+<4> A `BehaviourSubject` that publishes an `IUser` when signed in and publishes a `null` when the user signs-out or if the user has not signed-in yet. If subscribers would like to listen for changes to the logged-in state of a user, they can call the `getUser` method (discussed later) which returns an `Observable` of this `BehaviourSubject`.
+
+==== signIn method
+
+This method is called by the `LoginComponent` when the user gets redirected to `authentication/login` by the `AuthInterceptor`.
+
+[source, ts]
+----
+public async signIn(state: any): Promise<IAuthenticationResult> {
+    await this.ensureUserManagerInitialized(); // <1>
+    let user: User = null;
+    try {
+      user = await this.userManager.signinSilent(this.createArguments()); // <2>
+      this.userSubject.next(user.profile as any); // <3>
+      return this.success(state); // <4>
+    } catch (silentError) {
+      // User might not be authenticated, fallback to popup authentication
+      console.log('Silent authentication error: ', silentError);
+
+      try {
+        if (this.popUpDisabled) { // <5>
+          throw new Error("Popup disabled. Change 'authorize.service.ts:AuthorizeService.popupDisabled' to false to enable it.");
+        }
+        user = await this.userManager.signinPopup(this.createArguments()); // <6>
+        this.userSubject.next(user.profile as any);
+        return this.success(state);
+      } catch (popupError) {
+        if (popupError.message === 'Popup window closed') {
+          // The user explicitly cancelled the login action by closing an opened popup.
+          return this.error('The user closed the window.');
+        } else if (!this.popUpDisabled) {
+          console.log('Popup authentication error: ', popupError);
+        }
+
+        // PopUps might be blocked by the user, fallback to redirect
+        try {
+          await this.userManager.signinRedirect(this.createArguments(state)); // <7>
+          return this.redirect(); // <8>
+        } catch (redirectError) {
+          console.log('Redirect authentication error: ', redirectError);
+          return this.error(redirectError);
+        }
+      }
+    }
+  }
+----
+<1> Makes sure that `this.userManager` is not null and initialized to some basic settings.
+<2> Try to authenticate the user silently. This is a success if the user is already logged in to the Identity Provider.
+<3> `user.profile` returns an object that integrates the `https://authts.github.io/oidc-client-ts/interfaces/IdTokenClaims.html[IDTokenClaims^]` with `IUser` and publishes it to subscribers.  
+<4> Returns an `IAuthenticationResult` with the status as Success.
+<5> Checks if the the popup is disabled.
+<6> Opens the `signinPopup`
+<7> Redirects the user to the Identity Providers sign in page. The state is an object that contains the redirect url.
+<8> Returns an `IAuthenticationResult` with the status as Redirect.
+
+==== completeSignIn method
+
+This method is called by the `LoginComponent` when the Identity Provider validates the user successfully and calls the login-callback url - `authentication/login-callback`
+
+[source,ts]
+----
+public async completeSignIn(url: string): Promise<IAuthenticationResult> {
+  try {
+    await this.ensureUserManagerInitialized(); // <1>
+    const user = await this.userManager.signinCallback(url); // <2>
+    this.userSubject.next(user && (user.profile as any)); // <3>
+    return this.success(user && user.state); // <4>
+  } catch (error) {
+    console.log('There was an error signing in: ', error);
+    return this.error('There was an error signing in.');
+  }
+}
+----
+<1> Makes sure that `this.userManager` is not null and initialized to some basic settings.
+<2> The `url` to return to once the `User` object is populated. If the sign-in happened in a popup, it notifies the parent window of the response from the authorization endpoint.
+<3> Publish the `User` object.
+<4> Return `IAuthenticationResult.Success` with the `state`.
+
+==== signOut method
+
+This method is called by the `LogoutComponent` when the user gets redirected to `authentication/logout`.
+
+[source,ts]
+----
+public async signOut(state: any): Promise<IAuthenticationResult> {
+  try {
+    if (this.popUpDisabled) {
+      throw new Error("Popup disabled. Change 'authorize.service.ts:AuthorizeService.popupDisabled' to false to enable it.");
+    }
+
+    await this.ensureUserManagerInitialized(); // <1>
+    await this.userManager.signoutPopup(this.createArguments()); // <2>
+    this.userSubject.next(null); // <3>
+    return this.success(state); // <4>
+  } catch (popupSignOutError) {
+    console.log('Popup signout error: ', popupSignOutError);
+    try {
+      await this.userManager.signoutRedirect(this.createArguments(state)); // <5>
+      return this.redirect(); // <6>
+    } catch (redirectSignOutError) {
+      console.log('Redirect signout error: ', popupSignOutError);
+      return this.error(redirectSignOutError);
+    }
+  }
+}
+----
+<1> Makes sure that `this.userManager` is not null and initialized to some basic settings.
+<2> Popup logout if enabled. `useReplaceToNavigate` is set to true by the `createArguments` method and passed to `signoutPopup`. It allows `location.replace` when using `signinRedirect`. 
+<3> Successful logout publishes `null`.
+<4> Return `IAuthenticationResult.Success`.
+<5> Redirects the user to the Identity Providers sign in page. The state is an object that contains the redirect url.
+<6> Return `IAuthenticationResult.Redirect`.
+
+==== completeSignOut method
+
+This method is called by the `LogoutComponent` when the Identity Provider calls the logout-callback url - `authentication/logout-callback`
+
+[source,ts]
+----
+public async completeSignOut(url: string): Promise<IAuthenticationResult> {
+  await this.ensureUserManagerInitialized(); // <1>
+  try {
+    await this.userManager.signoutCallback(url); // <2>
+    this.userSubject.next(null); // <3>
+    return this.success({}); // <4>
+  } catch (error) {
+    console.log(`There was an error trying to log out '${error}'.`);
+    return this.error(error);
+  }
+}
+----
+<1> Makes sure that `this.userManager` is not null and initialized to some basic settings.
+<2> The `url` to return to once the `User` object is populated. If the sign-out happened in a popup, it notifies the parent window of the response from the authorization endpoint.
+<3> Publish null.
+<4> Return `IAuthenticationResult.Success` with a blank `state`.
+
+==== ensureUserManagerInitialized method
+
+This is a private method called by the above public methods. This method makes sure that the `userManager` object is intialized with some basic settings.
+
+[source, ts]
+----
+private async ensureUserManagerInitialized(): Promise<void> {
+  if (this.userManager !== undefined) {
+    return;
+  }
+  const response = await fetch(ApplicationPaths.ApiAuthorizationClientConfigurationUrl); // <1>
+  if (!response.ok) {
+    throw new Error(`Could not load settings for '${ApplicationName}'`);
+  }
+
+  const settings: any = await response.json();
+  settings.automaticSilentRenew = true;
+  settings.includeIdTokenInSilentRenew = true;
+  this.userManager = new UserManager(settings);
+
+  this.userManager.events.addUserSignedOut(async () => { // <2>
+    await this.userManager.removeUser();
+    this.userSubject.next(null);
+  });
+}
+----
+<1> This fetches a few settings from the STS - `${environment.stsUrl}_configuration/${ApplicationName}`
+<2> Subscribe to the `addUserSignedOut` event to remove the user and publish null.
+
+==== getUser method
+
+This method returns an `IObservable<IUser>`. Use this method to get the latest user and subscribe to any changes to the `IUser` object.
+
+[source,ts]
+----
+public getUser(): Observable<IUser | null> {
+   return concat( // <1>
+     this.userSubject.pipe( // <2>
+       take(1),
+       filter(u => !!u),
+     ),
+     this.getUserFromStorage().pipe( // <3>
+       filter(u => !!u),
+       tap(u => {
+         this._user = u;
+         this.userSubject.next(u);
+       }),
+     ),
+     this.userSubject.asObservable(), // <4>
+   );
+ }
+----
+<1> The concat method returns all the three `IObservable<IUser>` one after the other.
+<2> Returns the user if already subscribed.
+<3> Gets the user from storage.
+<4> Returns the observable
+
+
+==== getUserFromStorage method
+
+This method returns a user stored by the `this.userManager` class.
+
+[source,ts]
+----
+  private getUserFromStorage(): Observable<IUser> {
+    return from(this.ensureUserManagerInitialized()).pipe(
+      mergeMap(() => this.userManager.getUser()),
+      map(u => u && (u.profile as any)),
+    );
+  }
+----
+
+==== getAccessToken method
+
+In case you need to view the access token, this is the method to use.
+
+[source,ts]
+----
+public getAccessToken(): Observable<string> {
+  return from(this.ensureUserManagerInitialized()).pipe(
+    mergeMap(() => from(this.userManager.getUser())),
+    map(user => user && user.access_token),
+  );
+}
+----

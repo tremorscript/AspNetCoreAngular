@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User, UserManager, WebStorageStateStore } from 'oidc-client';
+import { User, UserManager, WebStorageStateStore } from 'oidc-client-ts';
 import { BehaviorSubject, concat, from, Observable } from 'rxjs';
 import { filter, map, mergeMap, take, tap } from 'rxjs/operators';
 import { ApplicationPaths, ApplicationName } from '../constants';
@@ -165,9 +165,9 @@ export class AuthorizeService {
   public async completeSignOut(url: string): Promise<IAuthenticationResult> {
     await this.ensureUserManagerInitialized();
     try {
-      const signoutResponse = await this.userManager.signoutCallback(url);
+      await this.userManager.signoutCallback(url);
       this.userSubject.next(null);
-      return this.success(signoutResponse && signoutResponse.state.data);
+      return this.success({});
     } catch (error) {
       console.log(`There was an error trying to log out '${error}'.`);
       return this.error(error);

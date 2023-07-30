@@ -45,7 +45,7 @@
     "bootstrap": "5.2.3",
     "date-fns": "2.29.3",
     "lodash": "4.17.21",
-    "oidc-client": "1.11.5",
+    "oidc-client-ts": "2.2.4",
     "rxjs": "7.5.7",
     "zone.js": "~0.12.0"
   },
