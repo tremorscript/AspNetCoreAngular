@@ -5,6 +5,16 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "firefox",
+      "request": "launch",
+      "reAttach": true,
+      "name": "Firefox",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}/src/Presentation/Web/ClientApp",
+      "timeout": 90000,
+      "tmpDir": "/home/marcus/tmp"
+    },
+    {
       "name": "Web",
       "type": "coreclr",
       "request": "launch",
@@ -49,6 +59,10 @@
     {
       "name": "Web/STS",
       "configurations": ["Web", "STS"]
+    },
+    {
+      "name": "Firefox/Web/STS",
+      "configurations": ["Firefox","Web", "STS"]
     }
   ]
 }
