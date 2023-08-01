@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductDto, ProductService } from './product.service';
+import { IProductDto, ProductService } from './product.service';
 import { GridColumn, GridFieldType } from '@app/shared';
 
 @Component({
@@ -10,7 +10,7 @@ import { GridColumn, GridFieldType } from '@app/shared';
 export class ProductsComponent implements OnInit {
   constructor(private productsClient: ProductService) {}
 
-  products: ProductDto[];
+  products: IProductDto[];
 
   columns: GridColumn[] = [
     {
@@ -71,12 +71,12 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  editProduct(product: ProductDto) {
+  editProduct(product: IProductDto) {
     console.log(product);
     this.productsClient.update(product).subscribe(this.getData);
   }
 
-  deleteProduct(product: ProductDto) {
+  deleteProduct(product: IProductDto) {
     console.log(product);
     this.productsClient.delete(product.productId).subscribe(this.getData);
   }

@@ -1,0 +1,25 @@
+= Introduction 
+:navtitle: Introduction
+:title: Introduction
+
+This is the developer documentation for the https://github.com/tremorscript/AspNetCoreAngular[AspNetCoreAngular^] Starter Kit repository.
+
+== What is the point of this repository?
+
+The repository is to be used as the starting point for any project in your organization with Angular as the front-end framework and .Net Core as the back-end.
+
+== Features
+
+* http://www.dot.net/[ASP.NET Core 7^] 
+* https://docs.efproject.net/en/latest/[Entity Framework Core 7^]
+* http://identityserver.io/[Identity Server 4^]
+* https://angular.io/[Angular 15^]
+* https://cli.angular.io/[Angular CLI^]
+* http://sass-lang.com/[SASS^]
+* Best https://angular.io/docs/ts/latest/guide/style-guide.html[practices^] for Angular Code generation.
+* https://github.com/jasontaylordev/CleanArchitecture[Clean Architecture^] inspired from Jason Taylor.
+* https://developers.google.com/web/progressive-web-apps/[PWA support^]
+* Unit Testing with https://facebook.github.io/jest/[Jest^].
+* E2E Testing with https://playwright.dev/[Playwright^].
+* https://compodoc.github.io/compodoc/[Compodoc^] for angular documentation.
+

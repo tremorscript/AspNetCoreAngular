@@ -18,7 +18,8 @@ export class GridComponent implements OnChanges {
   private gridColumnApi: ColumnApi;
   @Input() columns: GridColumn[];
   @Input() rows: any[];
-  @Input() enableCsvExport: boolean;
+  @Input() enableRowSelection: boolean = true;
+  @Input() enableCsvExport: boolean = true;
   gridColumns: ColDef[];
 
   defaultColumnDef = {

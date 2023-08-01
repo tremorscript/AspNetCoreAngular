@@ -1,0 +1,14 @@
+= Accordion Component
+:navtitle: Accordion
+:title: Accordion
+
+
+== Source Code
+
+[source, ts]
+----
+export interface IAccordionItem {
+  title: string;
+  description: string;
+}
+----

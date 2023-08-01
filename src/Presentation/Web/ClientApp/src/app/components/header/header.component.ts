@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'oidc-client';
+import { User } from 'oidc-client-ts';
 
 import { AppService, AuthorizeService } from '@app/shared';
 

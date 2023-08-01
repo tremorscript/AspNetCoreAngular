@@ -1,20 +1,26 @@
 site:
-  title: Antora Docs
-  start_page: component-b::index.adoc
+  title: AspNetCoreAngular Developer Documentation
+  start_page: homesite::index.adoc
+  url: https://tremorscript.com
 content:
   sources:
-  - url: https://gitlab.com/antora/demo/demo-component-a.git
-    branches: HEAD
-  - url: https://gitlab.com/antora/demo/demo-component-b.git
-    branches: [v2.0, v1.0]
-    start_path: docs
+  - url: ../
+    branches: hacks
+    start_path: docs-site 
+urls:
+  latest_version_segment_strategy: redirect:to
+  latest_version_segment: current
 ui:
   bundle:
-    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
-    snapshot: true
+    # url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    url: ./ui-bundle.zip
+    # snapshot: true
   supplemental_files:
   - path: ui.yml
     contents: |
       static_files:
       - .nojekyll
   - path: .nojekyll
+antora:
+  extensions:
+  - '@antora/lunr-extension'

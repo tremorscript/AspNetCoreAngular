@@ -28,7 +28,8 @@
     "compiled": false,
     "wwwroot": true,
     "bin": true,
-    "**/obj": true,
+    "**/obj": true
   },
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "asciidoc.antora.enableAntoraSupport": true
 }
