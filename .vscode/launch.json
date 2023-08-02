@@ -7,12 +7,17 @@
     {
       "type": "firefox",
       "request": "launch",
+      "preLaunchTask": "npm: start",
       "reAttach": true,
       "name": "Firefox",
-      "url": "http://localhost:4200",
+      "url": "https://localhost:5005/",
       "webRoot": "${workspaceFolder}/src/Presentation/Web/ClientApp",
-      "timeout": 90000,
-      "tmpDir": "/home/marcus/tmp"
+      "pathMappings": [
+        {
+          "url": "webpack:///src",
+          "path": "${workspaceFolder}/src/Presentation/Web/ClientApp/src"
+        }
+      ]
     },
     {
       "name": "Web",
@@ -57,12 +62,8 @@
   ],
   "compounds": [
     {
-      "name": "Web/STS",
-      "configurations": ["Web", "STS"]
-    },
-    {
       "name": "Firefox/Web/STS",
-      "configurations": ["Firefox","Web", "STS"]
+      "configurations": ["Firefox", "Web", "STS"]
     }
   ]
 }

@@ -237,3 +237,4 @@ ModelManifest.xml
 **/.angular/cache
 **/.idea
 **/build
+.fake
