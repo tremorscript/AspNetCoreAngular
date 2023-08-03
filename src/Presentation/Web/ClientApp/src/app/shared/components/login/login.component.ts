@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, defer, from, take } from 'rxjs';
 
 import { AuthenticationResultStatus, AuthorizeService } from '../../services';
 import { ApplicationPaths, ReturnUrlType, QueryParameterNames, LoginActions, ApplicationName } from '../../constants';
@@ -19,14 +19,14 @@ export class LoginComponent implements OnInit {
 
   constructor(private authorizeService: AuthorizeService, private activatedRoute: ActivatedRoute, private router: Router) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     const action = this.activatedRoute.snapshot.url[1];
     switch (action.path) {
       case LoginActions.Login:
-        await this.login(this.getReturnUrl());
+        this.login(this.getReturnUrl());
         break;
       case LoginActions.LoginCallback:
-        await this.processLoginCallback();
+        this.processLoginCallback();
         break;
       case LoginActions.LoginFailed:
         const message = this.activatedRoute.snapshot.queryParamMap.get(QueryParameterNames.Message);
@@ -43,40 +43,51 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  private async login(returnUrl: string): Promise<void> {
+  private login(returnUrl: string) {
     const state: INavigationState = { returnUrl };
-    const result = await this.authorizeService.signIn(state);
-    this.message.next(undefined);
-    switch (result.status) {
-      case AuthenticationResultStatus.Redirect:
-        break;
-      case AuthenticationResultStatus.Success:
-        await this.navigateToReturnUrl(returnUrl);
-        break;
-      case AuthenticationResultStatus.Fail:
-        await this.router.navigate(ApplicationPaths.LoginFailedPathComponents, {
-          queryParams: { [QueryParameterNames.Message]: result.message },
-        });
-        break;
-      default:
-        throw new Error(`Invalid status result ${(result as any).status}.`);
-    }
+    let signIn$ = this.authorizeService.signIn(state);
+
+    signIn$.pipe(take(1)).subscribe((result) => {
+      this.message.next(undefined);
+      switch (result.status) {
+        case AuthenticationResultStatus.Redirect:
+          break;
+        case AuthenticationResultStatus.Success:
+          this.navigateToReturnUrl(returnUrl).pipe(take(1)).subscribe();
+          break;
+        case AuthenticationResultStatus.Fail:
+          defer(() =>
+            this.router.navigate(ApplicationPaths.LoginFailedPathComponents, {
+              queryParams: { [QueryParameterNames.Message]: result.message },
+            }),
+          )
+            .pipe(take(1))
+            .subscribe();
+          break;
+        default:
+          throw new Error(`Invalid status result ${(result as any).status}.`);
+      }
+    });
   }
 
-  private async processLoginCallback(): Promise<void> {
+  private processLoginCallback() {
     const url = window.location.href;
-    const result = await this.authorizeService.completeSignIn(url);
-    switch (result.status) {
-      case AuthenticationResultStatus.Redirect:
-        // There should not be any redirects as completeSignIn never redirects.
-        throw new Error('Should not redirect.');
-      case AuthenticationResultStatus.Success:
-        await this.navigateToReturnUrl(this.getReturnUrl(result.state));
-        break;
-      case AuthenticationResultStatus.Fail:
-        this.message.next(result.message);
-        break;
-    }
+    this.authorizeService
+      .completeSignIn(url)
+      .pipe(take(1))
+      .subscribe((result) => {
+        switch (result.status) {
+          case AuthenticationResultStatus.Redirect:
+            // There should not be any redirects as completeSignIn never redirects.
+            throw new Error('Should not redirect.');
+          case AuthenticationResultStatus.Success:
+            this.navigateToReturnUrl(this.getReturnUrl(result.state)).pipe(take(1)).subscribe();
+            break;
+          case AuthenticationResultStatus.Fail:
+            this.message.next(result.message);
+            break;
+        }
+      });
   }
 
   private redirectToRegister(): any {
@@ -87,12 +98,16 @@ export class LoginComponent implements OnInit {
     this.redirectToApiAuthorizationPath(`${ApplicationPaths.IdentityManagePath}?${ReturnUrlType}=?client_id=${ApplicationName}`);
   }
 
-  private async navigateToReturnUrl(returnUrl: string) {
+  private navigateToReturnUrl(returnUrl: string): Observable<boolean> {
     // It's important that we do a replace here so that we remove the callback uri with the
     // fragment containing the tokens from the browser history.
-    await this.router.navigateByUrl(returnUrl, {
-      replaceUrl: true,
-    });
+    return defer(() =>
+      from(
+        this.router.navigateByUrl(returnUrl, {
+          replaceUrl: true,
+        }),
+      ),
+    );
   }
 
   private getReturnUrl(state?: INavigationState): string {

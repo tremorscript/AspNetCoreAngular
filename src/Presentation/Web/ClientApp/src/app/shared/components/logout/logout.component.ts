@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { BehaviorSubject, Observable, defer, from } from 'rxjs';
+import { filter, mergeMap, take } from 'rxjs/operators';
 
 import { AuthenticationResultStatus, AuthorizeService } from '../../services';
 import { LogoutActions, ApplicationPaths, ReturnUrlType } from '../../constants';
@@ -42,53 +42,66 @@ export class LogoutComponent implements OnInit {
     }
   }
 
-  private async logout(returnUrl: string): Promise<void> {
+  private logout(returnUrl: string) {
     const state: INavigationState = { returnUrl };
-    const isAuthenticated = await this.authorizeService
+    const isAuthenticated = this.authorizeService
       .isAuthenticated()
+      .pipe(
+        filter((isAuthenticated) => {
+          if (!isAuthenticated) {
+            this.message.next('You have successfully logged out!');
+          }
+          return isAuthenticated;
+        }),
+        mergeMap(() => this.authorizeService.signOut(state)),
+        take(1),
+      )
+      .subscribe((result) => {
+        switch (result.status) {
+          case AuthenticationResultStatus.Redirect:
+            break;
+          case AuthenticationResultStatus.Success:
+            this.navigateToReturnUrl(returnUrl).pipe(take(1)).subscribe();
+            break;
+          case AuthenticationResultStatus.Fail:
+            this.message.next(result.message);
+            break;
+          default:
+            throw new Error('Invalid authentication result status.');
+        }
+      });
+  }
+
+  private processLogoutCallback() {
+    this.authorizeService
+      .completeSignOut(window.location.href)
       .pipe(take(1))
-      .toPromise();
-    if (isAuthenticated) {
-      const result = await this.authorizeService.signOut(state);
-      switch (result.status) {
-        case AuthenticationResultStatus.Redirect:
-          break;
-        case AuthenticationResultStatus.Success:
-          await this.navigateToReturnUrl(returnUrl);
-          break;
-        case AuthenticationResultStatus.Fail:
-          this.message.next(result.message);
-          break;
-        default:
-          throw new Error('Invalid authentication result status.');
-      }
-    } else {
-      this.message.next('You have successfully logged out!');
-    }
+      .subscribe((result) => {
+        switch (result.status) {
+          case AuthenticationResultStatus.Redirect:
+            // There should not be any redirects as the only time completeAuthentication finishes
+            // is when we are doing a redirect sign in flow.
+            throw new Error('Should not redirect.');
+          case AuthenticationResultStatus.Success:
+            this.navigateToReturnUrl(this.getReturnUrl(result.state));
+            break;
+          case AuthenticationResultStatus.Fail:
+            this.message.next(result.message);
+            break;
+          default:
+            throw new Error('Invalid authentication result status.');
+        }
+      });
   }
 
-  private async processLogoutCallback(): Promise<void> {
-    const result = await this.authorizeService.completeSignOut(window.location.href);
-    switch (result.status) {
-      case AuthenticationResultStatus.Redirect:
-        // There should not be any redirects as the only time completeAuthentication finishes
-        // is when we are doing a redirect sign in flow.
-        throw new Error('Should not redirect.');
-      case AuthenticationResultStatus.Success:
-        await this.navigateToReturnUrl(this.getReturnUrl(result.state));
-        break;
-      case AuthenticationResultStatus.Fail:
-        this.message.next(result.message);
-        break;
-      default:
-        throw new Error('Invalid authentication result status.');
-    }
-  }
-
-  private async navigateToReturnUrl(returnUrl: string) {
-    await this.router.navigateByUrl(returnUrl, {
-      replaceUrl: true,
-    });
+  private navigateToReturnUrl(returnUrl: string): Observable<boolean> {
+    return defer(() =>
+      from(
+        this.router.navigateByUrl(returnUrl, {
+          replaceUrl: true,
+        }),
+      ),
+    );
   }
 
   private getReturnUrl(state?: INavigationState): string {

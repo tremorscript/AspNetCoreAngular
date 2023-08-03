@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User, UserManager, WebStorageStateStore } from 'oidc-client-ts';
-import { BehaviorSubject, concat, from, Observable } from 'rxjs';
-import { filter, map, mergeMap, take, tap } from 'rxjs/operators';
+import { BehaviorSubject, concat, defer, from, Observable, of, throwError, onErrorResumeNext } from 'rxjs';
+import { catchError, filter, map, mergeMap, take, tap } from 'rxjs/operators';
 import { ApplicationPaths, ApplicationName } from '../constants';
 
 export type IAuthenticationResult = SuccessAuthenticationResult | FailureAuthenticationResult | RedirectAuthenticationResult;
@@ -55,18 +55,18 @@ export class AuthorizeService {
   }
 
   public isAuthenticated(): Observable<boolean> {
-    return this.getUser().pipe(map(u => !!u));
+    return this.getUser().pipe(map((u) => !!u));
   }
 
   public getUser(): Observable<IUser | null> {
     return concat(
       this.userSubject.pipe(
         take(1),
-        filter(u => !!u),
+        filter((u) => !!u),
       ),
       this.getUserFromStorage().pipe(
-        filter(u => !!u),
-        tap(u => {
+        filter((u) => !!u),
+        tap((u) => {
           this._user = u;
           this.userSubject.next(u);
         }),
@@ -78,7 +78,7 @@ export class AuthorizeService {
   public getAccessToken(): Observable<string> {
     return from(this.ensureUserManagerInitialized()).pipe(
       mergeMap(() => from(this.userManager.getUser())),
-      map(user => user && user.access_token),
+      map((user) => user && user.access_token),
     );
   }
 
@@ -86,91 +86,57 @@ export class AuthorizeService {
   // 1) We try to see if we can authenticate the user silently. This happens
   //    when the user is already logged in on the IdP and is done using a hidden iframe
   //    on the client.
-  // 2) We try to authenticate the user using a PopUp Window. This might fail if there is a
-  //    Pop-Up blocker or the user has disabled PopUps.
-  // 3) If the two methods above fail, we redirect the browser to the IdP to perform a traditional
+  // 3) If the above method above fails, we redirect the browser to the IdP to perform a traditional
   //    redirect flow.
-  public async signIn(state: any): Promise<IAuthenticationResult> {
-    await this.ensureUserManagerInitialized();
-    let user: User = null;
-    try {
-      user = await this.userManager.signinSilent(this.createArguments());
-      this.userSubject.next(user.profile as any);
-      return this.success(state);
-    } catch (silentError) {
-      // User might not be authenticated, fallback to popup authentication
-      console.log('Silent authentication error: ', silentError);
-
-      try {
-        if (this.popUpDisabled) {
-          throw new Error("Popup disabled. Change 'authorize.service.ts:AuthorizeService.popupDisabled' to false to enable it.");
-        }
-        user = await this.userManager.signinPopup(this.createArguments());
-        this.userSubject.next(user.profile as any);
-        return this.success(state);
-      } catch (popupError) {
-        if (popupError.message === 'Popup window closed') {
-          // The user explicitly cancelled the login action by closing an opened popup.
-          return this.error('The user closed the window.');
-        } else if (!this.popUpDisabled) {
-          console.log('Popup authentication error: ', popupError);
-        }
-
-        // PopUps might be blocked by the user, fallback to redirect
-        try {
-          await this.userManager.signinRedirect(this.createArguments(state));
-          return this.redirect();
-        } catch (redirectError) {
-          console.log('Redirect authentication error: ', redirectError);
-          return this.error(redirectError);
-        }
-      }
-    }
+  public signIn(state: any): Observable<IAuthenticationResult> {
+    let ensureUserManagerInitialized$ = defer(() => this.ensureUserManagerInitialized());
+    return onErrorResumeNext(
+      ensureUserManagerInitialized$.pipe(
+        mergeMap(() => this.userManager.signinSilent(this.createArguments())),
+        tap((user) => this.userSubject.next(user.profile as any)),
+        map((user) => this.success(state)),
+      ),
+      ensureUserManagerInitialized$.pipe(
+        mergeMap(() => this.userManager.signinRedirect(this.createArguments(state))),
+        map(() => this.redirect()),
+      ),
+    );
   }
 
-  public async completeSignIn(url: string): Promise<IAuthenticationResult> {
-    try {
-      await this.ensureUserManagerInitialized();
-      const user = await this.userManager.signinCallback(url);
-      this.userSubject.next(user && (user.profile as any));
-      return this.success(user && user.state);
-    } catch (error) {
-      console.log('There was an error signing in: ', error);
-      return this.error('There was an error signing in.');
-    }
+  public completeSignIn(url: string): Observable<IAuthenticationResult> {
+    var ensureUserManagerInitialized$ = defer(() => from(this.ensureUserManagerInitialized()));
+    return ensureUserManagerInitialized$.pipe(
+      mergeMap(() => this.userManager.signinCallback(url)),
+      tap((user) => this.userSubject.next(user && (user.profile as any))),
+      map((user) => this.success(user && user.state)),
+      catchError((err) => of(this.error('TEst'))),
+    );
   }
 
-  public async signOut(state: any): Promise<IAuthenticationResult> {
-    try {
-      if (this.popUpDisabled) {
-        throw new Error("Popup disabled. Change 'authorize.service.ts:AuthorizeService.popupDisabled' to false to enable it.");
-      }
-
-      await this.ensureUserManagerInitialized();
-      await this.userManager.signoutPopup(this.createArguments());
-      this.userSubject.next(null);
-      return this.success(state);
-    } catch (popupSignOutError) {
-      console.log('Popup signout error: ', popupSignOutError);
-      try {
-        await this.userManager.signoutRedirect(this.createArguments(state));
-        return this.redirect();
-      } catch (redirectSignOutError) {
-        console.log('Redirect signout error: ', popupSignOutError);
-        return this.error(redirectSignOutError);
-      }
-    }
+  public signOut(state: any): Observable<IAuthenticationResult> {
+    let ensureUserManagerInitialized$ = defer(() => from(this.ensureUserManagerInitialized()));
+    return ensureUserManagerInitialized$.pipe(
+      tap(() => this.userManager.signoutRedirect(this.createArguments())),
+      map(() => this.redirect()),
+      catchError((err) => of(this.error(err))),
+    );
   }
 
-  public async completeSignOut(url: string): Promise<IAuthenticationResult> {
-    await this.ensureUserManagerInitialized();
+  public completeSignOut(url: string): Observable<IAuthenticationResult> {
+    let ensureUserManagerInitialized$ = defer(() => this.ensureUserManagerInitialized());
     try {
-      await this.userManager.signoutCallback(url);
-      this.userSubject.next(null);
-      return this.success({});
+      return ensureUserManagerInitialized$.pipe(
+        mergeMap(() => this.userManager.signoutCallback(url)),
+        tap(() => this.userSubject.next(null)),
+        map(() => this.success({})),
+        catchError((err) => {
+          console.log(`There was an error trying to log out '${err}'.`);
+          return of(this.error(err));
+        }),
+      );
     } catch (error) {
       console.log(`There was an error trying to log out '${error}'.`);
-      return this.error(error);
+      return throwError(() => this.error(error));
     }
   }
 
@@ -213,7 +179,7 @@ export class AuthorizeService {
   private getUserFromStorage(): Observable<IUser> {
     return from(this.ensureUserManagerInitialized()).pipe(
       mergeMap(() => this.userManager.getUser()),
-      map(u => u && (u.profile as any)),
+      map((u) => u && (u.profile as any)),
     );
   }
 }
