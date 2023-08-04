@@ -72,12 +72,10 @@ export class ProductsComponent implements OnInit {
   }
 
   editProduct(product: IProductDto) {
-    console.log(product);
     this.productsClient.update(product).subscribe(this.getData);
   }
 
   deleteProduct(product: IProductDto) {
-    console.log(product);
     this.productsClient.delete(product.productId).subscribe(this.getData);
   }
 }
