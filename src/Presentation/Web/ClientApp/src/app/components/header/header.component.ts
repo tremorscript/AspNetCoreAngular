@@ -17,12 +17,6 @@ export class HeaderComponent implements OnInit {
 
   constructor(private authService: AuthorizeService, private appService: AppService) {}
 
-  get isLoggedIn(): boolean {
-    return this.authService.isLoggedIn;
-  }
-  get user(): User {
-    return this.authService.user;
-  }
   get cultures(): ICulture[] {
     return this.appService.appData.cultures;
   }
