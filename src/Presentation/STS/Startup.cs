@@ -2,6 +2,7 @@
 using AspNetCoreAngular.Common;
 using AspNetCoreAngular.Infrastructure;
 using AspNetCoreAngular.Infrastructure.Identity;
+using AspNetCoreAngular.Infrastructure.Services;
 using AspNetCoreAngular.STS.Seed;
 using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Builder;
@@ -48,7 +49,8 @@ namespace AspNetCoreAngular.STS
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}"
+                );
                 endpoints.MapRazorPages();
             });
         }

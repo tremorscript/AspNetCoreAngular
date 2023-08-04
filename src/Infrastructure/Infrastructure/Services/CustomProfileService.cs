@@ -6,14 +6,17 @@ using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Identity;
 
-namespace AspNetCoreAngular.STS
+namespace AspNetCoreAngular.Infrastructure.Services
 {
     public class CustomProfileService : IProfileService
     {
         private readonly IUserClaimsPrincipalFactory<ApplicationUser> _claimsFactory;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public CustomProfileService(UserManager<ApplicationUser> userManager, IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory)
+        public CustomProfileService(
+            UserManager<ApplicationUser> userManager,
+            IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory
+        )
         {
             _userManager = userManager;
             _claimsFactory = claimsFactory;
@@ -27,7 +30,10 @@ namespace AspNetCoreAngular.STS
 
             var claims = principal.Claims.ToList();
 
-            context.IssuedClaims = claims;
+            if (context.Caller == "ClaimsProviderIdentityToken")
+            {
+                context.IssuedClaims = claims;
+            }
         }
 
         public async Task IsActiveAsync(IsActiveContext context)

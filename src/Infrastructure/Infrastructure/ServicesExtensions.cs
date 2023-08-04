@@ -18,6 +18,8 @@ using AspNetCoreAngular.Infrastructure.Localization.EFLocalizer;
 using AspNetCoreAngular.Infrastructure.Persistence;
 using AspNetCoreAngular.Infrastructure.Services;
 using AspNetCoreAngular.Infrastructure.Services.Certificate;
+using Duende.IdentityServer;
+using Duende.IdentityServer.AspNetIdentity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -38,9 +40,15 @@ using NSwag.Generation.Processors.Security;
 
 namespace AspNetCoreAngular.Infrastructure
 {
+    public record Clients(string ClientId, string CorsOrigin);
+
     public static class ServicesExtensions
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
+        public static IServiceCollection AddInfrastructure(
+            this IServiceCollection services,
+            IConfiguration configuration,
+            IWebHostEnvironment environment
+        )
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -56,13 +64,15 @@ namespace AspNetCoreAngular.Infrastructure
             services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
 
-            services.AddHttpContextAccessor()
+            services
+                .AddHttpContextAccessor()
                 .AddResponseCompression()
                 .AddMemoryCache()
                 .AddHealthChecks();
 
             // Shared configuration across apps
-            services.AddCustomConfiguration(configuration)
+            services
+                .AddCustomConfiguration(configuration)
                 .AddCustomSignalR()
                 .AddCustomCors(configuration)
                 .AddCustomLocalization(configuration, environment)
@@ -71,14 +81,20 @@ namespace AspNetCoreAngular.Infrastructure
             return services;
         }
 
-        public static IIdentityServerBuilder AddStsServer(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
+        public static IIdentityServerBuilder AddStsServer(
+            this IServiceCollection services,
+            IConfiguration configuration,
+            IWebHostEnvironment environment
+        )
         {
             services.AddTransient<IClientInfoService, ClientInfoService>();
 
             services.AddDbContext<IdentityServerDbContext>(options =>
             {
-                options.UseSqlite(configuration.GetConnectionString("Identity"),
-                    b => b.MigrationsAssembly(typeof(IdentityServerDbContext).Assembly.FullName));
+                options.UseSqlite(
+                    configuration.GetConnectionString("Identity"),
+                    b => b.MigrationsAssembly(typeof(IdentityServerDbContext).Assembly.FullName)
+                );
 
                 if (environment.IsDevelopment())
                 {
@@ -86,91 +102,123 @@ namespace AspNetCoreAngular.Infrastructure
                 }
             });
 
-            services.AddDefaultIdentity<ApplicationUser>()
-            .AddRoles<ApplicationRole>()
-            .AddEntityFrameworkStores<IdentityServerDbContext>();
+            services
+                .AddDefaultIdentity<ApplicationUser>()
+                .AddRoles<ApplicationRole>()
+                .AddEntityFrameworkStores<IdentityServerDbContext>();
 
             var x509Certificate2 = GetCertificate(environment, configuration);
 
-            var identityBuilder = services.AddIdentityServer()
+            var identityBuilder = services
+                .AddIdentityServer()
                 .AddSigningCredential(x509Certificate2)
                 .AddApiAuthorization<ApplicationUser, IdentityServerDbContext>(options =>
                 {
-                    var corsList = configuration.GetSection("CorsOrigins").Get<List<string>>();
-                    corsList.ForEach(host =>
+                    var clients = configuration.GetSection("Clients").Get<List<Clients>>();
+                    clients.ForEach(client =>
                     {
-                        var uri = new Uri(host);
-                        var hostElements = uri.AbsoluteUri.Replace(":", string.Empty).Replace("/", string.Empty).Split(".");
-                        var clientId = string.Join(string.Empty, hostElements);
+                        var clientId = client.ClientId;
+                        var host = client.CorsOrigin;
+                        var spaClient = options.Clients.AddSPA(
+                            clientId,
+                            spa =>
+                                spa.WithRedirectUri($"{host}/authentication/login-callback")
+                                    .WithScopes(new string[] { clientId })
+                                    .WithLogoutRedirectUri($"{host}/authentication/logout-callback")
+                        );
 
-                        options.Clients.AddSPA(clientId, spa => spa.WithRedirectUri($"{host}/authentication/login-callback")
-                                                                    .WithScopes(new string[] { clientId })
-                                                                    .WithLogoutRedirectUri($"{host}/authentication/logout-callback"));
+                        spaClient.AlwaysIncludeUserClaimsInIdToken = true;
 
-                        options.ApiResources.AddApiResource(clientId, resource =>
-                        {
-                            resource.WithScopes(clientId);
-                        });
+                        options.ApiResources.AddApiResource(
+                            clientId,
+                            resource =>
+                            {
+                                resource.WithScopes(
+                                    clientId,
+                                    IdentityServerConstants.StandardScopes.Email
+                                );
+                            }
+                        );
                     });
-                });
+                })
+                .AddProfileService<CustomProfileService>();
 
-            services.AddAuthentication()
+            services
+                .AddAuthentication()
                 .AddIdentityServerJwt()
                 .AddGoogle(options =>
                 {
                     options.ClientId = configuration["IdentityServer:ExternalAuth:Google:ClientId"];
-                    options.ClientSecret = configuration["IdentityServer:ExternalAuth:Google:ClientSecret"];
+                    options.ClientSecret = configuration[
+                        "IdentityServer:ExternalAuth:Google:ClientSecret"
+                    ];
                 })
                 .AddFacebook(options =>
                 {
                     options.AppId = configuration["IdentityServer:ExternalAuth:Facebook:AppId"];
-                    options.AppSecret = configuration["IdentityServer:ExternalAuth:Facebook:AppSecret"];
+                    options.AppSecret = configuration[
+                        "IdentityServer:ExternalAuth:Facebook:AppSecret"
+                    ];
                 })
                 .AddTwitter(options =>
                 {
-                    options.ConsumerKey = configuration["IdentityServer:ExternalAuth:Twitter:ConsumerKey"];
-                    options.ConsumerSecret = configuration["IdentityServer:ExternalAuth:Twitter:ConsumerSecret"];
+                    options.ConsumerKey = configuration[
+                        "IdentityServer:ExternalAuth:Twitter:ConsumerKey"
+                    ];
+                    options.ConsumerSecret = configuration[
+                        "IdentityServer:ExternalAuth:Twitter:ConsumerSecret"
+                    ];
                 })
-                .AddAzureAD(options => { configuration.Bind("IdentityServer:ExternalAuth:AzureAd", options); });
+                .AddAzureAD(options =>
+                {
+                    configuration.Bind("IdentityServer:ExternalAuth:AzureAd", options);
+                });
             // .AddMicrosoftIdentityWebApp(configuration.GetSection("IdentityServer:ExternalAuth:AzureAd"));
 
-            services.Configure<OpenIdConnectOptions>(AzureADDefaults.OpenIdScheme, options =>
-            {
-                options.Authority = options.Authority + "/v2.0/";
-
-                // Per the code below, this application signs in users in any Work and School
-                // accounts and any Microsoft Personal Accounts.
-                // If you want to direct Azure AD to restrict the users that can sign-in, change 
-                // the tenant value of the appsettings.json file in the following way:
-                // - only Work and School accounts => 'organizations'
-                // - only Microsoft Personal accounts => 'consumers'
-                // - Work and School and Personal accounts => 'common'
-
-                // If you want to restrict the users that can sign-in to only one tenant
-                // set the tenant value in the appsettings.json file to the tenant ID of this
-                // organization, and set ValidateIssuer below to true.
-
-                // If you want to restrict the users that can sign-in to several organizations
-                // Set the tenant value in the appsettings.json file to 'organizations', set
-                // ValidateIssuer, above to 'true', and add the issuers you want to accept to the
-                // options.TokenValidationParameters.ValidIssuers collection
-                options.SignInScheme = "Identity.External";
-                options.UsePkce = false; // live does not support this yet
-                options.Scope.Add("profile");
-                options.Scope.Add("email");
-                //options.TokenValidationParameters.ValidateIssuer = false;
-                options.TokenValidationParameters = new TokenValidationParameters
+            services.Configure<OpenIdConnectOptions>(
+                AzureADDefaults.OpenIdScheme,
+                options =>
                 {
-                    // ALWAYS VALIDATE THE ISSUER IF POSSIBLE !!!!
-                    ValidateIssuer = false,
-                    // ValidIssuers = new List<string> { "tenant..." },
-                    NameClaimType = "email",
-                };
-            });
+                    options.Authority = options.Authority + "/v2.0/";
+
+                    // Per the code below, this application signs in users in any Work and School
+                    // accounts and any Microsoft Personal Accounts.
+                    // If you want to direct Azure AD to restrict the users that can sign-in, change
+                    // the tenant value of the appsettings.json file in the following way:
+                    // - only Work and School accounts => 'organizations'
+                    // - only Microsoft Personal accounts => 'consumers'
+                    // - Work and School and Personal accounts => 'common'
+
+                    // If you want to restrict the users that can sign-in to only one tenant
+                    // set the tenant value in the appsettings.json file to the tenant ID of this
+                    // organization, and set ValidateIssuer below to true.
+
+                    // If you want to restrict the users that can sign-in to several organizations
+                    // Set the tenant value in the appsettings.json file to 'organizations', set
+                    // ValidateIssuer, above to 'true', and add the issuers you want to accept to the
+                    // options.TokenValidationParameters.ValidIssuers collection
+                    options.SignInScheme = "Identity.External";
+                    options.UsePkce = false; // live does not support this yet
+                    options.Scope.Add("profile");
+                    options.Scope.Add("email");
+                    //options.TokenValidationParameters.ValidateIssuer = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        // ALWAYS VALIDATE THE ISSUER IF POSSIBLE !!!!
+                        ValidateIssuer = false,
+                        // ValidIssuers = new List<string> { "tenant..." },
+                        NameClaimType = "email",
+                    };
+                }
+            );
 
             return identityBuilder;
         }
-        public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
+
+        public static IServiceCollection AddPersistence(
+            this IServiceCollection services,
+            IConfiguration configuration
+        )
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             {
@@ -184,51 +232,68 @@ namespace AspNetCoreAngular.Infrastructure
                 }
                 else if (useSqlite)
                 {
-                    options.UseSqlite(connectionString, b =>
-                    {
-                        b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);
-                        //b.UseNetTopologySuite();
-                    });
+                    options.UseSqlite(
+                        connectionString,
+                        b =>
+                        {
+                            b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);
+                            //b.UseNetTopologySuite();
+                        }
+                    );
                 }
                 else
                 {
-                    options.UseSqlServer(connectionString, b =>
-                    {
-                        b.MigrationsAssembly("AspNetCoreAngular.Infrastructure");
-                        // Add following package to enable net topology suite for sql server:
-                        // Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite
-                        //b.UseNetTopologySuite();
-                    });
+                    options.UseSqlServer(
+                        connectionString,
+                        b =>
+                        {
+                            b.MigrationsAssembly("AspNetCoreAngular.Infrastructure");
+                            // Add following package to enable net topology suite for sql server:
+                            // Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite
+                            //b.UseNetTopologySuite();
+                        }
+                    );
                 }
             });
 
-            services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+            services.AddScoped<IApplicationDbContext>(
+                provider => provider.GetService<ApplicationDbContext>()
+            );
 
             return services;
         }
 
-        private static IServiceCollection AddCustomLocalization(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
+        private static IServiceCollection AddCustomLocalization(
+            this IServiceCollection services,
+            IConfiguration configuration,
+            IWebHostEnvironment environment
+        )
         {
             services.AddLocalization(options => options.ResourcesPath = "Resources");
-            services.Configure<RequestLocalizationOptions>(
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new List<CultureInfo>
+                {
+                    new CultureInfo("en-GB"),
+                    new CultureInfo("en-US"),
+                    new CultureInfo("fr-FR")
+                };
+
+                options.DefaultRequestCulture = new RequestCulture(
+                    culture: "en-GB",
+                    uiCulture: "en-GB"
+                );
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+
+            services.AddDbContext<LocalizationDbContext>(
                 options =>
                 {
-                    var supportedCultures = new List<CultureInfo>
-                    {
-                        new CultureInfo("en-GB"),
-                        new CultureInfo("en-US"),
-                        new CultureInfo("fr-FR")
-                    };
-
-                    options.DefaultRequestCulture = new RequestCulture(culture: "en-GB", uiCulture: "en-GB");
-                    options.SupportedCultures = supportedCultures;
-                    options.SupportedUICultures = supportedCultures;
-                });
-
-            services.AddDbContext<LocalizationDbContext>(options =>
-                {
-                    options.UseSqlite(configuration["Data:Localization"],
-                        b => b.MigrationsAssembly(typeof(LocalizationDbContext).Assembly.FullName));
+                    options.UseSqlite(
+                        configuration["Data:Localization"],
+                        b => b.MigrationsAssembly(typeof(LocalizationDbContext).Assembly.FullName)
+                    );
 
                     if (environment.IsDevelopment())
                     {
@@ -236,28 +301,40 @@ namespace AspNetCoreAngular.Infrastructure
                     }
                 },
                 ServiceLifetime.Singleton,
-                ServiceLifetime.Singleton);
+                ServiceLifetime.Singleton
+            );
 
             services.AddSingleton<IStringLocalizerFactory, EFStringLocalizerFactory>();
-            services.AddSingleton<ILocalizationDbContext>(provider => provider.GetService<LocalizationDbContext>());
+            services.AddSingleton<ILocalizationDbContext>(
+                provider => provider.GetService<LocalizationDbContext>()
+            );
 
             return services;
         }
 
-        private static IServiceCollection AddCustomUi(this IServiceCollection services, IWebHostEnvironment environment)
+        private static IServiceCollection AddCustomUi(
+            this IServiceCollection services,
+            IWebHostEnvironment environment
+        )
         {
             services.AddOpenApiDocument(configure =>
             {
                 configure.Title = "AspNetCoreAngular API";
-                configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
-                {
-                    Type = OpenApiSecuritySchemeType.ApiKey,
-                    Name = "Authorization",
-                    In = OpenApiSecurityApiKeyLocation.Header,
-                    Description = "Type into the textbox: Bearer {your JWT token}."
-                });
+                configure.AddSecurity(
+                    "JWT",
+                    Enumerable.Empty<string>(),
+                    new OpenApiSecurityScheme
+                    {
+                        Type = OpenApiSecuritySchemeType.ApiKey,
+                        Name = "Authorization",
+                        In = OpenApiSecurityApiKeyLocation.Header,
+                        Description = "Type into the textbox: Bearer {your JWT token}."
+                    }
+                );
 
-                configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+                configure.OperationProcessors.Add(
+                    new AspNetCoreOperationSecurityScopeProcessor("JWT")
+                );
             });
 
             // Customise default API behaviour
@@ -267,9 +344,10 @@ namespace AspNetCoreAngular.Infrastructure
             });
 
             var controllerWithViews = services.AddControllersWithViews();
-            var razorPages = services.AddRazorPages()
-            .AddViewLocalization()
-            .AddDataAnnotationsLocalization();
+            var razorPages = services
+                .AddRazorPages()
+                .AddViewLocalization()
+                .AddDataAnnotationsLocalization();
 
             if (environment.IsDevelopment())
             {
@@ -280,25 +358,34 @@ namespace AspNetCoreAngular.Infrastructure
             return services;
         }
 
-        private static IServiceCollection AddCustomConfiguration(this IServiceCollection services, IConfiguration configuration)
+        private static IServiceCollection AddCustomConfiguration(
+            this IServiceCollection services,
+            IConfiguration configuration
+        )
         {
             // Custom configuration
             services.ConfigurePoco<EmailSettings>(configuration.GetSection(nameof(EmailSettings)));
 
             return services;
         }
-        private static IServiceCollection AddCustomCors(this IServiceCollection services, IConfiguration configuration)
+
+        private static IServiceCollection AddCustomCors(
+            this IServiceCollection services,
+            IConfiguration configuration
+        )
         {
             services.AddCors(options =>
             {
-                options.AddPolicy(Common.Constants.DefaultCorsPolicy,
+                options.AddPolicy(
+                    Common.Constants.DefaultCorsPolicy,
                     builder =>
                     {
-                        var corsList = configuration.GetSection("CorsOrigins").Get<List<string>>()?.ToArray() ?? new string[] { };
-                        builder.WithOrigins(corsList)
-                            .AllowAnyMethod()
-                            .AllowAnyHeader();
-                    });
+                        var corsList =
+                            configuration.GetSection("CorsOrigins").Get<List<string>>()?.ToArray()
+                            ?? new string[] { };
+                        builder.WithOrigins(corsList).AllowAnyMethod().AllowAnyHeader();
+                    }
+                );
             });
 
             return services;
@@ -306,17 +393,22 @@ namespace AspNetCoreAngular.Infrastructure
 
         private static IServiceCollection AddCustomSignalR(this IServiceCollection services)
         {
-            services.AddSignalR()
-                .AddMessagePackProtocol();
+            services.AddSignalR().AddMessagePackProtocol();
 
             return services;
         }
 
-        private static X509Certificate2 GetCertificate(IWebHostEnvironment environment, IConfiguration configuration)
+        private static X509Certificate2 GetCertificate(
+            IWebHostEnvironment environment,
+            IConfiguration configuration
+        )
         {
             var useDevCertificate = bool.Parse(configuration["UseDevCertificate"]);
 
-            var cert = new X509Certificate2(Path.Combine(environment.ContentRootPath, "sts_dev_cert.pfx"), "1234");
+            var cert = new X509Certificate2(
+                Path.Combine(environment.ContentRootPath, "sts_dev_cert.pfx"),
+                "1234"
+            );
 
             if (environment.IsProduction() && !useDevCertificate)
             {
@@ -328,7 +420,11 @@ namespace AspNetCoreAngular.Infrastructure
                     var certificateThumbprint = configuration["CertificateThumbprint"];
 
                     store.Open(OpenFlags.ReadOnly);
-                    var certs = store.Certificates.Find(X509FindType.FindByThumbprint, certificateThumbprint, false);
+                    var certs = store.Certificates.Find(
+                        X509FindType.FindByThumbprint,
+                        certificateThumbprint,
+                        false
+                    );
                     cert = certs[0];
                     store.Close();
                 }
@@ -336,12 +432,17 @@ namespace AspNetCoreAngular.Infrastructure
                 {
                     // Azure deployment, will be used if deployed to Azure
                     var vaultConfigSection = configuration.GetSection("Vault");
-                    var keyVaultService = new KeyVaultCertificateService(vaultConfigSection["Url"], vaultConfigSection["ClientId"], vaultConfigSection["ClientSecret"]);
-                    cert = keyVaultService.GetCertificateFromKeyVault(vaultConfigSection["CertificateName"]);
+                    var keyVaultService = new KeyVaultCertificateService(
+                        vaultConfigSection["Url"],
+                        vaultConfigSection["ClientId"],
+                        vaultConfigSection["ClientSecret"]
+                    );
+                    cert = keyVaultService.GetCertificateFromKeyVault(
+                        vaultConfigSection["CertificateName"]
+                    );
                 }
             }
             return cert;
         }
-
     }
 }

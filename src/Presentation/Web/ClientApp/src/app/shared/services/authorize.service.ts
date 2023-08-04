@@ -130,12 +130,10 @@ export class AuthorizeService {
         tap(() => this.userSubject.next(null)),
         map(() => this.success({})),
         catchError((err) => {
-          console.log(`There was an error trying to log out '${err}'.`);
           return of(this.error(err));
         }),
       );
     } catch (error) {
-      console.log(`There was an error trying to log out '${error}'.`);
       return throwError(() => this.error(error));
     }
   }

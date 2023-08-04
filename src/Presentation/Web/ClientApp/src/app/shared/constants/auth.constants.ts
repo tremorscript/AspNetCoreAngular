@@ -1,10 +1,5 @@
 import { environment } from 'environments/environment';
-export const ApplicationName = document.baseURI
-  .replace(/\//g, '')
-  .replace(/:/g, '')
-  .split('.')
-  .join('');
-
+export const ApplicationName = environment.clientId;
 export const ReturnUrlType = 'returnUrl';
 
 export const QueryParameterNames = {
