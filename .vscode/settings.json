@@ -31,5 +31,6 @@
     "**/obj": true
   },
   "editor.formatOnSave": true,
-  "asciidoc.antora.enableAntoraSupport": true
+  "asciidoc.antora.enableAntoraSupport": true,
+  "dotnet.defaultSolution": "AspNetCoreAngular.sln"
 }

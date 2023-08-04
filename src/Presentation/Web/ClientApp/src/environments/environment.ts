@@ -6,4 +6,5 @@
 export const environment = {
   production: false,
   stsUrl: 'http://localhost:5007/',
+  clientId: 'aspnetcoreangular',
 };
