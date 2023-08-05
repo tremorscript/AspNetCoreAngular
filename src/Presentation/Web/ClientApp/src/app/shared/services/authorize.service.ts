@@ -35,20 +35,9 @@ export interface IUser extends User {
   providedIn: 'root',
 })
 export class AuthorizeService {
-  // By default pop ups are disabled because they don't work properly on Edge.
-  // If you want to enable pop up authentication simply set this flag to false.
   private _user: IUser;
-  private popUpDisabled = true;
   private userManager: UserManager;
   private userSubject: BehaviorSubject<IUser | null> = new BehaviorSubject(null);
-
-  get isLoggedIn(): boolean {
-    return !!this.user;
-  }
-
-  get user(): IUser {
-    return this._user;
-  }
 
   public hasRole(role: string): boolean {
     return this._user && this._user.role && this._user.role.indexOf(role) > -1;
@@ -86,7 +75,7 @@ export class AuthorizeService {
   // 1) We try to see if we can authenticate the user silently. This happens
   //    when the user is already logged in on the IdP and is done using a hidden iframe
   //    on the client.
-  // 3) If the above method above fails, we redirect the browser to the IdP to perform a traditional
+  // 2) If the above method above fails, we redirect the browser to the IdP to perform a traditional
   //    redirect flow.
   public signIn(state: any): Observable<IAuthenticationResult> {
     let ensureUserManagerInitialized$ = defer(() => this.ensureUserManagerInitialized());

@@ -1,0 +1,10 @@
+= Coding Guidelines 
+:navtitle: Coding Guidelines 
+:title: Coding Guidelines 
+:toclevels: 4
+
+The project follows below guidelines for programming in C# and Angular
+
+* https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions[C# Coding Guidelines^]
+* https://angular.io/guide/styleguide[Angular Coding Guidelines^]
+* https://learn.microsoft.com/en-us/dotnet/standard/security/secure-coding-guidelines[Secure Coding Guidelines^]
