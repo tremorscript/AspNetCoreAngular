@@ -15,14 +15,16 @@ namespace AspNetCoreAngular.Web.Controllers
 
         public AppController(IApplicationService applicationService)
         {
-            _applicationService = applicationService;
+            this._applicationService = applicationService;
         }
 
         [HttpPost]
         public IActionResult SetLanguage(string culture)
         {
-            Response.Cookies.Append(CookieRequestCultureProvider.DefaultCookieName,
-                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)), new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            this.Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
             );
 
             return LocalRedirect("~/");

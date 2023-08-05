@@ -21,12 +21,14 @@ namespace AspNetCoreAngular.Web.Services
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly IMemoryCache _cache;
         private readonly IDeploymentEnvironment _deploymentEnvironment;
+
         public ApplicationService(
             IOptions<RequestLocalizationOptions> locOptions,
             IStringLocalizer<ApplicationService> stringLocalizer,
             IHttpContextAccessor contextAccessor,
             IMemoryCache memoryCache,
-            IDeploymentEnvironment deploymentEnvironment)
+            IDeploymentEnvironment deploymentEnvironment
+        )
         {
             _locOptions = locOptions.Value;
             _stringLocalizer = stringLocalizer;
@@ -42,13 +44,16 @@ namespace AspNetCoreAngular.Web.Services
                 Content = GetContentByCulture(),
                 CookieConsent = GetCookieConsent(),
                 Cultures = _locOptions.SupportedUICultures
-                        .Select(c => new CulturesDisplayViewModel
-                        {
-                            Value = c.Name,
-                            Text = c.NativeName,
-                            Current = (c.Name == Thread.CurrentThread.CurrentCulture.Name),
-                        })
-                        .ToList(),
+                    .Select(
+                        c =>
+                            new CulturesDisplayViewModel
+                            {
+                                Value = c.Name,
+                                Text = c.NativeName,
+                                Current = (c.Name == Thread.CurrentThread.CurrentCulture.Name),
+                            }
+                    )
+                    .ToList(),
                 EnvironmentInfo = new EnvironmentInformation
                 {
                     OS = _deploymentEnvironment.OS,
@@ -57,7 +62,7 @@ namespace AspNetCoreAngular.Web.Services
                     FrameworkVersion = _deploymentEnvironment.RuntimeFramework,
                     CommitHash = _deploymentEnvironment.CommitSha,
                     Branch = _deploymentEnvironment.Branch,
-                    Tag = _deploymentEnvironment.Tag
+                    Tag = _deploymentEnvironment.Tag,
                 },
             };
 
@@ -66,7 +71,8 @@ namespace AspNetCoreAngular.Web.Services
 
         private Dictionary<string, string> GetContentByCulture()
         {
-            var requestCulture = _contextAccessor.HttpContext.Features.Get<IRequestCultureFeature>();
+            var requestCulture =
+                _contextAccessor.HttpContext.Features.Get<IRequestCultureFeature>();
             // Culture contains the information of the requested culture
             var culture = requestCulture.RequestCulture.Culture;
             var CACHE_KEY = $"Content-{culture.Name}";
@@ -77,19 +83,16 @@ namespace AspNetCoreAngular.Web.Services
             if (!_cache.TryGetValue(CACHE_KEY, out cacheEntry))
             {
                 // Key not in cache, so get & set data.
-                var culturalContent = _stringLocalizer.GetAllStrings()
-                                        .Select(c => new
-                                        {
-                                            Key = c.Name,
-                                            Value = c.Value
-                                        })
-                                        .ToDictionary(x => x.Key, x => x.Value);
+                var culturalContent = _stringLocalizer
+                    .GetAllStrings()
+                    .Select(c => new { Key = c.Name, Value = c.Value })
+                    .ToDictionary(x => x.Key, x => x.Value);
                 cacheEntry = culturalContent;
 
                 // Set cache options.
                 var cacheEntryOptions = new MemoryCacheEntryOptions()
-                    // Keep in cache for this time, reset time if accessed.
-                    .SetSlidingExpiration(TimeSpan.FromMinutes(30));
+                // Keep in cache for this time, reset time if accessed.
+                .SetSlidingExpiration(TimeSpan.FromMinutes(30));
 
                 // Save data in cache.
                 _cache.Set(CACHE_KEY, cacheEntry, cacheEntryOptions);
@@ -100,7 +103,8 @@ namespace AspNetCoreAngular.Web.Services
 
         private object GetCookieConsent()
         {
-            var consentFeature = _contextAccessor.HttpContext.Features.Get<ITrackingConsentFeature>();
+            var consentFeature =
+                _contextAccessor.HttpContext.Features.Get<ITrackingConsentFeature>();
             var showConsent = !consentFeature?.CanTrack ?? false;
             var cookieString = consentFeature?.CreateConsentCookie();
             return new { showConsent, cookieString };

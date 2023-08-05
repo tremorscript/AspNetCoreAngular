@@ -4,6 +4,6 @@ namespace AspNetCoreAngular.Web.ViewModels
     {
         None,
         Female,
-        Male
+        Male,
     }
 }
