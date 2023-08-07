@@ -193,7 +193,7 @@ private async ensureUserManagerInitialized(): Promise<void> {
   }
   const response = await fetch(ApplicationPaths.ApiAuthorizationClientConfigurationUrl); // <1>
   if (!response.ok) {
-    throw new Error(`Could not load settings for '${ApplicationName}'`);
+    throw new Error(`Could not load settings for ''`);
   }
 
   const settings: any = await response.json();
@@ -207,7 +207,7 @@ private async ensureUserManagerInitialized(): Promise<void> {
   });
 }
 ----
-<1> This fetches a few settings from the STS - `${environment.stsUrl}_configuration/${ApplicationName}`
+<1> This fetches a few settings from the STS - `${environment.stsUrl}_configuration`
 <2> Subscribe to the `addUserSignedOut` event to remove the user and publish null.
 
 ==== getUser method
