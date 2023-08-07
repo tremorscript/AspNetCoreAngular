@@ -16,7 +16,7 @@ jobs:
     - name: List directory contents
       run: ls
     - name: Generate Site
-      run: cd docs-site && npx antora antora-playbook.yml
+      run: cd docs-site && npx antora --fetch antora-playbook.yml
     - name: List directory contents after generation
       run: ls
     - name: List directory contents inside docs-site
