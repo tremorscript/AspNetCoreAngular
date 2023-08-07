@@ -13,8 +13,9 @@
     <RootNamespace>AspNetCoreAngular.Web</RootNamespace>
     <AssemblyName>AspNetCoreAngular.Web</AssemblyName>
     <UserSecretsId>59517051-9d6b-4801-9469-232f804fdd0f</UserSecretsId>
-    <!-- <RunCodeAnalysis>true</RunCodeAnalysis> -->
-    <!-- <TreatWarningsAsErrors>false</TreatWarningsAsErrors> -->
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <CodeAnalysisRuleSet>..\..\..\StyleCopRuleSet.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,8 +37,8 @@
     <PackageReference Include="NSwag.AspNetCore" />
     <PackageReference Include="NSwag.Core" />
     <PackageReference Include="NSwag.MSBuild" />
-    <!-- <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" /> -->
-    <!-- <PackageReference Include="StyleCop.Analyzers" /> -->
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" />
+    <PackageReference Include="StyleCop.Analyzers" />
   </ItemGroup>
 
 
@@ -64,7 +65,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="../../../stylecop.json" />
+    <AdditionalFiles Include="../../../stylecopProperties.json" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
