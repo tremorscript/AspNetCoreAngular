@@ -70,13 +70,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
-    <PackageVersion Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="7.0.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.0" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.0" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.0" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="7.0.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Authentication.Facebook" Version="7.0.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Authentication.Twitter" Version="7.0.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.0" />
@@ -89,8 +84,6 @@
     <PackageVersion Include="OpenIddict" Version="3.1.1" />
     <PackageVersion Include="OpenIddict.EntityFrameworkCore" Version="3.1.1" />
     <PackageVersion Include="Sendgrid" Version="9.28.1" />
-    <PackageVersion Include="NSwag.AspNetCore" Version="13.18.0" />
-    <PackageVersion Include="NSwag.Core" Version="13.18.0" />
     <PackageVersion Include="CsvHelper" Version="30.0.1" />
   </ItemGroup>
 </Project>

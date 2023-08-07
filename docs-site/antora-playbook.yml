@@ -16,11 +16,11 @@ ui:
     url: ./ui-bundle.zip
     # snapshot: true
   supplemental_files:
-  - path: ui.yml
-    contents: |
-      static_files:
-      - .nojekyll
-  - path: .nojekyll
+    - path: ui.yml
+      contents: |
+        static_files:
+        - .nojekyll
+    - path: .nojekyll
 antora:
   extensions:
-  - '@antora/lunr-extension'
+    - "@antora/lunr-extension"
