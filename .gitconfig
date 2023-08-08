@@ -37,7 +37,7 @@
   # *********************
   # Rebase workflow
     synced = "!git pull $((git remote get-url upstream > /dev/null 2>&1 && echo 'upstream') || (git remote get-url origin > /dev/null 2>&1 && echo 'origin')) $(git mainbranch)  --rebase"
-    update = "!git pull origin $(git rev-parse --abbrev-ref HEAD) --rebase"  # Update current branch with remote
+    update1 = "!git pull origin $(git rev-parse --abbrev-ref HEAD) --rebase"  # Update current branch with remote
     squash = "!git rebase -v -i $(git mainbranch)"
     publish = push origin HEAD --force-with-lease 
     pub = publish 
