@@ -32,7 +32,7 @@ https://tremorscript.github.io/AspNetCoreAngular/ (In Progress)
 
 ## Pull Request Guidelines
 
-https://tremorscript.github.io/AspNetCoreAngular/homesite/current/coding-guidelines.htmlhomesite/current/pull-request-guidelines.html
+https://tremorscript.github.io/AspNetCoreAngular/homesite/current/coding-guidelines.html
 
 
 ## Pre-requisites
