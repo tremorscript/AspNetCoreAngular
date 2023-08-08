@@ -11,28 +11,28 @@ namespace AspNetCoreAngular.Application.Features.Employees.Queries.GetEmployeesL
 {
     public class GetEmployeesListQuery : IRequest<EmployeesListVm>
     {
-        public class GetEmployeesListQueryHandler : IRequestHandler<GetEmployeesListQuery, EmployeesListVm>
+        public class GetEmployeesListQueryHandler
+            : IRequestHandler<GetEmployeesListQuery, EmployeesListVm>
         {
-            private readonly IApplicationDbContext _context;
-            private readonly IMapper _mapper;
+            private readonly IApplicationDbContext context;
+            private readonly IMapper mapper;
 
             public GetEmployeesListQueryHandler(IApplicationDbContext context, IMapper mapper)
             {
-                _context = context;
-                _mapper = mapper;
+                this.context = context;
+                this.mapper = mapper;
             }
 
-            public async Task<EmployeesListVm> Handle(GetEmployeesListQuery request, CancellationToken cancellationToken)
+            public async Task<EmployeesListVm> Handle(
+                GetEmployeesListQuery request,
+                CancellationToken cancellationToken)
             {
-                var employees = await _context.Employees
-                    .ProjectTo<EmployeeLookupDto>(_mapper.ConfigurationProvider)
+                var employees = await context.Employees
+                    .ProjectTo<EmployeeLookupDto>(mapper.ConfigurationProvider)
                     .OrderBy(e => e.Name)
                     .ToListAsync(cancellationToken);
 
-                var vm = new EmployeesListVm
-                {
-                    Employees = employees
-                };
+                var vm = new EmployeesListVm { Employees = employees };
 
                 return vm;
             }

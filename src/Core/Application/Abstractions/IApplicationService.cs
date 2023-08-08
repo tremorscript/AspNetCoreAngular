@@ -1,4 +1,4 @@
-using AspNetCoreAngular.Application.Models;
+﻿using AspNetCoreAngular.Application.Models;
 
 namespace AspNetCoreAngular.Application.Abstractions
 {

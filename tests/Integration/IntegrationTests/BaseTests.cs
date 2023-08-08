@@ -1,18 +1,21 @@
-﻿using System.Threading.Tasks;
-using AspNetCoreAngular.Web;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Xunit;
+﻿// <copyright file="BaseTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace AspNetCoreAngular.Integration.Tests.IntegrationTests
 {
-    #region snippet1
+    using System.Threading.Tasks;
+    using AspNetCoreAngular.Web;
+    using Microsoft.AspNetCore.Mvc.Testing;
+    using Xunit;
+
     public class BasicTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
-        private readonly WebApplicationFactory<Startup> _factory;
+        private readonly WebApplicationFactory<Startup> factory;
 
         public BasicTests(WebApplicationFactory<Startup> factory)
         {
-            _factory = factory;
+            this.factory = factory;
         }
 
         [Theory(Skip = "TODO: enable npm script in Web Startup and remove skip")]
@@ -20,7 +23,7 @@ namespace AspNetCoreAngular.Integration.Tests.IntegrationTests
         public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url)
         {
             // Arrange
-            var client = _factory.CreateClient();
+            var client = this.factory.CreateClient();
 
             // Act
             var response = await client.GetAsync(url);
@@ -30,6 +33,5 @@ namespace AspNetCoreAngular.Integration.Tests.IntegrationTests
             var contentType = response.Content.Headers.ContentType.ToString();
             Assert.Equal("text/html; charset=UTF-8", contentType);
         }
-        #endregion
     }
 }

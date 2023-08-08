@@ -11,11 +11,11 @@ namespace AspNetCoreAngular.Web.Controllers
     [AllowAnonymous]
     public class AppController : BaseController
     {
-        private readonly IApplicationService _applicationService;
+        private readonly IApplicationService applicationService;
 
         public AppController(IApplicationService applicationService)
         {
-            this._applicationService = applicationService;
+            this.applicationService = applicationService;
         }
 
         [HttpPost]
@@ -24,8 +24,7 @@ namespace AspNetCoreAngular.Web.Controllers
             this.Response.Cookies.Append(
                 CookieRequestCultureProvider.DefaultCookieName,
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
-                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
-            );
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
 
             return LocalRedirect("~/");
         }
@@ -34,7 +33,7 @@ namespace AspNetCoreAngular.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<ApplicationDataViewModel> GetApplicationData()
         {
-            var appData = _applicationService.GetApplicationData();
+            var appData = applicationService.GetApplicationData();
 
             return Ok(appData);
         }

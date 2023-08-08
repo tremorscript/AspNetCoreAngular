@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
-using AngleSharp.Html.Dom;
-using Xunit;
+﻿// <copyright file="HttpClientExtensions.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace AspNetCoreAngular.Integration.Tests.Helpers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using AngleSharp.Html.Dom;
+    using Xunit;
+
     public static class HttpClientExtensions
     {
         public static Task<HttpResponseMessage> SendAsync(
@@ -47,9 +51,10 @@ namespace AspNetCoreAngular.Integration.Tests.Helpers
                 var formaction = submitButton.GetAttribute("formaction");
                 target = new Uri(formaction, UriKind.Relative);
             }
+
             var submision = new HttpRequestMessage(new HttpMethod(submit.Method.ToString()), target)
             {
-                Content = new StreamContent(submit.Body)
+                Content = new StreamContent(submit.Body),
             };
 
             foreach (var header in submit.Headers)

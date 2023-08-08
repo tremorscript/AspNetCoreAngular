@@ -14,9 +14,15 @@ namespace AspNetCoreAngular.Application.Common.Mappings
 
         private void ApplyMappingsFromAssembly(Assembly assembly)
         {
-            var types = assembly.GetExportedTypes()
-                .Where(t => t.GetInterfaces().Any(i =>
-                    i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMapFrom<>)))
+            var types = assembly
+                .GetExportedTypes()
+                .Where(
+                    t =>
+                        t.GetInterfaces()
+                            .Any(
+                                i =>
+                                    i.IsGenericType
+                                    && i.GetGenericTypeDefinition() == typeof(IMapFrom<>)))
                 .ToList();
 
             foreach (var type in types)

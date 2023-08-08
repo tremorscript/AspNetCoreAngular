@@ -1,21 +1,27 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿// <copyright file="20211111210526_Initial.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 #nullable disable
 
 namespace AspNetCoreAngular.Infrastructure.Localization.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
                 name: "Cultures",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: true)
-                },
+                columns: table =>
+                    new
+                    {
+                        Id = table
+                            .Column<int>(type: "INTEGER", nullable: false)
+                            .Annotation("Sqlite:Autoincrement", true),
+                        Name = table.Column<string>(type: "TEXT", nullable: true),
+                    },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cultures", x => x.Id);
@@ -23,14 +29,16 @@ namespace AspNetCoreAngular.Infrastructure.Localization.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Resources",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Key = table.Column<string>(type: "TEXT", nullable: true),
-                    Value = table.Column<string>(type: "TEXT", nullable: true),
-                    CultureId = table.Column<int>(type: "INTEGER", nullable: true)
-                },
+                columns: table =>
+                    new
+                    {
+                        Id = table
+                            .Column<int>(type: "INTEGER", nullable: false)
+                            .Annotation("Sqlite:Autoincrement", true),
+                        Key = table.Column<string>(type: "TEXT", nullable: true),
+                        Value = table.Column<string>(type: "TEXT", nullable: true),
+                        CultureId = table.Column<int>(type: "INTEGER", nullable: true),
+                    },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Resources", x => x.Id);
@@ -49,11 +57,9 @@ namespace AspNetCoreAngular.Infrastructure.Localization.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Resources");
+            migrationBuilder.DropTable(name: "Resources");
 
-            migrationBuilder.DropTable(
-                name: "Cultures");
+            migrationBuilder.DropTable(name: "Cultures");
         }
     }
 }

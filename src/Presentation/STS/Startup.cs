@@ -1,27 +1,33 @@
-﻿using AspNetCoreAngular.Application;
-using AspNetCoreAngular.Common;
-using AspNetCoreAngular.Infrastructure;
-using AspNetCoreAngular.Infrastructure.Identity;
-using AspNetCoreAngular.Infrastructure.Services;
-using AspNetCoreAngular.STS.Seed;
-using Duende.IdentityServer.Services;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿// <copyright file="Startup.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace AspNetCoreAngular.STS
 {
+    using AspNetCoreAngular.Application;
+    using AspNetCoreAngular.Common;
+    using AspNetCoreAngular.Infrastructure;
+    using AspNetCoreAngular.Infrastructure.Identity;
+    using AspNetCoreAngular.Infrastructure.Services;
+    using AspNetCoreAngular.STS.Seed;
+    using Duende.IdentityServer.Services;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+
     public class Startup
     {
-        public static IConfiguration Configuration { get; set; }
-        public IWebHostEnvironment HostingEnvironment { get; }
-
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
-            HostingEnvironment = environment;
+            this.HostingEnvironment = environment;
         }
+
+
+        public static IConfiguration Configuration { get; set; }
+
+        public IWebHostEnvironment HostingEnvironment { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -30,16 +36,16 @@ namespace AspNetCoreAngular.STS
 
             services
                 .AddApplication()
-                .AddInfrastructure(Configuration, HostingEnvironment)
+                .AddInfrastructure(Configuration, this.HostingEnvironment)
                 .AddHealthChecks()
                 .AddDbContextCheck<IdentityServerDbContext>();
 
-            services.AddStsServer(Configuration, HostingEnvironment);
+            services.AddStsServer(Configuration, this.HostingEnvironment);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseInfrastructure(HostingEnvironment);
+            app.UseInfrastructure(this.HostingEnvironment);
             app.UseRouting();
             app.UseCors(Constants.DefaultCorsPolicy);
             app.UseAuthentication();
@@ -49,8 +55,7 @@ namespace AspNetCoreAngular.STS
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}"
-                );
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

@@ -1,9 +1,13 @@
-﻿using AspNetCoreAngular.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿// <copyright file="SupplierConfiguration.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace AspNetCoreAngular.Infrastructure.Persistence.Configurations
 {
+    using AspNetCoreAngular.Domain.Entities;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
     public class SupplierConfiguration : IEntityTypeConfiguration<Supplier>
     {
         public void Configure(EntityTypeBuilder<Supplier> builder)
@@ -14,9 +18,7 @@ namespace AspNetCoreAngular.Infrastructure.Persistence.Configurations
 
             builder.Property(e => e.City).HasMaxLength(15);
 
-            builder.Property(e => e.CompanyName)
-                .IsRequired()
-                .HasMaxLength(40);
+            builder.Property(e => e.CompanyName).IsRequired().HasMaxLength(40);
 
             builder.Property(e => e.ContactName).HasMaxLength(30);
 

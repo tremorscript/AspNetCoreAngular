@@ -16,7 +16,8 @@ namespace AspNetCoreAngular.Application.Features.Categories.Queries.GetCategorie
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Category, CategoryDto>()
+            profile
+                .CreateMap<Category, CategoryDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.CategoryId))
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.CategoryName));
         }

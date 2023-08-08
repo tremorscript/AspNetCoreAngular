@@ -1,27 +1,34 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using AspNetCoreAngular.Application.Abstractions;
-using AspNetCoreAngular.Common;
-using AspNetCoreAngular.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿// <copyright file="ApplicationDbContext.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace AspNetCoreAngular.Infrastructure.Persistence
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+    using AspNetCoreAngular.Application.Abstractions;
+    using AspNetCoreAngular.Common;
+    using AspNetCoreAngular.Domain.Entities;
+    using Microsoft.EntityFrameworkCore;
+
     public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
-        private readonly ICurrentUserService _currentUserService;
-        private readonly IDateTime _dateTime;
+        private readonly ICurrentUserService currentUserService;
+        private readonly IDateTime dateTime;
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, ICurrentUserService currentUserService, IDateTime dateTime)
+        public ApplicationDbContext(
+            DbContextOptions<ApplicationDbContext> options,
+            ICurrentUserService currentUserService,
+            IDateTime dateTime)
             : base(options)
         {
-            _currentUserService = currentUserService;
-            _dateTime = dateTime;
+            this.currentUserService = currentUserService;
+            this.dateTime = dateTime;
         }
 
         public DbSet<Category> Categories { get; set; }
@@ -45,20 +52,23 @@ namespace AspNetCoreAngular.Infrastructure.Persistence
         public DbSet<Supplier> Suppliers { get; set; }
 
         public DbSet<Territory> Territories { get; set; }
+
         public DbSet<ContactUs> ContactUs { get; set; }
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+
+        public override Task<int> SaveChangesAsync(
+            CancellationToken cancellationToken = default(CancellationToken))
         {
-            foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
+            foreach (var entry in this.ChangeTracker.Entries<AuditableEntity>())
             {
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedBy = _currentUserService.UserId.ToString();
-                        entry.Entity.Created = _dateTime.Now;
+                        entry.Entity.CreatedBy = this.currentUserService.UserId.ToString();
+                        entry.Entity.Created = this.dateTime.Now;
                         break;
                     case EntityState.Modified:
-                        entry.Entity.LastModifiedBy = _currentUserService.UserId.ToString();
-                        entry.Entity.LastModified = _dateTime.Now;
+                        entry.Entity.LastModifiedBy = this.currentUserService.UserId.ToString();
+                        entry.Entity.LastModified = this.dateTime.Now;
                         break;
                 }
             }
@@ -72,4 +82,3 @@ namespace AspNetCoreAngular.Infrastructure.Persistence
         }
     }
 }
-

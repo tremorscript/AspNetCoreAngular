@@ -19,18 +19,19 @@ namespace AspNetCoreAngular.Web
 {
     public class Startup
     {
-        // Order to run
-        //1) Constructor
-        //2) Configure services
-        //3) Configure
-        private IWebHostEnvironment HostingEnvironment { get; }
-        public static IConfiguration Configuration { get; set; }
-
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             HostingEnvironment = env;
             Configuration = configuration;
         }
+
+        public static IConfiguration Configuration { get; set; }
+
+        // Order to run
+        // 1) Constructor
+        // 2) Configure services
+        // 3) Configure
+        private IWebHostEnvironment HostingEnvironment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
@@ -38,7 +39,8 @@ namespace AspNetCoreAngular.Web
         {
             services.AddTransient<IApplicationService, ApplicationService>();
 
-            services.AddApplication()
+            services
+                .AddApplication()
                 .AddInfrastructure(Configuration, HostingEnvironment)
                 .AddHealthChecks()
                 .AddDbContextCheck<LocalizationDbContext>()
@@ -46,29 +48,32 @@ namespace AspNetCoreAngular.Web
 
             services.AddPersistence(Configuration);
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                            .AddJwtBearer(options =>
-                            {
-                                // base-address of your identity server
-                                options.Authority = Configuration["Auth:Authority"];
-                                // name of the API resource
-                                options.TokenValidationParameters = new TokenValidationParameters
-                                {
-                                    ValidateIssuer = false,
-                                    ValidateAudience = false,
-                                    ValidAudiences = Configuration.GetSection("Auth:Audiences").Get<List<string>>(),
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    // base-address of your identity server
+                    options.Authority = Configuration["Auth:Authority"];
 
-                                };
-                                options.RequireHttpsMetadata = false;
-                            });
+                    // name of the API resource
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidAudiences = Configuration
+                            .GetSection("Auth:Audiences")
+                            .Get<List<string>>(),
+                    };
+                    options.RequireHttpsMetadata = false;
+                });
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist/AspNetCoreAngular";
             });
-
         }
+
         public void Configure(IApplicationBuilder app)
         {
             app.UseInfrastructure(HostingEnvironment);
@@ -91,8 +96,8 @@ namespace AspNetCoreAngular.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                                   name: "default",
-                                   pattern: "{controller}/{action=Index}/{id?}");
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
 
                 endpoints.MapHub<Chat>("/chathub");
@@ -100,16 +105,16 @@ namespace AspNetCoreAngular.Web
             });
 
             app.UseSpa(spa =>
-                      {
-                          spa.Options.SourcePath = "ClientApp";
+            {
+                spa.Options.SourcePath = "ClientApp";
 
-                          if (HostingEnvironment.IsDevelopment())
-                          {
-                              //spa.UseAngularCliServer(npmScript: "start");
-                              //   OR
-                              spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-                          }
-                      });
+                if (HostingEnvironment.IsDevelopment())
+                {
+                    // spa.UseAngularCliServer(npmScript: "start");
+                    //   OR
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                }
+            });
         }
     }
 }

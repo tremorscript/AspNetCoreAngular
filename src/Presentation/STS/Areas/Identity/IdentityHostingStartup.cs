@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="IdentityHostingStartup.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using System;
 using AspNetCoreAngular.Infrastructure.Identity;
 using AspNetCoreAngular.Infrastructure.Identity.Entities;
 using Microsoft.AspNetCore.Hosting;
@@ -9,15 +13,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: HostingStartup(typeof(AspNetCoreAngular.STS.Areas.Identity.IdentityHostingStartup))]
+
 namespace AspNetCoreAngular.STS.Areas.Identity
 {
     public class IdentityHostingStartup : IHostingStartup
     {
         public void Configure(IWebHostBuilder builder)
         {
-            builder.ConfigureServices((context, services) =>
-            {
-            });
+            builder.ConfigureServices((context, services) => { });
         }
     }
 }

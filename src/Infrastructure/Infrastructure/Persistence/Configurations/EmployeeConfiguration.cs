@@ -1,9 +1,13 @@
-﻿using AspNetCoreAngular.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿// <copyright file="EmployeeConfiguration.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace AspNetCoreAngular.Infrastructure.Persistence.Configurations
 {
+    using AspNetCoreAngular.Domain.Entities;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
     public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
     {
         public void Configure(EntityTypeBuilder<Employee> builder)
@@ -20,17 +24,13 @@ namespace AspNetCoreAngular.Infrastructure.Persistence.Configurations
 
             builder.Property(e => e.Extension).HasMaxLength(4);
 
-            builder.Property(e => e.FirstName)
-                .IsRequired()
-                .HasMaxLength(10);
+            builder.Property(e => e.FirstName).IsRequired().HasMaxLength(10);
 
             builder.Property(e => e.HireDate).HasColumnType("datetime");
 
             builder.Property(e => e.HomePhone).HasMaxLength(24);
 
-            builder.Property(e => e.LastName)
-                .IsRequired()
-                .HasMaxLength(20);
+            builder.Property(e => e.LastName).IsRequired().HasMaxLength(20);
 
             builder.Property(e => e.Notes).HasColumnType("ntext");
 
@@ -46,7 +46,8 @@ namespace AspNetCoreAngular.Infrastructure.Persistence.Configurations
 
             builder.Property(e => e.TitleOfCourtesy).HasMaxLength(25);
 
-            builder.HasOne(d => d.Manager)
+            builder
+                .HasOne(d => d.Manager)
                 .WithMany(p => p.DirectReports)
                 .HasForeignKey(d => d.ReportsTo)
                 .HasConstraintName("FK_Employees_Employees");
