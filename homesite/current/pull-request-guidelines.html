@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Pull Request Guidelines :: AspNetCoreAngular Developer Documentation</title>
+    <link rel="canonical" href="https://tremorscript.com/homesite/current/pull-request-guidelines.html">
+    <meta name="generator" content="Antora 3.1.4">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <script>var uiRootPath = '../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://tremorscript.com">AspNetCoreAngular Developer Documentation</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="homesite" data-version="1.0.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Home page</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="coding-guidelines.html">Coding Guidelines</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="pull-request-guidelines.html">Pull Request Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="version-control-policy.html">Version Control Policy</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="authorization.html">Authentication and Authorization</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="content-security-policy.html">Content Security Policy</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="error-handling.html">Error Handling</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="internationalization.html">Internationalization</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="unit-testing.html">Performance Testing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="functional-testing.html">Functional Testing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="e2e-testing.html">End-to-End Testing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="property-based-testing.html">Property Based Testing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="performance-testing.html">Performance Testing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="owasp-top10.html">OWASP Top 10</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="threat-modeling.html">Threat Modeling</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="api-versioning.html">Api Versioning Policy</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="release-policy.html">Release Policy</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Home page</span>
+    <span class="version">1.0.0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="index.html">Home page</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">1.0.0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Home page</a></li>
+    <li><a href="pull-request-guidelines.html">Pull Request Guidelines</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/tremorscript/AspNetCoreAngular/edit/main/docs-site/modules/ROOT/pages/pull-request-guidelines.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Pull Request Guidelines</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>A pull request (PR) is a way to notify a task is finished and ready to be merged into the main working branch (source of truth).</p>
+</div>
+<div class="paragraph">
+<p>This is a guideline that the devs must follow when working with Pull Requests(PRs).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pull_request_best_practices"><a class="anchor" href="#_pull_request_best_practices"></a>Pull Request Best Practices</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Keep the PR small</p>
+<div class="ulist">
+<ul>
+<li>
+<p>They are easier to review.</p>
+</li>
+<li>
+<p>They are easier to deploy.</p>
+</li>
+<li>
+<p>Minimizes possible conflicts and stale PRs.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Do not break the build.</p>
+</li>
+<li>
+<p>Include related tests as part of the PR.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pull_request_template"><a class="anchor" href="#_pull_request_template"></a>Pull Request Template</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The project has a <a href="https://github.com/tremorscript/AspNetCoreAngular/blob/main/.github/pull_request_template.md" target="_blank" rel="noopener">pull request template</a> that is automatically added when you create a pull request.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>It should include Issue number and the link (In Github, typing <code>#IssueId</code> creates a link to the issue Id.)</p>
+</li>
+<li>
+<p>Description</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Should include a concise description of the changes (bug or feature), it’s impact, along with a summary of the solution.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Steps to Reproduce Bug and Validate Solution</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Only applicable if the work is to address a bug.</p>
+</li>
+<li>
+<p>Provide details on the environment the bug is found, and detailed steps to recreate the bug.</p>
+</li>
+<li>
+<p>This should be detailed enough for a team member to confirm that the bug no longer occurs.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>PR Checklist</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Use the check-list below to ensure your branch is ready for PR. If the item is not applicable, leave it blank.</p>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> I have updated the documentation accordingly.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> I have added tests to cover my changes</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> All new and existing tests passed.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> My code follows the code style of this project.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> I ran the lint checks which produced no new errors nor warnings for my changes.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> I have checked to ensure there aren’t other open Pull Requests for the same update/change.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Does this introduce a breaking change?</p>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> Yes</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> No</p>
+</li>
+<li>
+<p>If this introduces a breaking change, please describe the impact and migration path for existing applications below.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Testing</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Instructions for testing and validation of your code:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>What OS was used for testing.</p>
+</li>
+<li>
+<p>Which test sets were used.</p>
+</li>
+<li>
+<p>Description of test scenarios that you have tried</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Any relevant logs or outputs</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Use this section to attach pictures that demonstrates your changes working / healthy</p>
+</li>
+<li>
+<p>If you are printing something show a screenshot</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Other information or known dependencies</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Any other information or known dependencies that is important to this PR.</p>
+</li>
+<li>
+<p>TODO that are to be done after this PR.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_add_aliases_to_the_config_file_in_git"><a class="anchor" href="#_add_aliases_to_the_config_file_in_git"></a>Add aliases to the config file in .git</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Add the aliases from the <code>.gitconfig</code> file of the repository to your local <code>.git/config</code> file.</p>
+</li>
+<li>
+<p>These aliases make working with <code>git</code> a bit easier.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>git publish</code> - Pushes the local branch updates to the current branch at origin. Rejects if the local branch is not up to date with the latest from origin.</p>
+</li>
+<li>
+<p><code>git synced</code> - Updates your local branch from <code>origin/main</code> i.e. Github. It performs a rebase, replaying your commits on top of the tip of main or master.</p>
+</li>
+<li>
+<p><code>git update1</code> - Updates your local branch with the latest from the same branch at origin. This fetches <code>origin/your-branch</code> and performs a rebase.</p>
+</li>
+<li>
+<p><code>git squash</code> - Shrinks the many commits in a branch to one commit. Useful just before merging.</p>
+</li>
+<li>
+<p><code>git pr</code> - Opens the PR at github.com. Useful to see review comments, create a PR, or view a diff in Github.</p>
+</li>
+<li>
+<p><code>git hub</code> - Opens the repository at github.com.</p>
+</li>
+<li>
+<p><code>git amend</code> - Alias for <code>git commit --amend</code></p>
+</li>
+<li>
+<p><code>git ammend</code> - In case you are prone to misspelling <code>amend</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="https://softwaredoug.com/blog/2022/11/09/idiot-proof-git-aliases.html" target="_blank" rel="noopener">Original Article</a></p>
+</li>
+<li>
+<p><a href="https://github.com/softwaredoug/idiot-proof-git" target="_blank" rel="noopener">Github repo</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_steps_to_follow_while_creating_a_pull_requestpr"><a class="anchor" href="#_steps_to_follow_while_creating_a_pull_requestpr"></a>Steps to follow while creating a Pull Request(PR)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Checkout the main branch.</p>
+</li>
+<li>
+<p>Create a new git branch: <code>git checkout -b IssueNumber_description-text main</code>.</p>
+</li>
+<li>
+<p>Make a single commit - or an empty commit using <code>git commit -m "my message" --allow-empty</code>.</p>
+</li>
+<li>
+<p>Create a Pull request with a <code>WIP</code> in the title.</p>
+</li>
+<li>
+<p>Ensure PR is linked to Work Item. In github, it is <code>#123</code>.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_steps_before_submitting_a_pull_request_pr"><a class="anchor" href="#_steps_before_submitting_a_pull_request_pr"></a>Steps before Submitting a Pull Request (PR)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Run the full test suite and ensure that all the tests pass.</p>
+</li>
+<li>
+<p>If you have multiple commits, squash your commits to one commit. Use <code>git squash</code>.</p>
+</li>
+<li>
+<p>Commit your changes using a descriptive commit message that follows the <a href="#_commit_message_guideline">commit message guidelines</a>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>git commit -a</code> &#8658; <code>-a</code> will automatically <code>add</code> and <code>rm</code> edited files.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Push your branch to GitHub: <code>git publish</code>.</p>
+</li>
+<li>
+<p>Send a pull request to <code>main</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If changes are suggested then:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Make the required updates.</p>
+</li>
+<li>
+<p>Re-run the tests to ensure all the tests are still passing.</p>
+</li>
+<li>
+<p>Rebase your branch and force push to your GitHub repository (thiswill update your Pull Request):</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>git rebase master -i &amp;&amp; git push -f</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_steps_after_merging_a_pull_request_pr"><a class="anchor" href="#_steps_after_merging_a_pull_request_pr"></a>Steps after merging a Pull Request (PR)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After your pull request is merged, you can safely delete your branch and
+pull the changes from the main (upstream) repository:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Delete the remote branch on GitHub either through the GitHub web UI or your local shell as follows: <code>git push origin --delete my-fix-branch</code>.</p>
+</li>
+<li>
+<p>Check out the main branch: <code>git checkout master -f</code>.</p>
+</li>
+<li>
+<p>Delete the local branch: <code>git branch -D my-fix-branch</code>.</p>
+</li>
+<li>
+<p>Update your local main branch with the latest: <code>git update</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_commit_message_guidelines"><a class="anchor" href="#_commit_message_guidelines"></a>Commit Message Guidelines</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The repository has a git commit message that gets added automatically when you try to merge commit.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/tremorscript/AspNetCoreAngular/blob/main/gitcommitmessage.txt" class="bare">https://github.com/tremorscript/AspNetCoreAngular/blob/main/gitcommitmessage.txt</a></p>
+</div>
+<div class="paragraph">
+<p>Locally, run the command:- <code>git config --local commit.template gitcommitmsg.txt</code></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;type&gt;[optional scope]: &lt;description&gt;
+
+[optional body]
+
+[optional footer]</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>fix:</strong> a commit of the <em>type</em> <code>fix</code> patches a bug in your codebase (this correlates with <a href="http://semver.org/#summary"><code>PATCH</code></a> in semantic versioning).</p>
+</li>
+<li>
+<p><strong>feat:</strong> a commit of the <em>type</em> <code>feat</code> introduces a new feature to the codebase (this correlates with <a href="http://semver.org/#summary"><code>MINOR</code></a> in semantic versioning).</p>
+</li>
+<li>
+<p>Sample types used by angular - <a href="https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#type" target="_blank" rel="noopener">Angular types</a></p>
+</li>
+<li>
+<p><strong>BREAKING CHANGE:</strong> a commit that has the text <code>BREAKING CHANGE:</code> at the beginning of its optional body or footer section introduces a breaking API change (correlating with
+<a href="http://semver.org/#summary"><code>MAJOR</code></a> in semantic versioning). A breaking change can be part of commits of any <em>type</em>. e.g., a <code>fix:</code>, <code>feat:</code> &amp;
+<code>chore:</code> types would all be valid, in addition to any other <em>type</em>.</p>
+</li>
+<li>
+<p>Others: commit <em>types</em> other than <code>fix:</code> and <code>feat:</code> are allowed, for example <a href="https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional" target="_blank" rel="noopener">@commitlint/config-conventional</a>
+(based on the <a href="https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines" target="_blank" rel="noopener">the Angular convention</a>) recommends <code>chore:</code>, <code>docs:</code>, <code>style:</code>,<code>refactor:</code>, <code>perf:</code>, <code>test:</code>, and others.</p>
+</li>
+<li>
+<p>A scope may be provided to a commit’s type, to provide additional contextual information and is contained within parenthesis, e.g., <code>feat(parser): add ability to parse arrays</code>. Sample scopes used by angular.
+<a href="https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#scope" target="_blank" rel="noopener">Angular Scopes</a>.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_commit_message_with_description_and_breaking_change_in_body"><a class="anchor" href="#_commit_message_with_description_and_breaking_change_in_body"></a>Commit message with description and breaking change in body</h3>
+<div class="literalblock">
+<div class="content">
+<pre>feat: allow provided config object to extend other configs
+
+BREAKING CHANGE: `extends` key in config file is now used for extending other config files</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commit_message_with_no_body"><a class="anchor" href="#_commit_message_with_no_body"></a>Commit message with no body</h3>
+<div class="literalblock">
+<div class="content">
+<pre>docs: correct spelling of CHANGELOG</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commit_message_with_scope"><a class="anchor" href="#_commit_message_with_scope"></a>Commit message with scope</h3>
+<div class="literalblock">
+<div class="content">
+<pre>feat(lang): added polish language</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commit_message_for_a_fix_using_an_optional_issue_number"><a class="anchor" href="#_commit_message_for_a_fix_using_an_optional_issue_number"></a>Commit message for a fix using an (optional) issue number.</h3>
+<div class="literalblock">
+<div class="content">
+<pre>fix: minor typos in code
+
+see the issue for details on the typos fixed
+
+fixes issue #12</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_references"><a class="anchor" href="#_references"></a>References</h3>
+<div class="paragraph">
+<p><a href="https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md" target="_blank" rel="noopener">Angular Contribution guidelines</a><br>
+<a href="https://www.conventionalcommits.org/en/v1.0.0-beta.2/#specification" target="_blank" rel="noopener">Conventional Commit Specification</a><br>
+<a href="https://microsoft.github.io/code-with-engineering-playbook/code-reviews/pull-requests/" target="_blank" rel="noopener">CSE Pull Requests</a><br>
+<a href="https://devtutorial.io/how-to-create-a-template-commit-message-git-p1244.html" target="_blank" rel="noopener">How to create a template commit message</a><br>
+<a href="https://seankilleen.com/2023/08/my-process-for-submitting-pull-requests/" target="_blank" rel="noopener">My process for submitting pull requests</a></p>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>
