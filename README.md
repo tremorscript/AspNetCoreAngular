@@ -30,6 +30,11 @@
 
 https://tremorscript.github.io/AspNetCoreAngular/ (In Progress)
 
+## Pull Request Guidelines
+
+https://tremorscript.github.io/AspNetCoreAngular/homesite/current/coding-guidelines.htmlhomesite/current/pull-request-guidelines.html
+
+
 ## Pre-requisites
 
 1. [.Net 7.0 SDK](https://www.microsoft.com/net/core#windows)
