@@ -18,17 +18,18 @@ namespace AspNetCoreAngular.Application.Features.Customers.Commands.UpdateCustom
             RuleFor(x => x.PostalCode).MaximumLength(10);
             RuleFor(x => x.Region).MaximumLength(15);
 
-            RuleFor(c => c.PostalCode).Matches(@"^\d{4}$")
+            RuleFor(c => c.PostalCode)
+                .Matches(@"^\d{4}$")
                 .When(c => c.Country == "Australia")
                 .WithMessage("Australian Postcodes have 4 digits");
 
             RuleFor(c => c.Phone)
-                .Must((model, phone) => HaveQueenslandLandLine(model, phone))
+                .Must((model, phone) => HaveQueenslandLandLine(model))
                 .When(c => c.Country == "Australia" && c.PostalCode.StartsWith("4"))
                 .WithMessage("Customers in QLD require at least one QLD landline.");
         }
 
-        private static bool HaveQueenslandLandLine(UpdateCustomerCommand model, string phoneValue)
+        private static bool HaveQueenslandLandLine(UpdateCustomerCommand model)
         {
             return model.Phone.StartsWith("07") || model.Fax.StartsWith("07");
         }

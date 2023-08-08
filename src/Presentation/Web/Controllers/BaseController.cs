@@ -1,4 +1,4 @@
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +10,9 @@ namespace AspNetCoreAngular.Web.Controllers
     [Route("api/[controller]/[action]")]
     public class BaseController : ControllerBase
     {
-        private IMediator _mediator;
-        protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+        private IMediator mediator;
+
+        protected IMediator Mediator =>
+            mediator ??= HttpContext.RequestServices.GetService<IMediator>();
     }
 }

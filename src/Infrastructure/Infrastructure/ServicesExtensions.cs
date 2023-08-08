@@ -1,54 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using AspNetCoreAngular.Application.Abstractions;
-using AspNetCoreAngular.Application.Extensions;
-using AspNetCoreAngular.Application.Settings;
-using AspNetCoreAngular.Common;
-using AspNetCoreAngular.Infrastructure.Email;
-using AspNetCoreAngular.Infrastructure.Environment;
-using AspNetCoreAngular.Infrastructure.Files;
-using AspNetCoreAngular.Infrastructure.Identity;
-using AspNetCoreAngular.Infrastructure.Identity.Entities;
-using AspNetCoreAngular.Infrastructure.Localization;
-using AspNetCoreAngular.Infrastructure.Localization.EFLocalizer;
-using AspNetCoreAngular.Infrastructure.Persistence;
-using AspNetCoreAngular.Infrastructure.Services;
-using AspNetCoreAngular.Infrastructure.Services.Certificate;
-using Duende.IdentityServer;
-using Duende.IdentityServer.AspNetIdentity;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.AzureAD.UI;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Localization;
-using Microsoft.Identity.Web;
-using Microsoft.IdentityModel.Tokens;
-using NSwag;
-using NSwag.Generation.Processors.Security;
+﻿// <copyright file="ServicesExtensions.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace AspNetCoreAngular.Infrastructure
 {
-    public record Clients(string ClientId, string CorsOrigin);
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
+    using System.Security.Cryptography.X509Certificates;
+    using AspNetCoreAngular.Application.Abstractions;
+    using AspNetCoreAngular.Application.Extensions;
+    using AspNetCoreAngular.Application.Settings;
+    using AspNetCoreAngular.Common;
+    using AspNetCoreAngular.Infrastructure.Email;
+    using AspNetCoreAngular.Infrastructure.Environment;
+    using AspNetCoreAngular.Infrastructure.Files;
+    using AspNetCoreAngular.Infrastructure.Identity;
+    using AspNetCoreAngular.Infrastructure.Identity.Entities;
+    using AspNetCoreAngular.Infrastructure.Localization;
+    using AspNetCoreAngular.Infrastructure.Localization.EFLocalizer;
+    using AspNetCoreAngular.Infrastructure.Persistence;
+    using AspNetCoreAngular.Infrastructure.Services;
+    using AspNetCoreAngular.Infrastructure.Services.Certificate;
+    using Duende.IdentityServer;
+    using Duende.IdentityServer.AspNetIdentity;
+    using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+    using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Localization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Localization;
+    using Microsoft.Identity.Web;
+    using Microsoft.IdentityModel.Tokens;
+    using NSwag;
+    using NSwag.Generation.Processors.Security;
+
+    public record Clients(string clientId, string corsOrigin);
 
     public static class ServicesExtensions
     {
         public static IServiceCollection AddInfrastructure(
             this IServiceCollection services,
             IConfiguration configuration,
-            IWebHostEnvironment environment
-        )
+            IWebHostEnvironment environment)
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -84,8 +87,7 @@ namespace AspNetCoreAngular.Infrastructure
         public static IIdentityServerBuilder AddStsServer(
             this IServiceCollection services,
             IConfiguration configuration,
-            IWebHostEnvironment environment
-        )
+            IWebHostEnvironment environment)
         {
             services.AddTransient<IClientInfoService, ClientInfoService>();
 
@@ -93,8 +95,7 @@ namespace AspNetCoreAngular.Infrastructure
             {
                 options.UseSqlite(
                     configuration.GetConnectionString("Identity"),
-                    b => b.MigrationsAssembly(typeof(IdentityServerDbContext).Assembly.FullName)
-                );
+                    b => b.MigrationsAssembly(typeof(IdentityServerDbContext).Assembly.FullName));
 
                 if (environment.IsDevelopment())
                 {
@@ -117,15 +118,14 @@ namespace AspNetCoreAngular.Infrastructure
                     var clients = configuration.GetSection("Clients").Get<List<Clients>>();
                     clients.ForEach(client =>
                     {
-                        var clientId = client.ClientId;
-                        var host = client.CorsOrigin;
+                        var clientId = client.clientId;
+                        var host = client.corsOrigin;
                         var spaClient = options.Clients.AddSPA(
                             clientId,
                             spa =>
                                 spa.WithRedirectUri($"{host}/authentication/login-callback")
                                     .WithScopes(new string[] { clientId })
-                                    .WithLogoutRedirectUri($"{host}/authentication/logout-callback")
-                        );
+                                    .WithLogoutRedirectUri($"{host}/authentication/logout-callback"));
 
                         spaClient.AlwaysIncludeUserClaimsInIdToken = true;
 
@@ -135,10 +135,8 @@ namespace AspNetCoreAngular.Infrastructure
                             {
                                 resource.WithScopes(
                                     clientId,
-                                    IdentityServerConstants.StandardScopes.Email
-                                );
-                            }
-                        );
+                                    IdentityServerConstants.StandardScopes.Email);
+                            });
                     });
                 })
                 .AddProfileService<CustomProfileService>();
@@ -150,31 +148,27 @@ namespace AspNetCoreAngular.Infrastructure
                 {
                     options.ClientId = configuration["IdentityServer:ExternalAuth:Google:ClientId"];
                     options.ClientSecret = configuration[
-                        "IdentityServer:ExternalAuth:Google:ClientSecret"
-                    ];
+                        "IdentityServer:ExternalAuth:Google:ClientSecret"];
                 })
                 .AddFacebook(options =>
                 {
                     options.AppId = configuration["IdentityServer:ExternalAuth:Facebook:AppId"];
                     options.AppSecret = configuration[
-                        "IdentityServer:ExternalAuth:Facebook:AppSecret"
-                    ];
+                        "IdentityServer:ExternalAuth:Facebook:AppSecret"];
                 })
                 .AddTwitter(options =>
                 {
                     options.ConsumerKey = configuration[
-                        "IdentityServer:ExternalAuth:Twitter:ConsumerKey"
-                    ];
+                        "IdentityServer:ExternalAuth:Twitter:ConsumerKey"];
                     options.ConsumerSecret = configuration[
-                        "IdentityServer:ExternalAuth:Twitter:ConsumerSecret"
-                    ];
+                        "IdentityServer:ExternalAuth:Twitter:ConsumerSecret"];
                 })
                 .AddAzureAD(options =>
                 {
                     configuration.Bind("IdentityServer:ExternalAuth:AzureAd", options);
                 });
-            // .AddMicrosoftIdentityWebApp(configuration.GetSection("IdentityServer:ExternalAuth:AzureAd"));
 
+            // .AddMicrosoftIdentityWebApp(configuration.GetSection("IdentityServer:ExternalAuth:AzureAd"));
             services.Configure<OpenIdConnectOptions>(
                 AzureADDefaults.OpenIdScheme,
                 options =>
@@ -201,24 +195,24 @@ namespace AspNetCoreAngular.Infrastructure
                     options.UsePkce = false; // live does not support this yet
                     options.Scope.Add("profile");
                     options.Scope.Add("email");
-                    //options.TokenValidationParameters.ValidateIssuer = false;
+
+                    // options.TokenValidationParameters.ValidateIssuer = false;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         // ALWAYS VALIDATE THE ISSUER IF POSSIBLE !!!!
                         ValidateIssuer = false,
+
                         // ValidIssuers = new List<string> { "tenant..." },
                         NameClaimType = "email",
                     };
-                }
-            );
+                });
 
             return identityBuilder;
         }
 
         public static IServiceCollection AddPersistence(
             this IServiceCollection services,
-            IConfiguration configuration
-        )
+            IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             {
@@ -237,9 +231,9 @@ namespace AspNetCoreAngular.Infrastructure
                         b =>
                         {
                             b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);
-                            //b.UseNetTopologySuite();
-                        }
-                    );
+
+                            // b.UseNetTopologySuite();
+                        });
                 }
                 else
                 {
@@ -248,17 +242,16 @@ namespace AspNetCoreAngular.Infrastructure
                         b =>
                         {
                             b.MigrationsAssembly("AspNetCoreAngular.Infrastructure");
+
                             // Add following package to enable net topology suite for sql server:
                             // Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite
-                            //b.UseNetTopologySuite();
-                        }
-                    );
+                            // b.UseNetTopologySuite();
+                        });
                 }
             });
 
             services.AddScoped<IApplicationDbContext>(
-                provider => provider.GetService<ApplicationDbContext>()
-            );
+                provider => provider.GetService<ApplicationDbContext>());
 
             return services;
         }
@@ -266,8 +259,7 @@ namespace AspNetCoreAngular.Infrastructure
         private static IServiceCollection AddCustomLocalization(
             this IServiceCollection services,
             IConfiguration configuration,
-            IWebHostEnvironment environment
-        )
+            IWebHostEnvironment environment)
         {
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.Configure<RequestLocalizationOptions>(options =>
@@ -276,13 +268,12 @@ namespace AspNetCoreAngular.Infrastructure
                 {
                     new CultureInfo("en-GB"),
                     new CultureInfo("en-US"),
-                    new CultureInfo("fr-FR")
+                    new CultureInfo("fr-FR"),
                 };
 
                 options.DefaultRequestCulture = new RequestCulture(
                     culture: "en-GB",
-                    uiCulture: "en-GB"
-                );
+                    uiCulture: "en-GB");
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
             });
@@ -292,8 +283,7 @@ namespace AspNetCoreAngular.Infrastructure
                 {
                     options.UseSqlite(
                         configuration["Data:Localization"],
-                        b => b.MigrationsAssembly(typeof(LocalizationDbContext).Assembly.FullName)
-                    );
+                        b => b.MigrationsAssembly(typeof(LocalizationDbContext).Assembly.FullName));
 
                     if (environment.IsDevelopment())
                     {
@@ -301,21 +291,18 @@ namespace AspNetCoreAngular.Infrastructure
                     }
                 },
                 ServiceLifetime.Singleton,
-                ServiceLifetime.Singleton
-            );
+                ServiceLifetime.Singleton);
 
             services.AddSingleton<IStringLocalizerFactory, EFStringLocalizerFactory>();
             services.AddSingleton<ILocalizationDbContext>(
-                provider => provider.GetService<LocalizationDbContext>()
-            );
+                provider => provider.GetService<LocalizationDbContext>());
 
             return services;
         }
 
         private static IServiceCollection AddCustomUi(
             this IServiceCollection services,
-            IWebHostEnvironment environment
-        )
+            IWebHostEnvironment environment)
         {
             services.AddOpenApiDocument(configure =>
             {
@@ -328,13 +315,11 @@ namespace AspNetCoreAngular.Infrastructure
                         Type = OpenApiSecuritySchemeType.ApiKey,
                         Name = "Authorization",
                         In = OpenApiSecurityApiKeyLocation.Header,
-                        Description = "Type into the textbox: Bearer {your JWT token}."
-                    }
-                );
+                        Description = "Type into the textbox: Bearer {your JWT token}.",
+                    });
 
                 configure.OperationProcessors.Add(
-                    new AspNetCoreOperationSecurityScopeProcessor("JWT")
-                );
+                    new AspNetCoreOperationSecurityScopeProcessor("JWT"));
             });
 
             // Customise default API behaviour
@@ -360,8 +345,7 @@ namespace AspNetCoreAngular.Infrastructure
 
         private static IServiceCollection AddCustomConfiguration(
             this IServiceCollection services,
-            IConfiguration configuration
-        )
+            IConfiguration configuration)
         {
             // Custom configuration
             services.ConfigurePoco<EmailSettings>(configuration.GetSection(nameof(EmailSettings)));
@@ -371,8 +355,7 @@ namespace AspNetCoreAngular.Infrastructure
 
         private static IServiceCollection AddCustomCors(
             this IServiceCollection services,
-            IConfiguration configuration
-        )
+            IConfiguration configuration)
         {
             services.AddCors(options =>
             {
@@ -384,8 +367,7 @@ namespace AspNetCoreAngular.Infrastructure
                             configuration.GetSection("CorsOrigins").Get<List<string>>()?.ToArray()
                             ?? new string[] { };
                         builder.WithOrigins(corsList).AllowAnyMethod().AllowAnyHeader();
-                    }
-                );
+                    });
             });
 
             return services;
@@ -400,15 +382,13 @@ namespace AspNetCoreAngular.Infrastructure
 
         private static X509Certificate2 GetCertificate(
             IWebHostEnvironment environment,
-            IConfiguration configuration
-        )
+            IConfiguration configuration)
         {
             var useDevCertificate = bool.Parse(configuration["UseDevCertificate"]);
 
             var cert = new X509Certificate2(
                 Path.Combine(environment.ContentRootPath, "sts_dev_cert.pfx"),
-                "1234"
-            );
+                "1234");
 
             if (environment.IsProduction() && !useDevCertificate)
             {
@@ -423,8 +403,7 @@ namespace AspNetCoreAngular.Infrastructure
                     var certs = store.Certificates.Find(
                         X509FindType.FindByThumbprint,
                         certificateThumbprint,
-                        false
-                    );
+                        false);
                     cert = certs[0];
                     store.Close();
                 }
@@ -435,13 +414,12 @@ namespace AspNetCoreAngular.Infrastructure
                     var keyVaultService = new KeyVaultCertificateService(
                         vaultConfigSection["Url"],
                         vaultConfigSection["ClientId"],
-                        vaultConfigSection["ClientSecret"]
-                    );
+                        vaultConfigSection["ClientSecret"]);
                     cert = keyVaultService.GetCertificateFromKeyVault(
-                        vaultConfigSection["CertificateName"]
-                    );
+                        vaultConfigSection["CertificateName"]);
                 }
             }
+
             return cert;
         }
     }

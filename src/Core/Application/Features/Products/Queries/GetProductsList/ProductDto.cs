@@ -24,9 +24,17 @@ namespace AspNetCoreAngular.Application.Features.Products.Queries.GetProductsLis
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Product, ProductDto>()
-                .ForMember(d => d.SupplierCompanyName, opt => opt.MapFrom(s => s.Supplier != null ? s.Supplier.CompanyName : string.Empty))
-                .ForMember(d => d.CategoryName, opt => opt.MapFrom(s => s.Category != null ? s.Category.CategoryName : string.Empty));
+            profile
+                .CreateMap<Product, ProductDto>()
+                .ForMember(
+                    d => d.SupplierCompanyName,
+                    opt =>
+                        opt.MapFrom(s => s.Supplier != null ? s.Supplier.CompanyName : string.Empty))
+                .ForMember(
+                    d => d.CategoryName,
+                    opt =>
+                        opt.MapFrom(
+                            s => s.Category != null ? s.Category.CategoryName : string.Empty));
         }
     }
 }

@@ -8,28 +8,25 @@ using MediatR;
 
 namespace AspNetCoreAngular.Application.Features.Customers.Queries.GetCustomerDetail
 {
-    public class GetCustomerDetailQueryHandler : IRequestHandler<GetCustomerDetailQuery, CustomerDetailVm>
+    public class GetCustomerDetailQueryHandler
+        : IRequestHandler<GetCustomerDetailQuery, CustomerDetailVm>
     {
-        private readonly IApplicationDbContext _context;
-        private readonly IMapper _mapper;
+        private readonly IApplicationDbContext context;
+        private readonly IMapper mapper;
 
         public GetCustomerDetailQueryHandler(IApplicationDbContext context, IMapper mapper)
         {
-            _context = context;
-            _mapper = mapper;
+            this.context = context;
+            this.mapper = mapper;
         }
 
-        public async Task<CustomerDetailVm> Handle(GetCustomerDetailQuery request, CancellationToken cancellationToken)
+        public async Task<CustomerDetailVm> Handle(
+            GetCustomerDetailQuery request,
+            CancellationToken cancellationToken)
         {
-            var entity = await _context.Customers
-                .FindAsync(request.Id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Customer), request.Id);
-            }
-
-            return _mapper.Map<CustomerDetailVm>(entity);
+            var entity = await context.Customers.FindAsync(new object[] { request.Id }, cancellationToken: cancellationToken)
+                                        ?? throw new NotFoundException(nameof(Customer), request.Id);
+            return mapper.Map<CustomerDetailVm>(entity);
         }
     }
 }

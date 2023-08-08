@@ -12,16 +12,18 @@ namespace AspNetCoreAngular.Application.Features.Customers.Commands.CreateCustom
 
         public class CustomerCreatedHandler : INotificationHandler<CustomerCreated>
         {
-            private readonly IEmailService _email;
+            private readonly IEmailService email;
 
             public CustomerCreatedHandler(IEmailService email)
             {
-                _email = email;
+                this.email = email;
             }
 
-            public async Task Handle(CustomerCreated notification, CancellationToken cancellationToken)
+            public async Task Handle(
+                CustomerCreated notification,
+                CancellationToken cancellationToken)
             {
-                await _email.SendCustomerCreatedEmail(new EmailMessage());
+                await email.SendCustomerCreatedEmail(new EmailMessage());
             }
         }
     }

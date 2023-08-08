@@ -28,11 +28,19 @@ namespace AspNetCoreAngular.Application.Features.Products.Queries.GetProductDeta
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Product, ProductDetailVm>()
+            profile
+                .CreateMap<Product, ProductDetailVm>()
                 .ForMember(d => d.EditEnabled, opt => opt.Ignore())
                 .ForMember(d => d.DeleteEnabled, opt => opt.Ignore())
-                .ForMember(d => d.SupplierCompanyName, opt => opt.MapFrom(s => s.Supplier != null ? s.Supplier.CompanyName : string.Empty))
-                .ForMember(d => d.CategoryName, opt => opt.MapFrom(s => s.Category != null ? s.Category.CategoryName : string.Empty));
+                .ForMember(
+                    d => d.SupplierCompanyName,
+                    opt =>
+                        opt.MapFrom(s => s.Supplier != null ? s.Supplier.CompanyName : string.Empty))
+                .ForMember(
+                    d => d.CategoryName,
+                    opt =>
+                        opt.MapFrom(
+                            s => s.Category != null ? s.Category.CategoryName : string.Empty));
         }
     }
 }

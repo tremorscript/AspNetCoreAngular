@@ -12,9 +12,12 @@ namespace AspNetCoreAngular.Application.Extensions
 
             return userId;
         }
+
         public static string GetClaim(this IIdentity claimsIdentity, string claimType)
         {
-            var claim = ((ClaimsIdentity)claimsIdentity).Claims.FirstOrDefault(x => x.Type == claimType)?.Value;
+            var claim = ((ClaimsIdentity)claimsIdentity).Claims
+                .FirstOrDefault(x => x.Type == claimType)
+                ?.Value;
             return claim;
         }
     }

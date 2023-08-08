@@ -9,28 +9,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreAngular.Application.Features.Products.Queries.GetProductDetail
 {
-    public class GetProductDetailQueryHandler : MediatR.IRequestHandler<GetProductDetailQuery, ProductDetailVm>
+    public class GetProductDetailQueryHandler
+        : MediatR.IRequestHandler<GetProductDetailQuery, ProductDetailVm>
     {
-        private readonly IApplicationDbContext _context;
-        private readonly IMapper _mapper;
+        private readonly IApplicationDbContext context;
+        private readonly IMapper mapper;
 
         public GetProductDetailQueryHandler(IApplicationDbContext context, IMapper mapper)
         {
-            _context = context;
-            _mapper = mapper;
+            this.context = context;
+            this.mapper = mapper;
         }
 
-        public async Task<ProductDetailVm> Handle(GetProductDetailQuery request, CancellationToken cancellationToken)
+        public async Task<ProductDetailVm> Handle(
+            GetProductDetailQuery request,
+            CancellationToken cancellationToken)
         {
-            var vm = await _context.Products
-                .ProjectTo<ProductDetailVm>(_mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync(p => p.ProductId == request.Id, cancellationToken);
-
-            if (vm == null)
-            {
-                throw new NotFoundException(nameof(Product), request.Id);
-            }
-
+            var vm = await context.Products
+                .ProjectTo<ProductDetailVm>(mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync(p => p.ProductId == request.Id, cancellationToken)
+                        ?? throw new NotFoundException(nameof(Product), request.Id);
             return vm;
         }
     }

@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Razor.TagHelpers;
+﻿// <copyright file="IfTagHelper.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace AspNetCoreAngular.STS.TagHelpers
 {
+    using Microsoft.AspNetCore.Razor.TagHelpers;
+
     public class IfTagHelper : TagHelper
     {
         [HtmlAttributeName("show")]
@@ -15,7 +19,7 @@ namespace AspNetCoreAngular.STS.TagHelpers
             // Always strip the outer tag name as we never want <if> to render
             output.TagName = null;
 
-            if (Show && !Exclude)
+            if (this.Show && !this.Exclude)
             {
                 return;
             }

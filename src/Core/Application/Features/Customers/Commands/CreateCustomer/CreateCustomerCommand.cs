@@ -32,16 +32,18 @@ namespace AspNetCoreAngular.Application.Features.Customers.Commands.CreateCustom
 
         public class Handler : IRequestHandler<CreateCustomerCommand>
         {
-            private readonly IApplicationDbContext _context;
-            private readonly IMediator _mediator;
+            private readonly IApplicationDbContext context;
+            private readonly IMediator mediator;
 
             public Handler(IApplicationDbContext context, IMediator mediator)
             {
-                _context = context;
-                _mediator = mediator;
+                this.context = context;
+                this.mediator = mediator;
             }
 
-            public async Task<Unit> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(
+                CreateCustomerCommand request,
+                CancellationToken cancellationToken)
             {
                 var entity = new Customer
                 {
@@ -54,14 +56,16 @@ namespace AspNetCoreAngular.Application.Features.Customers.Commands.CreateCustom
                     Country = request.Country,
                     Fax = request.Fax,
                     Phone = request.Phone,
-                    PostalCode = request.PostalCode
+                    PostalCode = request.PostalCode,
                 };
 
-                _context.Customers.Add(entity);
+                context.Customers.Add(entity);
 
-                await _context.SaveChangesAsync(cancellationToken);
+                await context.SaveChangesAsync(cancellationToken);
 
-                await _mediator.Publish(new CustomerCreated { CustomerId = entity.CustomerId }, cancellationToken);
+                await mediator.Publish(
+                    new CustomerCreated { CustomerId = entity.CustomerId },
+                    cancellationToken);
 
                 return Unit.Value;
             }

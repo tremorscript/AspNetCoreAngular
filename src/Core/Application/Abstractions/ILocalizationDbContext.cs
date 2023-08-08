@@ -9,9 +9,11 @@ namespace AspNetCoreAngular.Application.Abstractions
     public interface ILocalizationDbContext
     {
         DbSet<Culture> Cultures { get; set; }
-        DbSet<Resource> Resources { get; set; }
-        DatabaseFacade Database { get; }
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 
+        DbSet<Resource> Resources { get; set; }
+
+        DatabaseFacade Database { get; }
+
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

@@ -5,8 +5,8 @@ using AspNetCoreAngular.Application.Features.Products.Commands.UpdateProduct;
 using AspNetCoreAngular.Application.Features.Products.Queries.GetProductDetail;
 using AspNetCoreAngular.Application.Features.Products.Queries.GetProductsFile;
 using AspNetCoreAngular.Application.Features.Products.Queries.GetProductsList;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCoreAngular.Web.Controllers
 {

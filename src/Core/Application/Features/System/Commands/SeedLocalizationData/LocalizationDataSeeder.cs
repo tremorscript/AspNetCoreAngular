@@ -10,18 +10,18 @@ namespace AspNetCoreAngular.Application.Features.System.Commands.SeedLocalizatio
 {
     public class LocalizationDataSeeder
     {
-        private readonly ILocalizationDbContext _context;
+        private readonly ILocalizationDbContext context;
 
         public LocalizationDataSeeder(ILocalizationDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
+
         public async Task SeedAllAsync(string contentRoot, CancellationToken cancellationToken)
         {
-            if (!_context.Cultures.Any())
+            if (!context.Cultures.Any())
             {
                 var translations = File.ReadAllLines(Path.Combine(contentRoot, "translations.csv"));
-                ;
 
                 var locales = translations.First().Split(",").Skip(1).ToList();
 
@@ -31,30 +31,30 @@ namespace AspNetCoreAngular.Application.Features.System.Commands.SeedLocalizatio
                 {
                     currentLocale += 1;
 
-                    var culture = new Culture
-                    {
-                        Name = locale
-                    };
+                    var culture = new Culture { Name = locale };
                     var resources = new List<Resource>();
-                    translations.Skip(1).ToList().ForEach(t =>
-                    {
-                        var line = t.Split(",");
-                        resources.Add(new Resource
+                    translations
+                        .Skip(1)
+                        .ToList()
+                        .ForEach(t =>
                         {
-                            Culture = culture,
-                            Key = line[0],
-                            Value = line[currentLocale]
+                            var line = t.Split(",");
+                            resources.Add(
+                                new Resource
+                                {
+                                    Culture = culture,
+                                    Key = line[0],
+                                    Value = line[currentLocale],
+                                });
                         });
-                    });
 
                     culture.Resources = resources;
 
-                    _context.Cultures.Add(culture);
+                    context.Cultures.Add(culture);
                 });
 
-                await _context.SaveChangesAsync(cancellationToken);
+                await context.SaveChangesAsync(cancellationToken);
             }
         }
-
     }
 }

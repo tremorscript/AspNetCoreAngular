@@ -8,14 +8,16 @@ namespace AspNetCoreAngular.Application.Features.Products.Commands.CreateProduct
 {
     public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, int>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly IApplicationDbContext context;
 
         public CreateProductCommandHandler(IApplicationDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
-        public async Task<int> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(
+            CreateProductCommand request,
+            CancellationToken cancellationToken)
         {
             var entity = new Product
             {
@@ -23,12 +25,12 @@ namespace AspNetCoreAngular.Application.Features.Products.Commands.CreateProduct
                 CategoryId = request.CategoryId,
                 SupplierId = request.SupplierId,
                 UnitPrice = request.UnitPrice,
-                Discontinued = request.Discontinued
+                Discontinued = request.Discontinued,
             };
 
-            _context.Products.Add(entity);
+            context.Products.Add(entity);
 
-            await _context.SaveChangesAsync(cancellationToken);
+            await context.SaveChangesAsync(cancellationToken);
 
             return entity.ProductId;
         }

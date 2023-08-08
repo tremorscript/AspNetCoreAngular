@@ -1,26 +1,30 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using AspNetCoreAngular.Application.Abstractions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Localization;
+﻿// <copyright file="EFStringLocalizerOfT.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace AspNetCoreAngular.Infrastructure.Localization.EFLocalizer
 {
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using AspNetCoreAngular.Application.Abstractions;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Localization;
+
     public class EFStringLocalizer<T> : IStringLocalizer<T>
     {
-        private readonly ILocalizationDbContext _context;
+        private readonly ILocalizationDbContext context;
 
         public EFStringLocalizer(ILocalizationDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         public LocalizedString this[string name]
         {
             get
             {
-                var value = GetString(name);
+                var value = this.GetString(name);
                 return new LocalizedString(name, value ?? name, resourceNotFound: value == null);
             }
         }
@@ -29,7 +33,7 @@ namespace AspNetCoreAngular.Infrastructure.Localization.EFLocalizer
         {
             get
             {
-                var format = GetString(name);
+                var format = this.GetString(name);
                 var value = string.Format(format ?? name, arguments);
                 return new LocalizedString(name, value, resourceNotFound: format == null);
             }
@@ -38,12 +42,12 @@ namespace AspNetCoreAngular.Infrastructure.Localization.EFLocalizer
         public IStringLocalizer WithCulture(CultureInfo culture)
         {
             CultureInfo.DefaultThreadCurrentCulture = culture;
-            return new EFStringLocalizer(_context);
+            return new EFStringLocalizer(this.context);
         }
 
         public IEnumerable<LocalizedString> GetAllStrings(bool includeAncestorCultures)
         {
-            return _context.Resources
+            return this.context.Resources
                 .Include(r => r.Culture)
                 .Where(r => r.Culture.Name == CultureInfo.CurrentCulture.Name)
                 .Select(r => new LocalizedString(r.Key, r.Value, true));
@@ -51,10 +55,11 @@ namespace AspNetCoreAngular.Infrastructure.Localization.EFLocalizer
 
         private string GetString(string name)
         {
-            return _context.Resources
+            return this.context.Resources
                 .Include(r => r.Culture)
                 .Where(r => r.Culture.Name == CultureInfo.CurrentCulture.Name)
-                .FirstOrDefault(r => r.Key == name)?.Value;
+                .FirstOrDefault(r => r.Key == name)
+                ?.Value;
         }
     }
 }

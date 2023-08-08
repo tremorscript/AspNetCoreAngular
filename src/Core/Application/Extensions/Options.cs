@@ -6,7 +6,9 @@ namespace AspNetCoreAngular.Application.Extensions
 {
     public static class Options
     {
-        public static TConfig ConfigurePoco<TConfig>(this IServiceCollection services, IConfiguration configuration)
+        public static TConfig ConfigurePoco<TConfig>(
+            this IServiceCollection services,
+            IConfiguration configuration)
             where TConfig : class, new()
         {
             if (services == null)

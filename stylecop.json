@@ -5,7 +5,12 @@
       "companyName": "",
       "copyrightText": "",
       "xmlHeader": false,
-      "fileNamingConvention": "metadata"
+      "fileNamingConvention": "metadata",
+      "documentExposedElements": false,
+      "documentInterfaces": false,
+      "documentInternalElements": false,
+      "documentPrivateElements": false,
+      "documentPrivateFields": false
     },
     "layoutRules": {
       "newlineAtEndOfFile": "require"
@@ -14,7 +19,7 @@
       "tupleElementNameCasing": "camelCase"
     },
     "orderingRules": {
-      "usingDirectivesPlacement": "outsideNamespace"
+      "usingDirectivesPlacement": "preserve"
     }
   }
 }

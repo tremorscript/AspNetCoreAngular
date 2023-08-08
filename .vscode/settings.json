@@ -1,7 +1,7 @@
 // Place your settings in this file to overwrite default and user settings.
 {
   "typescript.referencesCodeLens.enabled": true,
-  "debug.inlineValues": true,
+  "debug.inlineValues": "on",
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -31,6 +31,7 @@
     "**/obj": true
   },
   "editor.formatOnSave": true,
+  "omnisharp.enableRoslynAnalyzers": true,
   "asciidoc.antora.enableAntoraSupport": true,
   "dotnet.defaultSolution": "AspNetCoreAngular.sln"
 }

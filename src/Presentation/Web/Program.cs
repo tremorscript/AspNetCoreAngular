@@ -33,10 +33,13 @@ namespace AspNetCoreAngular.Web
 
                     var mediator = services.GetRequiredService<IMediator>();
 
-                    var localizationDbContext = services.GetRequiredService<ILocalizationDbContext>();
+                    var localizationDbContext =
+                        services.GetRequiredService<ILocalizationDbContext>();
                     localizationDbContext.Database.Migrate();
                     var env = services.GetRequiredService<IWebHostEnvironment>();
-                    await mediator.Send(new LocalizationDataSeederCommand { ContentRoot = env.ContentRootPath }, CancellationToken.None);
+                    await mediator.Send(
+                        new LocalizationDataSeederCommand { ContentRoot = env.ContentRootPath },
+                        CancellationToken.None);
 
                     var applicationDbContext = services.GetRequiredService<IApplicationDbContext>();
                     applicationDbContext.Database.Migrate();
@@ -52,8 +55,13 @@ namespace AspNetCoreAngular.Web
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-                  WebHost.CreateDefaultBuilder(args)
-                        .ConfigureAppConfiguration((host, configuration) => configuration.AddCustomAppSettings(host.HostingEnvironment.ContentRootPath, host.HostingEnvironment.EnvironmentName))
-                        .UseStartup<Startup>();
+            WebHost
+                .CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration(
+                    (host, configuration) =>
+                        configuration.AddCustomAppSettings(
+                            host.HostingEnvironment.ContentRootPath,
+                            host.HostingEnvironment.EnvironmentName))
+                .UseStartup<Startup>();
     }
 }

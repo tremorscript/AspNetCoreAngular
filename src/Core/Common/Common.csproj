@@ -4,6 +4,12 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<RootNamespace>AspNetCoreAngular.Common</RootNamespace>
 		<AssemblyName>AspNetCoreAngular.Common</AssemblyName>
+    	<RunCodeAnalysis>true</RunCodeAnalysis>
+    	<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    	<CodeAnalysisRuleSet>..\..\..\StyleCop.ruleset</CodeAnalysisRuleSet>
 	</PropertyGroup>
 
+	<ItemGroup>
+    	<AdditionalFiles Include="../../../stylecop.json" />
+  	</ItemGroup>
 </Project>

@@ -1,11 +1,11 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AspNetCoreAngular.Application.Features.Customers.Commands.CreateCustomer;
 using AspNetCoreAngular.Application.Features.Customers.Commands.DeleteCustomer;
 using AspNetCoreAngular.Application.Features.Customers.Commands.UpdateCustomer;
 using AspNetCoreAngular.Application.Features.Customers.Queries.GetCustomerDetail;
 using AspNetCoreAngular.Application.Features.Customers.Queries.GetCustomersList;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCoreAngular.Web.Controllers
 {

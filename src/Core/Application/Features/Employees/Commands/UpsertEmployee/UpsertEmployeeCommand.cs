@@ -45,26 +45,28 @@ namespace AspNetCoreAngular.Application.Features.Employees.Commands.UpsertEmploy
 
         public class UpsertEmployeeCommandHandler : IRequestHandler<UpsertEmployeeCommand, int>
         {
-            private readonly IApplicationDbContext _context;
+            private readonly IApplicationDbContext context;
 
             public UpsertEmployeeCommandHandler(IApplicationDbContext context)
             {
-                _context = context;
+                this.context = context;
             }
 
-            public async Task<int> Handle(UpsertEmployeeCommand request, CancellationToken cancellationToken)
+            public async Task<int> Handle(
+                UpsertEmployeeCommand request,
+                CancellationToken cancellationToken)
             {
                 Employee entity;
 
                 if (request.Id.HasValue)
                 {
-                    entity = await _context.Employees.FindAsync(request.Id.Value);
+                    entity = await context.Employees.FindAsync(new object[] { request.Id.Value }, cancellationToken: cancellationToken);
                 }
                 else
                 {
                     entity = new Employee();
 
-                    _context.Employees.Add(entity);
+                    context.Employees.Add(entity);
                 }
 
                 entity.TitleOfCourtesy = request.Title;
@@ -84,7 +86,7 @@ namespace AspNetCoreAngular.Application.Features.Employees.Commands.UpsertEmploy
                 entity.Photo = request.Photo;
                 entity.ReportsTo = request.ManagerId;
 
-                await _context.SaveChangesAsync(cancellationToken);
+                await context.SaveChangesAsync(cancellationToken);
 
                 return entity.EmployeeId;
             }

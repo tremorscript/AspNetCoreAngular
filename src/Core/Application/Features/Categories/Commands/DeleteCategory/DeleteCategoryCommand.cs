@@ -13,26 +13,22 @@ namespace AspNetCoreAngular.Application.Features.Categories.Commands.DeleteCateg
 
         public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand>
         {
-            private readonly IApplicationDbContext _context;
+            private readonly IApplicationDbContext context;
 
             public DeleteCategoryCommandHandler(IApplicationDbContext context)
             {
-                _context = context;
+                this.context = context;
             }
 
-            public async Task<Unit> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(
+                DeleteCategoryCommand request,
+                CancellationToken cancellationToken)
             {
-                var entity = await _context.Categories
-                    .FindAsync(request.Id);
+                var entity = await context.Categories.FindAsync(new object[] { request.Id }, cancellationToken: cancellationToken)
+                                    ?? throw new NotFoundException(nameof(Category), request.Id);
+                context.Categories.Remove(entity);
 
-                if (entity == null)
-                {
-                    throw new NotFoundException(nameof(Category), request.Id);
-                }
-
-                _context.Categories.Remove(entity);
-
-                await _context.SaveChangesAsync(cancellationToken);
+                await context.SaveChangesAsync(cancellationToken);
 
                 return Unit.Value;
             }

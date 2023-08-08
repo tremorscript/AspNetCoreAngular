@@ -1,4 +1,4 @@
-namespace AspNetCoreAngular.Web.ViewModels
+﻿namespace AspNetCoreAngular.Web.ViewModels
 {
     public enum Gender
     {

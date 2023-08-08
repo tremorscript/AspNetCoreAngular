@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AspNetCoreAngular.Application.Features.Categories.Commands.DeleteCategory;
 using AspNetCoreAngular.Application.Features.Categories.Commands.UpsertCategory;
 using AspNetCoreAngular.Application.Features.Categories.Queries.GetCategoriesList;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCoreAngular.Web.Controllers
 {
