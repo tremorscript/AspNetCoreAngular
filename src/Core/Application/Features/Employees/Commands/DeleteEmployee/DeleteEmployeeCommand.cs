@@ -14,42 +14,40 @@ namespace AspNetCoreAngular.Application.Features.Employees.Commands.DeleteEmploy
 
         public class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeCommand>
         {
-            private readonly IApplicationDbContext _context;
-            private readonly IUserManager _userManager;
-            private readonly ICurrentUserService _currentUser;
+            private readonly IApplicationDbContext context;
+            private readonly IUserManager userManager;
+            private readonly ICurrentUserService currentUser;
 
-            public DeleteEmployeeCommandHandler(IApplicationDbContext context, IUserManager userManager, ICurrentUserService currentUser)
+            public DeleteEmployeeCommandHandler(
+                IApplicationDbContext context,
+                IUserManager userManager,
+                ICurrentUserService currentUser)
             {
-                _context = context;
-                _userManager = userManager;
-                _currentUser = currentUser;
+                this.context = context;
+                this.userManager = userManager;
+                this.currentUser = currentUser;
             }
 
-            public async Task<Unit> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(
+                DeleteEmployeeCommand request,
+                CancellationToken cancellationToken)
             {
-                var entity = await _context.Employees
-                    .FindAsync(request.Id);
-
-                if (entity == null)
-                {
-                    throw new NotFoundException(nameof(Employee), request.Id);
-                }
-
-                if (entity.UserId == _currentUser.UserId)
+                var entity = await context.Employees.FindAsync(new object[] { request.Id }, cancellationToken: cancellationToken)
+                                                ?? throw new NotFoundException(nameof(Employee), request.Id);
+                if (entity.UserId == currentUser.UserId)
                 {
                     throw new BadRequestException("Employees cannot delete their own account.");
                 }
 
                 if (entity.UserId != default)
                 {
-                    await _userManager.DeleteUserAsync(entity.UserId);
+                    await userManager.DeleteUserAsync(entity.UserId);
                 }
 
                 // TODO: Update this logic, this will only work if the employee has no associated territories or orders.Emp
+                context.Employees.Remove(entity);
 
-                _context.Employees.Remove(entity);
-
-                await _context.SaveChangesAsync(cancellationToken);
+                await context.SaveChangesAsync(cancellationToken);
 
                 return Unit.Value;
             }

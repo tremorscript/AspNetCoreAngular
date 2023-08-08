@@ -10,32 +10,31 @@ namespace AspNetCoreAngular.Application.Features.Customers.Commands.DeleteCustom
 {
     public class DeleteCustomerCommandHandler : IRequestHandler<DeleteCustomerCommand>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly IApplicationDbContext context;
 
         public DeleteCustomerCommandHandler(IApplicationDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
-        public async Task<Unit> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(
+            DeleteCustomerCommand request,
+            CancellationToken cancellationToken)
         {
-            var entity = await _context.Customers
-                .FindAsync(request.Id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Customer), request.Id);
-            }
-
-            var hasOrders = _context.Orders.Any(o => o.CustomerId == entity.CustomerId);
+            var entity = await context.Customers.FindAsync(new object[] { request.Id }, cancellationToken: cancellationToken)
+                                    ?? throw new NotFoundException(nameof(Customer), request.Id);
+            var hasOrders = context.Orders.Any(o => o.CustomerId == entity.CustomerId);
             if (hasOrders)
             {
-                throw new DeleteFailureException(nameof(Customer), request.Id, "There are existing orders associated with this customer.");
+                throw new DeleteFailureException(
+                    nameof(Customer),
+                    request.Id,
+                    "There are existing orders associated with this customer.");
             }
 
-            _context.Customers.Remove(entity);
+            context.Customers.Remove(entity);
 
-            await _context.SaveChangesAsync(cancellationToken);
+            await context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }

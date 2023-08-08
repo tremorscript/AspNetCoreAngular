@@ -1,22 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿// <copyright file="OidcConfigurationController.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace AspNetCoreAngular.STS.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+
     [ApiExplorerSettings(IgnoreApi = true)]
     public class OidcConfigurationController : Controller
     {
-        private readonly ILogger<OidcConfigurationController> _logger;
+        private readonly ILogger<OidcConfigurationController> logger;
 
-        public OidcConfigurationController(IClientRequestParametersProvider clientRequestParametersProvider, ILogger<OidcConfigurationController> logger)
+        public OidcConfigurationController(
+            IClientRequestParametersProvider clientRequestParametersProvider,
+            ILogger<OidcConfigurationController> logger)
         {
-            ClientRequestParametersProvider = clientRequestParametersProvider;
-            _logger = logger;
+            this.ClientRequestParametersProvider = clientRequestParametersProvider;
+            this.logger = logger;
         }
 
         public IClientRequestParametersProvider ClientRequestParametersProvider { get; }
@@ -24,8 +30,10 @@ namespace AspNetCoreAngular.STS.Controllers
         [HttpGet("_configuration/{clientId}")]
         public IActionResult GetClientRequestParameters([FromRoute] string clientId)
         {
-            var parameters = ClientRequestParametersProvider.GetClientParameters(HttpContext, clientId);
-            return Ok(parameters);
+            var parameters = this.ClientRequestParametersProvider.GetClientParameters(
+                this.HttpContext,
+                clientId);
+            return this.Ok(parameters);
         }
     }
 }

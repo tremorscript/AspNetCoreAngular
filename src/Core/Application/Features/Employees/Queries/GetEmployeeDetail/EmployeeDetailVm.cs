@@ -46,7 +46,8 @@ namespace AspNetCoreAngular.Application.Features.Employees.Queries.GetEmployeeDe
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Employee, EmployeeDetailVm>()
+            profile
+                .CreateMap<Employee, EmployeeDetailVm>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.EmployeeId))
                 .ForMember(d => d.Title, opt => opt.MapFrom(s => s.TitleOfCourtesy))
                 .ForMember(d => d.Position, opt => opt.MapFrom(s => s.Title))

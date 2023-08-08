@@ -1,39 +1,56 @@
-﻿using System;
-using System.Threading.Tasks;
-using AspNetCoreAngular.Infrastructure.Identity.Entities;
-using Duende.IdentityServer.EntityFramework.Entities;
-using Duende.IdentityServer.EntityFramework.Extensions;
-using Duende.IdentityServer.EntityFramework.Interfaces;
-using Duende.IdentityServer.EntityFramework.Options;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+﻿// <copyright file="IdentityServerDbContext.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace AspNetCoreAngular.Infrastructure.Identity
 {
+    using System;
+    using System.Threading.Tasks;
+    using AspNetCoreAngular.Infrastructure.Identity.Entities;
+    using Duende.IdentityServer.EntityFramework.Entities;
+    using Duende.IdentityServer.EntityFramework.Extensions;
+    using Duende.IdentityServer.EntityFramework.Interfaces;
+    using Duende.IdentityServer.EntityFramework.Options;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Options;
 
-    public class IdentityServerDbContext :
-        IdentityDbContext<ApplicationUser, ApplicationRole, Guid,
-            ApplicationUserClaim, ApplicationUserRole, ApplicationUserLogin,
-            ApplicationRoleClaim, ApplicationUserToken>, IPersistedGrantDbContext
+    public class IdentityServerDbContext
+        : IdentityDbContext<
+            ApplicationUser,
+            ApplicationRole,
+            Guid,
+            ApplicationUserClaim,
+            ApplicationUserRole,
+            ApplicationUserLogin,
+            ApplicationRoleClaim,
+            ApplicationUserToken
+        >,
+            IPersistedGrantDbContext
     {
-        private readonly IOptions<OperationalStoreOptions> _operationalStoreOptions;
+        private readonly IOptions<OperationalStoreOptions> operationalStoreOptions;
 
         public IdentityServerDbContext(
             DbContextOptions<IdentityServerDbContext> options,
-            IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options)
+            IOptions<OperationalStoreOptions> operationalStoreOptions)
+            : base(options)
         {
-            _operationalStoreOptions = operationalStoreOptions;
+            this.operationalStoreOptions = operationalStoreOptions;
         }
 
         public DbSet<PersistedGrant> PersistedGrants { get; set; }
 
         public DbSet<DeviceFlowCodes> DeviceFlowCodes { get; set; }
-        Task<int> IPersistedGrantDbContext.SaveChangesAsync() => base.SaveChangesAsync();
+
         public DbSet<Client> Clients { get; set; }
+
         public DbSet<IdentityResource> IdentityResources { get; set; }
+
         public DbSet<ApiResource> ApiResources { get; set; }
+
         public DbSet<Key> Keys { get; set; }
+
+        Task<int> IPersistedGrantDbContext.SaveChangesAsync() => this.SaveChangesAsync();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -75,7 +92,7 @@ namespace AspNetCoreAngular.Infrastructure.Identity
                     .IsRequired();
             });
 
-            modelBuilder.ConfigurePersistedGrantContext(_operationalStoreOptions.Value);
+            modelBuilder.ConfigurePersistedGrantContext(this.operationalStoreOptions.Value);
         }
     }
 }

@@ -1,9 +1,13 @@
-﻿using AspNetCoreAngular.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿// <copyright file="OrderDetailConfiguration.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace AspNetCoreAngular.Infrastructure.Persistence.Configurations
 {
+    using AspNetCoreAngular.Domain.Entities;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
     public class OrderDetailConfiguration : IEntityTypeConfiguration<OrderDetail>
     {
         public void Configure(EntityTypeBuilder<OrderDetail> builder)
@@ -20,13 +24,15 @@ namespace AspNetCoreAngular.Infrastructure.Persistence.Configurations
 
             builder.Property(e => e.UnitPrice).HasColumnType("money");
 
-            builder.HasOne(d => d.Order)
+            builder
+                .HasOne(d => d.Order)
                 .WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.OrderId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Order_Details_Orders");
 
-            builder.HasOne(d => d.Product)
+            builder
+                .HasOne(d => d.Product)
                 .WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.ClientSetNull)

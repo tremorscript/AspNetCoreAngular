@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AspNetCoreAngular.Application.Features.Employees.Commands.DeleteEmployee;
 using AspNetCoreAngular.Application.Features.Employees.Commands.UpsertEmployee;
 using AspNetCoreAngular.Application.Features.Employees.Queries.GetEmployeeDetail;
 using AspNetCoreAngular.Application.Features.Employees.Queries.GetEmployeesList;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCoreAngular.Web.Controllers
 {
@@ -24,7 +24,6 @@ namespace AspNetCoreAngular.Web.Controllers
         {
             return Ok(await Mediator.Send(new GetEmployeeDetailQuery { Id = id }));
         }
-
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

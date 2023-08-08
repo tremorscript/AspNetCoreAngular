@@ -1,4 +1,4 @@
-namespace AspNetCoreAngular.Domain.Entities
+﻿namespace AspNetCoreAngular.Domain.Entities
 {
     public class ContactUs
     {
@@ -6,7 +6,5 @@ namespace AspNetCoreAngular.Domain.Entities
         public string Name { get; set; }
         public string Email { get; set; }
         public string Message { get; set; }
-
     }
-
 }

@@ -8,21 +8,24 @@ namespace AspNetCoreAngular.Application.Behaviours
 {
     public class RequestLogger<TRequest> : IRequestPreProcessor<TRequest>
     {
-        private readonly ILogger _logger;
-        private readonly ICurrentUserService _currentUserService;
+        private readonly ILogger logger;
+        private readonly ICurrentUserService currentUserService;
 
         public RequestLogger(ILogger<TRequest> logger, ICurrentUserService currentUserService)
         {
-            _logger = logger;
-            _currentUserService = currentUserService;
+            this.logger = logger;
+            this.currentUserService = currentUserService;
         }
 
         public Task Process(TRequest request, CancellationToken cancellationToken)
         {
             var name = typeof(TRequest).Name;
 
-            _logger.LogInformation("AspNetCoreAngular Request: {Name} {@UserId} {@Request}",
-                name, _currentUserService.UserId, request);
+            logger.LogInformation(
+                "AspNetCoreAngular Request: {Name} {@UserId} {@Request}",
+                name,
+                currentUserService.UserId,
+                request);
 
             return Task.CompletedTask;
         }

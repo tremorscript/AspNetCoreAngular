@@ -8,7 +8,14 @@
     <RootNamespace>AspNetCoreAngular.STS</RootNamespace>
     <AssemblyName>AspNetCoreAngular.STS</AssemblyName>
     <UserSecretsId>e385fd2f-51ff-4e48-8a84-f5002e9f2033</UserSecretsId>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <CodeAnalysisRuleSet>..\..\..\StyleCop.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="../../../stylecop.json" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="..\..\Core\Application\sharedsettings.Development.json" Link="sharedsettings.Development.json">

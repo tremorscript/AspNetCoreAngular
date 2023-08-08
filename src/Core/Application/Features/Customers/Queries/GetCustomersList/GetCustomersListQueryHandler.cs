@@ -8,27 +8,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreAngular.Application.Features.Customers.Queries.GetCustomersList
 {
-    public class GetCustomersListQueryHandler : IRequestHandler<GetCustomersListQuery, CustomersListVm>
+    public class GetCustomersListQueryHandler
+        : IRequestHandler<GetCustomersListQuery, CustomersListVm>
     {
-        private readonly IApplicationDbContext _context;
-        private readonly IMapper _mapper;
+        private readonly IApplicationDbContext context;
+        private readonly IMapper mapper;
 
         public GetCustomersListQueryHandler(IApplicationDbContext context, IMapper mapper)
         {
-            _context = context;
-            _mapper = mapper;
+            this.context = context;
+            this.mapper = mapper;
         }
 
-        public async Task<CustomersListVm> Handle(GetCustomersListQuery request, CancellationToken cancellationToken)
+        public async Task<CustomersListVm> Handle(
+            GetCustomersListQuery request,
+            CancellationToken cancellationToken)
         {
-            var customers = await _context.Customers
-                .ProjectTo<CustomerLookupDto>(_mapper.ConfigurationProvider)
+            var customers = await context.Customers
+                .ProjectTo<CustomerLookupDto>(mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
-            var vm = new CustomersListVm
-            {
-                Customers = customers
-            };
+            var vm = new CustomersListVm { Customers = customers };
 
             return vm;
         }

@@ -1,24 +1,24 @@
-﻿using AspNetCoreAngular.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿// <copyright file="OrderConfiguration.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace AspNetCoreAngular.Infrastructure.Persistence.Configurations
 {
+    using AspNetCoreAngular.Domain.Entities;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
     public class OrderConfiguration : IEntityTypeConfiguration<Order>
     {
         public void Configure(EntityTypeBuilder<Order> builder)
         {
             builder.Property(e => e.OrderId).HasColumnName("OrderID");
 
-            builder.Property(e => e.CustomerId)
-                .HasColumnName("CustomerID")
-                .HasMaxLength(5);
+            builder.Property(e => e.CustomerId).HasColumnName("CustomerID").HasMaxLength(5);
 
             builder.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
 
-            builder.Property(e => e.Freight)
-                .HasColumnType("money")
-                .HasDefaultValueSql("((0))");
+            builder.Property(e => e.Freight).HasColumnType("money").HasDefaultValueSql("((0))");
 
             builder.Property(e => e.OrderDate).HasColumnType("datetime");
 
@@ -38,7 +38,8 @@ namespace AspNetCoreAngular.Infrastructure.Persistence.Configurations
 
             builder.Property(e => e.ShippedDate).HasColumnType("datetime");
 
-            builder.HasOne(d => d.Shipper)
+            builder
+                .HasOne(d => d.Shipper)
                 .WithMany(p => p.Orders)
                 .HasForeignKey(d => d.ShipVia)
                 .HasConstraintName("FK_Orders_Shippers");

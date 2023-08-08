@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using AspNetCoreAngular.Application.Abstractions;
-using AspNetCoreAngular.Application.Features.Products.Queries.GetProductsFile;
-using CsvHelper;
+﻿// <copyright file="CsvFileBuilder.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace AspNetCoreAngular.Infrastructure.Files
 {
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.IO;
+    using AspNetCoreAngular.Application.Abstractions;
+    using AspNetCoreAngular.Application.Features.Products.Queries.GetProductsFile;
+    using CsvHelper;
+
     public class CsvFileBuilder : ICsvFileBuilder
     {
         public byte[] BuildProductsFile(IEnumerable<ProductRecordDto> records)

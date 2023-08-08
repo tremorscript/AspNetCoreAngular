@@ -1,18 +1,21 @@
-﻿using System;
-using AspNetCoreAngular.Infrastructure.Persistence;
-using AspNetCoreAngular.Integration.Tests.Helpers;
-using AspNetCoreAngular.Web;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+﻿// <copyright file="CustomWebApplicationFactory.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace AspNetCoreAngular.Integration.Tests
 {
-    #region snippet1
-    public class CustomWebApplicationFactory<TStartup>
-        : WebApplicationFactory<TStartup> where TStartup : class
+    using System;
+    using AspNetCoreAngular.Infrastructure.Persistence;
+    using AspNetCoreAngular.Integration.Tests.Helpers;
+    using AspNetCoreAngular.Web;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc.Testing;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+
+    public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup>
+        where TStartup : class
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -20,16 +23,16 @@ namespace AspNetCoreAngular.Integration.Tests
             {
                 // Create a new service provider.
                 var serviceProvider = new ServiceCollection()
-                .AddEntityFrameworkInMemoryDatabase()
-                .BuildServiceProvider();
+                    .AddEntityFrameworkInMemoryDatabase()
+                    .BuildServiceProvider();
 
-                // Add a database context (ApplicationDbContext) using an in-memory 
+                // Add a database context (ApplicationDbContext) using an in-memory
                 // database for testing.
                 services.AddDbContext<ApplicationDbContext>(options =>
-            {
-                options.UseInMemoryDatabase("InMemoryDbForTesting");
-                options.UseInternalServiceProvider(serviceProvider);
-            });
+                {
+                    options.UseInMemoryDatabase("InMemoryDbForTesting");
+                    options.UseInternalServiceProvider(serviceProvider);
+                });
 
                 // Build the service provider.
                 var sp = services.BuildServiceProvider();
@@ -40,8 +43,9 @@ namespace AspNetCoreAngular.Integration.Tests
                 {
                     var scopedServices = scope.ServiceProvider;
                     var db = scopedServices.GetRequiredService<ApplicationDbContext>();
-                    var logger = scopedServices
-                        .GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
+                    var logger = scopedServices.GetRequiredService<
+                        ILogger<CustomWebApplicationFactory<TStartup>>
+                    >();
 
                     // Ensure the database is created.
                     db.Database.EnsureCreated();
@@ -53,11 +57,12 @@ namespace AspNetCoreAngular.Integration.Tests
                     }
                     catch (Exception ex)
                     {
-                        logger.LogError(ex, $"An error occurred seeding the database. {ex.Message}");
+                        logger.LogError(
+                            ex,
+                            $"An error occurred seeding the database. {ex.Message}");
                     }
                 }
             });
         }
     }
-    #endregion
 }

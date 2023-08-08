@@ -1,15 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AspNetCoreAngular.Infrastructure.Identity.Entities;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
+﻿// <copyright file="ShowRecoveryCodes.cshtml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace AspNetCoreAngular.STS.Areas.Identity.Pages.Account.Manage
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using AspNetCoreAngular.Infrastructure.Identity.Entities;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.Extensions.Logging;
+
     public class ShowRecoveryCodesModel : PageModel
     {
         [TempData]
@@ -20,12 +24,12 @@ namespace AspNetCoreAngular.STS.Areas.Identity.Pages.Account.Manage
 
         public IActionResult OnGet()
         {
-            if (RecoveryCodes == null || RecoveryCodes.Length == 0)
+            if (this.RecoveryCodes == null || this.RecoveryCodes.Length == 0)
             {
-                return RedirectToPage("./TwoFactorAuthentication");
+                return this.RedirectToPage("./TwoFactorAuthentication");
             }
 
-            return Page();
+            return this.Page();
         }
     }
 }

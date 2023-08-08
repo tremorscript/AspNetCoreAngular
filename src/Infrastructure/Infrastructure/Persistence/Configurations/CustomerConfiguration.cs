@@ -1,14 +1,19 @@
-﻿using AspNetCoreAngular.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿// <copyright file="CustomerConfiguration.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace AspNetCoreAngular.Infrastructure.Persistence.Configurations
 {
+    using AspNetCoreAngular.Domain.Entities;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
     public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
     {
         public void Configure(EntityTypeBuilder<Customer> builder)
         {
-            builder.Property(e => e.CustomerId)
+            builder
+                .Property(e => e.CustomerId)
                 .HasColumnName("CustomerID")
                 .HasMaxLength(5)
                 .ValueGeneratedNever();
@@ -17,9 +22,7 @@ namespace AspNetCoreAngular.Infrastructure.Persistence.Configurations
 
             builder.Property(e => e.City).HasMaxLength(15);
 
-            builder.Property(e => e.CompanyName)
-                .IsRequired()
-                .HasMaxLength(40);
+            builder.Property(e => e.CompanyName).IsRequired().HasMaxLength(40);
 
             builder.Property(e => e.ContactName).HasMaxLength(30);
 

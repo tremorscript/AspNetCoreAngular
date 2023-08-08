@@ -1,31 +1,35 @@
-﻿using System;
-using System.Net;
-using System.Threading.Tasks;
-using AspNetCoreAngular.Application.Exceptions;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
+﻿// <copyright file="CustomExceptionHandler.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace AspNetCoreAngular.Infrastructure.Middlewares
 {
+    using System;
+    using System.Net;
+    using System.Threading.Tasks;
+    using AspNetCoreAngular.Application.Exceptions;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Http;
+    using Newtonsoft.Json;
+
     public class CustomExceptionHandler
     {
-        private readonly RequestDelegate _next;
+        private readonly RequestDelegate next;
 
         public CustomExceptionHandler(RequestDelegate next)
         {
-            _next = next;
+            this.next = next;
         }
 
         public async Task Invoke(HttpContext context)
         {
             try
             {
-                await _next(context);
+                await this.next(context);
             }
             catch (Exception ex)
             {
-                await HandleExceptionAsync(context, ex);
+                await this.HandleExceptionAsync(context, ex);
             }
         }
 
@@ -55,14 +59,6 @@ namespace AspNetCoreAngular.Infrastructure.Middlewares
             }
 
             return context.Response.WriteAsync(result);
-        }
-    }
-
-    public static class CustomExceptionHandlerExtensions
-    {
-        public static IApplicationBuilder UseCustomExceptionHandler(this IApplicationBuilder builder)
-        {
-            return builder.UseMiddleware<CustomExceptionHandler>();
         }
     }
 }

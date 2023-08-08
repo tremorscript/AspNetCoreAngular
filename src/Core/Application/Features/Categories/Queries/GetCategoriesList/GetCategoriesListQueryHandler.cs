@@ -8,28 +8,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreAngular.Application.Features.Categories.Queries.GetCategoriesList
 {
-    public class GetCategoriesListQueryHandler : IRequestHandler<GetCategoriesListQuery, CategoriesListVm>
+    public class GetCategoriesListQueryHandler
+        : IRequestHandler<GetCategoriesListQuery, CategoriesListVm>
     {
-        private readonly IApplicationDbContext _context;
-        private readonly IMapper _mapper;
+        private readonly IApplicationDbContext context;
+        private readonly IMapper mapper;
 
         public GetCategoriesListQueryHandler(IApplicationDbContext context, IMapper mapper)
         {
-            _context = context;
-            _mapper = mapper;
+            this.context = context;
+            this.mapper = mapper;
         }
 
-        public async Task<CategoriesListVm> Handle(GetCategoriesListQuery request, CancellationToken cancellationToken)
+        public async Task<CategoriesListVm> Handle(
+            GetCategoriesListQuery request,
+            CancellationToken cancellationToken)
         {
-            var categories = await _context.Categories
-                .ProjectTo<CategoryDto>(_mapper.ConfigurationProvider)
+            var categories = await context.Categories
+                .ProjectTo<CategoryDto>(mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
-            var vm = new CategoriesListVm
-            {
-                Categories = categories,
-                Count = categories.Count
-            };
+            var vm = new CategoriesListVm { Categories = categories, Count = categories.Count };
 
             return vm;
         }

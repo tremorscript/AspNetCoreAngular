@@ -14,10 +14,15 @@ namespace AspNetCoreAngular.Application.Features.Employees.Queries.GetEmployeeDe
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<EmployeeTerritory, EmployeeTerritoryDto>()
+            profile
+                .CreateMap<EmployeeTerritory, EmployeeTerritoryDto>()
                 .ForMember(d => d.TerritoryId, opts => opts.MapFrom(s => s.TerritoryId))
-                .ForMember(d => d.Territory, opts => opts.MapFrom(s => s.Territory.TerritoryDescription))
-                .ForMember(d => d.Region, opts => opts.MapFrom(s => s.Territory.Region.RegionDescription));
+                .ForMember(
+                    d => d.Territory,
+                    opts => opts.MapFrom(s => s.Territory.TerritoryDescription))
+                .ForMember(
+                    d => d.Region,
+                    opts => opts.MapFrom(s => s.Territory.Region.RegionDescription));
         }
     }
 }

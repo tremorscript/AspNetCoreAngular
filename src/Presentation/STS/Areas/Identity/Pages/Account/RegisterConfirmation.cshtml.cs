@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿// <copyright file="RegisterConfirmation.cshtml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace AspNetCoreAngular.STS.Areas.Identity.Pages.Account
 {
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+
     [AllowAnonymous]
     public class RegisterConfirmationModel : PageModel
     {
@@ -15,9 +19,9 @@ namespace AspNetCoreAngular.STS.Areas.Identity.Pages.Account
 
         public IActionResult OnGet(string email)
         {
-            Email = email;
+            this.Email = email;
 
-            return Page();
+            return this.Page();
         }
     }
 }

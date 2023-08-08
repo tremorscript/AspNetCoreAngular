@@ -9,22 +9,19 @@ namespace AspNetCoreAngular.Application.Features.Products.Commands.UpdateProduct
 {
     public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly IApplicationDbContext context;
 
         public UpdateProductCommandHandler(IApplicationDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
-        public async Task<Unit> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(
+            UpdateProductCommand request,
+            CancellationToken cancellationToken)
         {
-            var entity = await _context.Products.FindAsync(request.ProductId);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Product), request.ProductId);
-            }
-
+            var entity = await context.Products.FindAsync(new object[] { request.ProductId }, cancellationToken: cancellationToken)
+                         ?? throw new NotFoundException(nameof(Product), request.ProductId);
             entity.ProductId = request.ProductId;
             entity.ProductName = request.ProductName;
             entity.CategoryId = request.CategoryId;
@@ -32,7 +29,7 @@ namespace AspNetCoreAngular.Application.Features.Products.Commands.UpdateProduct
             entity.UnitPrice = request.UnitPrice;
             entity.Discontinued = request.Discontinued;
 
-            await _context.SaveChangesAsync(cancellationToken);
+            await context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }

@@ -13,22 +13,25 @@ namespace AspNetCoreAngular.Application.Features.Employees.Queries.GetEmployeeDe
     {
         public int Id { get; set; }
 
-        public class GetEmployeeDetailQueryHandler : IRequestHandler<GetEmployeeDetailQuery, EmployeeDetailVm>
+        public class GetEmployeeDetailQueryHandler
+            : IRequestHandler<GetEmployeeDetailQuery, EmployeeDetailVm>
         {
-            private readonly IApplicationDbContext _context;
-            private readonly IMapper _mapper;
+            private readonly IApplicationDbContext context;
+            private readonly IMapper mapper;
 
             public GetEmployeeDetailQueryHandler(IApplicationDbContext context, IMapper mapper)
             {
-                _context = context;
-                _mapper = mapper;
+                this.context = context;
+                this.mapper = mapper;
             }
 
-            public async Task<EmployeeDetailVm> Handle(GetEmployeeDetailQuery request, CancellationToken cancellationToken)
+            public async Task<EmployeeDetailVm> Handle(
+                GetEmployeeDetailQuery request,
+                CancellationToken cancellationToken)
             {
-                var vm = await _context.Employees
+                var vm = await context.Employees
                     .Where(e => e.EmployeeId == request.Id)
-                    .ProjectTo<EmployeeDetailVm>(_mapper.ConfigurationProvider)
+                    .ProjectTo<EmployeeDetailVm>(mapper.ConfigurationProvider)
                     .SingleOrDefaultAsync(cancellationToken);
 
                 return vm;
