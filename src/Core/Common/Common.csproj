@@ -1,5 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+	<Import Project="..\..\..\common.props" />
+
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
 		<RootNamespace>AspNetCoreAngular.Common</RootNamespace>
@@ -9,7 +11,4 @@
     	<CodeAnalysisRuleSet>..\..\..\StyleCop.ruleset</CodeAnalysisRuleSet>
 	</PropertyGroup>
 
-	<ItemGroup>
-    	<AdditionalFiles Include="../../../stylecop.json" />
-  	</ItemGroup>
 </Project>

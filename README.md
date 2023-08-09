@@ -21,7 +21,7 @@
 - Angular application inspired from [asadsahi](https://github.com/asadsahi/AspNetCoreSpa) and [gothinkster](https://github.com/gothinkster/realworld).
 - [PWA support](https://developers.google.com/web/progressive-web-apps/)
 - Fast Unit Testing with [Jest](https://facebook.github.io/jest/).
-- E2E testing with [Playwirght](https://playwright.dev/).
+- E2E testing with [Playwright](https://playwright.dev/).
 - [Compodoc](https://compodoc.github.io/compodoc/) for Angular documentation
 - Angular dynamic forms for reusable and DRY code.
 - [Swagger](http://swagger.io/) as Api explorer.

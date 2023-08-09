@@ -1,12 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="..\..\..\common.props" />
+
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
     <RootNamespace>AspNetCoreAngular.Application</RootNamespace>
     <AssemblyName>AspNetCoreAngular.Application</AssemblyName>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <CodeAnalysisRuleSet>..\..\..\StyleCop.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,8 +20,6 @@
     <PackageReference Include="FluentValidation.AspNetCore" />
     <PackageReference Include="MediatR" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" />
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" />
-    <PackageReference Include="StyleCop.Analyzers" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,7 +27,4 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <AdditionalFiles Include="../../../stylecop.json" />
-  </ItemGroup>
 </Project>
