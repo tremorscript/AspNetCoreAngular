@@ -26,6 +26,7 @@ namespace AspNetCoreAngular.Infrastructure.Services.Certificate
             this.vaultClientSecret = vaultClientSecret;
         }
 
+        [Obsolete("TODO: to be updated")]
         public X509Certificate2 GetCertificateFromKeyVault(string vaultCertificateName)
         {
             var keyVaultClient = new KeyVaultClient(this.AuthenticationCallback);
@@ -41,6 +42,7 @@ namespace AspNetCoreAngular.Infrastructure.Services.Certificate
             return cert;
         }
 
+        [Obsolete]
         private async Task<string> AuthenticationCallback(
             string authority,
             string resource,

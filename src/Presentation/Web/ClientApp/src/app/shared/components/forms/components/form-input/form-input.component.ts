@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FieldBaseComponent } from '../field-base';
 
 @Component({
-  selector: 'app-form-input',
+  selector: 'appc-form-input',
   styleUrls: ['form-input.component.scss'],
   templateUrl: 'form-input.component.html',
 })

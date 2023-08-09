@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FieldBaseComponent } from '../field-base';
 
 @Component({
-  selector: 'app-form-radio-list',
+  selector: 'appc-form-radio-list',
   styleUrls: ['form-radio-list.component.scss'],
   templateUrl: 'form-radio-list.component.html',
 })

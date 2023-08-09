@@ -1,4 +1,4 @@
-// tslint:disable:no-bitwise
+/* eslint-disable no-bitwise */
 export class JwtHelperService {
   tokenGetter: () => string;
   public urlBase64Decode(str: string): string {

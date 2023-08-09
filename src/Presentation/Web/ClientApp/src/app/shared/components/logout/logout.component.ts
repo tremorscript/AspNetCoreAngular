@@ -10,7 +10,7 @@ import { LogoutActions, ApplicationPaths, ReturnUrlType } from '../../constants'
 // This is the starting point for the logout process, which is usually initiated when a
 // user clicks on the logout button on the LoginMenu component.
 @Component({
-  selector: 'app-logout',
+  selector: 'appc-logout',
   templateUrl: './logout.component.html',
   styleUrls: ['./logout.component.css'],
 })

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FieldBaseComponent } from '../field-base';
 
 @Component({
-  selector: 'app-form-time',
+  selector: 'appc-form-time',
   styleUrls: ['form-time.component.scss'],
   templateUrl: 'form-time.component.html',
 })

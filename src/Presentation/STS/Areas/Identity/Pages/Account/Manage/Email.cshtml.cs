@@ -21,16 +21,13 @@ namespace AspNetCoreAngular.STS.Areas.Identity.Pages.Account.Manage
     public partial class EmailModel : PageModel
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IEmailSender emailSender;
 
         public EmailModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender)
         {
             this.userManager = userManager;
-            this.signInManager = signInManager;
             this.emailSender = emailSender;
         }
 
@@ -124,8 +121,8 @@ namespace AspNetCoreAngular.STS.Areas.Identity.Pages.Account.Manage
                 values: new
                 {
                     area = "Identity",
-                    userId = userId,
-                    code = code,
+                    userId,
+                    code,
                 },
                 protocol: this.Request.Scheme);
             await this.emailSender.SendEmailAsync(

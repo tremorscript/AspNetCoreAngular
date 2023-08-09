@@ -5,14 +5,13 @@ import { IFieldConfig } from '../../../../models';
 import { AppFormComponent } from '../form';
 
 @Component({
-  selector: 'app-form-field-error, [appFormFieldError]',
+  selector: 'appc-form-field-error, [appFormFieldError]',
   styleUrls: ['./form-field-error.component.scss'],
   templateUrl: 'form-field-error.component.html',
 })
-export class FormFieldErrorComponent implements OnInit {
+export class FormFieldErrorComponent {
   @Input() public fieldConfig: IFieldConfig;
   constructor(public formComponent: AppFormComponent) {}
-  ngOnInit() {}
 
   errorMessage(): string {
     const control: AbstractControl = this.formComponent.form.get(this.fieldConfig.name);

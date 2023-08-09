@@ -13,7 +13,7 @@ namespace AspNetCoreAngular.Infrastructure.Services
     {
         public CurrentUserService(IHttpContextAccessor httpContextAccessor)
         {
-            Guid.TryParse(
+            _ = Guid.TryParse(
                 httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier),
                 out var userId);
             this.UserId = userId;

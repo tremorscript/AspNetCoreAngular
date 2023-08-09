@@ -10,7 +10,7 @@ import { eCommerceRoutes } from '../../ecommerce/eCommerceRoutes';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   isCollapsed = true;
 
   eCommerceRoutes = [...eCommerceRoutes];
@@ -23,8 +23,6 @@ export class HeaderComponent implements OnInit {
   get currentCulture(): ICulture {
     return this.cultures.filter((x) => x.current)[0];
   }
-  ngOnInit(): void {}
-
   toggleMenu() {
     this.isCollapsed = !this.isCollapsed;
   }

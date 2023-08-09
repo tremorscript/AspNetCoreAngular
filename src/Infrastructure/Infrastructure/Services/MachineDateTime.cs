@@ -9,8 +9,8 @@ namespace AspNetCoreAngular.Infrastructure.Services
 
     public class MachineDateTime : IDateTime
     {
-        public DateTime Now => DateTime.Now;
+        public static int CurrentYear => DateTime.Now.Year;
 
-        public int CurrentYear => DateTime.Now.Year;
+        public DateTime Now => DateTime.Now;
     }
 }

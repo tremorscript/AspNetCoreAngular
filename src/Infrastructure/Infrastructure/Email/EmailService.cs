@@ -31,7 +31,7 @@ namespace AspNetCoreAngular.Infrastructure.Email
 
         public Task RegistrationConfirmationEmail(string to, string link)
         {
-            var registrationTemplate = this.GetBaseTemplate("RegistrationTemplate");
+            var registrationTemplate = GetBaseTemplate("RegistrationTemplate");
 
             registrationTemplate = registrationTemplate
                 .Replace("@user@", to)
@@ -50,7 +50,7 @@ namespace AspNetCoreAngular.Infrastructure.Email
 
         public Task ForgottentPasswordEmail(string to, string link)
         {
-            var registrationTemplate = this.GetBaseTemplate("RegistrationTemplate");
+            var registrationTemplate = GetBaseTemplate("RegistrationTemplate");
 
             registrationTemplate = registrationTemplate
                 .Replace("@user@", to)
@@ -72,7 +72,7 @@ namespace AspNetCoreAngular.Infrastructure.Email
             return Task.CompletedTask;
         }
 
-        private string GetBaseTemplate(string bodyTemplateName)
+        private static string GetBaseTemplate(string bodyTemplateName)
         {
             var assembly = Assembly.GetExecutingAssembly();
             var baseTemplateStream = assembly.GetManifestResourceStream(
@@ -125,14 +125,16 @@ namespace AspNetCoreAngular.Infrastructure.Email
 
                 client.Send(mailMessage);
 
+                var emailMessageTo = emailMessage.To;
+                var eMailMessageSubject = emailMessage.Subject;
                 this.logger.LogInformation(
-                    $"Email sent successfully to: {emailMessage.To}. Subject: {emailMessage.Subject}");
-
+                    "Email sent successfully to: {EmailMessageTo}. Subject: {EMailMessageSubject}", emailMessageTo, eMailMessageSubject);
                 return Task.CompletedTask;
             }
             catch (Exception ex)
             {
-                this.logger.LogError($"Email failed to send to {emailMessage.To}", ex);
+                var emailMessageTo = emailMessage.To;
+                this.logger.LogError(ex, "Email failed to send to {EmailMessageTo}", emailMessageTo);
                 throw;
             }
         }

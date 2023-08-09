@@ -3,7 +3,7 @@ import { NgbDateStruct, NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { IDateParams } from 'ag-grid-community';
 
 @Component({
-  selector: 'app-date-filter',
+  selector: 'appc-date-filter',
   templateUrl: './date-filter.component.html',
   styleUrls: ['./date-filter.component.scss'],
 })

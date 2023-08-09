@@ -84,6 +84,7 @@ namespace AspNetCoreAngular.Infrastructure
             return services;
         }
 
+        [Obsolete("TODO: to be updated")]
         public static IIdentityServerBuilder AddStsServer(
             this IServiceCollection services,
             IConfiguration configuration,
@@ -173,7 +174,7 @@ namespace AspNetCoreAngular.Infrastructure
                 AzureADDefaults.OpenIdScheme,
                 options =>
                 {
-                    options.Authority = options.Authority + "/v2.0/";
+                    options.Authority += "/v2.0/";
 
                     // Per the code below, this application signs in users in any Work and School
                     // accounts and any Microsoft Personal Accounts.
@@ -216,8 +217,8 @@ namespace AspNetCoreAngular.Infrastructure
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                bool.TryParse(configuration["Data:useSqLite"], out var useSqlite);
-                bool.TryParse(configuration["Data:useInMemory"], out var useInMemory);
+                var v = bool.TryParse(configuration["Data:useSqLite"], out var useSqlite);
+                var v1 = bool.TryParse(configuration["Data:useInMemory"], out var useInMemory);
                 var connectionString = configuration["Data:Web"];
 
                 if (useInMemory)
@@ -365,7 +366,7 @@ namespace AspNetCoreAngular.Infrastructure
                     {
                         var corsList =
                             configuration.GetSection("CorsOrigins").Get<List<string>>()?.ToArray()
-                            ?? new string[] { };
+                            ?? Array.Empty<string>();
                         builder.WithOrigins(corsList).AllowAnyMethod().AllowAnyHeader();
                     });
             });
@@ -380,6 +381,7 @@ namespace AspNetCoreAngular.Infrastructure
             return services;
         }
 
+        [Obsolete("TODO: to be updated")]
         private static X509Certificate2 GetCertificate(
             IWebHostEnvironment environment,
             IConfiguration configuration)

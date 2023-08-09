@@ -4,6 +4,7 @@ import { NgControl } from '@angular/forms';
 import { AppFormComponent } from '../components';
 
 @Directive({
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[formControlName]:not(.checkbox-list-item),[ngModel]:not([ngbTypeahead]),[formControl]',
 })
 export class FieldColorValidationDirective {

@@ -1,26 +1,24 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 // Uage
-// <app-toggle-switch
+// <appc-toggle-switch
 //   [checked]="false"
 //   (onChange)="change($event)"
-// ></app-toggle-switch>
+// ></appc-toggle-switch>
 @Component({
-  selector: 'app-toggle-switch',
+  selector: 'appc-toggle-switch',
   styleUrls: ['./toggle-switch.component.scss'],
   templateUrl: './toggle-switch.component.html',
 })
-export class ToggleSwitchComponent implements OnInit {
+export class ToggleSwitchComponent {
   constructor() {}
 
   @Input() checked: boolean;
   @Input() label: string;
   @Input() disabled: boolean;
-  @Output() onChange = new EventEmitter<boolean>();
-
-  ngOnInit(): void {}
+  @Output() toggleSwitched = new EventEmitter<boolean>();
 
   changeHandler(e) {
-    this.onChange.next(e.target.checked);
+    this.toggleSwitched.next(e.target.checked);
   }
 }

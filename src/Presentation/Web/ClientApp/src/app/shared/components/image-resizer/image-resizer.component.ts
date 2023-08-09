@@ -2,11 +2,11 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { ModalService } from '../../services';
 
 @Component({
-  selector: 'app-image-resizer',
+  selector: 'appc-image-resizer',
   templateUrl: './image-resizer.component.html',
   styleUrls: ['./image-resizer.component.scss'],
 })
-export class ImageResizerComponent implements OnInit {
+export class ImageResizerComponent {
   @Input() width = 200;
   @Input() height = 200;
   @Input() title: string;
@@ -23,7 +23,6 @@ export class ImageResizerComponent implements OnInit {
   get imageSource(): string {
     return this.file_src || this.src;
   }
-  ngOnInit() { }
 
   onSave() {
     this.save.next(this.file_src);

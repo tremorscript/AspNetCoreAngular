@@ -13,15 +13,12 @@ namespace AspNetCoreAngular.Infrastructure.Environment
 
     public class DeploymentEnvironment : IDeploymentEnvironment
     {
-        private readonly ILogger<DeploymentEnvironment> logger;
         private readonly IWebHostEnvironment hostingEnv;
 
         public DeploymentEnvironment(
-            IWebHostEnvironment hostingEnv,
-            ILogger<DeploymentEnvironment> logger)
+            IWebHostEnvironment hostingEnv)
         {
             this.hostingEnv = hostingEnv;
-            this.logger = logger;
         }
 
         public string OS =>

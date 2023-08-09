@@ -11,20 +11,18 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'app-card',
+  selector: 'appc-card',
   templateUrl: './card.component.html',
 })
-export class CardComponent implements OnInit, AfterViewInit {
+export class CardComponent implements AfterViewInit {
   @ViewChild('footerTemplate', { static: true }) footerTemplate;
   @Input() title: string;
   @Input() body: string | TemplateRef<any>;
   @Input() headerClass: string;
-  @Output() onClick = new EventEmitter<any>();
+  @Output() Click = new EventEmitter<any>();
 
   showFooter: boolean;
   constructor(private cdRef: ChangeDetectorRef) {}
-
-  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.showFooter =

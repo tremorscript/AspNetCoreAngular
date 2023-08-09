@@ -4,7 +4,7 @@ import { IFieldConfig, FieldTypes } from '../../../../models';
 
 @Component({
   exportAs: 'appForm',
-  selector: 'app-form',
+  selector: 'appc-form',
   styleUrls: ['form.component.scss'],
   templateUrl: './form.component.html',
 })

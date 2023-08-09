@@ -47,6 +47,7 @@ const components: { [type: string]: Type<Field> } = {
 };
 
 @Directive({
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[appFormField]',
 })
 export class FormFieldDirective implements Field, OnChanges, OnInit {

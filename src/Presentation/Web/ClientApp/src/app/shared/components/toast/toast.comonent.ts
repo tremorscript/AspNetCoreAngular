@@ -2,9 +2,10 @@ import { Component, TemplateRef } from '@angular/core';
 import { ToastService } from '../../services';
 
 @Component({
-  selector: 'app-toast',
+  selector: 'appc-toast',
   templateUrl: './toast.component.html',
-  host: { '[class.ngb-toasts]': 'true' },
+  // TODO: figure this out
+  // host: { '[class.ngb-toasts]': 'true' },
 })
 export class ToastComponent {
   constructor(public toastService: ToastService) {}

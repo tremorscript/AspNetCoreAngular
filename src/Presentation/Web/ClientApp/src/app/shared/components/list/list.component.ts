@@ -3,14 +3,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { IListItem } from '../../models';
 
 @Component({
-  selector: 'app-list',
+  selector: 'appc-list',
   templateUrl: './list.component.html',
 })
-export class ListComponent implements OnInit {
+export class ListComponent {
   @Input() list: IListItem[];
   constructor() {}
-
-  ngOnInit(): void {}
 
   trackByFn(index, item) {
     return index;
