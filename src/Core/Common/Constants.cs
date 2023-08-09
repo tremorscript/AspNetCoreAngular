@@ -6,6 +6,6 @@ namespace AspNetCoreAngular.Common
 {
     public class Constants
     {
-        public static string DefaultCorsPolicy = nameof(DefaultCorsPolicy);
+        public const string DefaultCorsPolicy = nameof(DefaultCorsPolicy);
     }
 }

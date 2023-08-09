@@ -1,21 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\..\..\common.props" />
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
     <RootNamespace>AspNetCoreAngular.Infrastructure</RootNamespace>
     <AssemblyName>AspNetCoreAngular.Infrastructure</AssemblyName>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <CodeAnalysisRuleSet>..\..\..\StyleCop.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Email\Templates\BaseTemplate.html" />
     <None Remove="Email\Templates\RegistrationTemplate.html" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <AdditionalFiles Include="../../../stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>

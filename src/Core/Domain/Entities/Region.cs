@@ -10,6 +10,7 @@ namespace AspNetCoreAngular.Domain.Entities
         }
 
         public int RegionId { get; set; }
+
         public string RegionDescription { get; set; }
 
         public ICollection<Territory> Territories { get; private set; }

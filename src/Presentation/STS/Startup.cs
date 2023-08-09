@@ -24,7 +24,6 @@ namespace AspNetCoreAngular.STS
             this.HostingEnvironment = environment;
         }
 
-
         public static IConfiguration Configuration { get; set; }
 
         public IWebHostEnvironment HostingEnvironment { get; }

@@ -1,13 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="..\..\common.props" />
+
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <RootNamespace>AspNetCoreAngular.Web.Tests</RootNamespace>
     <AssemblyName>AspNetCoreAngular.Web.Tests</AssemblyName>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <CodeAnalysisRuleSet>..\..\StyleCop.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,7 +13,6 @@
     <PackageReference Include="xunit.runner.visualstudio" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="coverlet.collector" />
-    <AdditionalFiles Include="../../stylecop.json" />
   </ItemGroup>
 
 </Project>
