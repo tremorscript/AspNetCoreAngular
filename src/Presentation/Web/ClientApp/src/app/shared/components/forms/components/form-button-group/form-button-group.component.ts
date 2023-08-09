@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FieldBaseComponent } from '../field-base';
 
 @Component({
-  selector: 'app-form-button-group',
+  selector: 'appc-form-button-group',
   templateUrl: 'form-button-group.component.html',
 })
 export class FormButtonGroupComponent extends FieldBaseComponent {

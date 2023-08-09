@@ -14,14 +14,11 @@ namespace AspNetCoreAngular.STS.Areas.Identity.Pages.Account.Manage
     public class PersonalDataModel : PageModel
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly ILogger<PersonalDataModel> logger;
 
         public PersonalDataModel(
-            UserManager<ApplicationUser> userManager,
-            ILogger<PersonalDataModel> logger)
+            UserManager<ApplicationUser> userManager)
         {
             this.userManager = userManager;
-            this.logger = logger;
         }
 
         public async Task<IActionResult> OnGet()

@@ -80,7 +80,7 @@ namespace AspNetCoreAngular.STS.Areas.Identity.Pages.Account
                         {
                             area = "Identity",
                             userId = user.Id,
-                            code = code,
+                            code,
                         },
                         protocol: this.Request.Scheme);
 

@@ -85,7 +85,7 @@ namespace AspNetCoreAngular.STS.Areas.Identity.Pages.Account
                 {
                     return this.RedirectToPage(
                         "./LoginWith2fa",
-                        new { ReturnUrl = returnUrl, RememberMe = this.Input.RememberMe });
+                        new { ReturnUrl = returnUrl, this.Input.RememberMe });
                 }
 
                 if (result.IsLockedOut)

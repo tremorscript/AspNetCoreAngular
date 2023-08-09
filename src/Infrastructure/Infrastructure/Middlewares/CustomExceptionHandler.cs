@@ -29,11 +29,11 @@ namespace AspNetCoreAngular.Infrastructure.Middlewares
             }
             catch (Exception ex)
             {
-                await this.HandleExceptionAsync(context, ex);
+                await HandleExceptionAsync(context, ex);
             }
         }
 
-        private Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             var code = HttpStatusCode.InternalServerError;
 

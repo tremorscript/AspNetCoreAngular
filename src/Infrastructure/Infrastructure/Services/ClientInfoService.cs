@@ -49,9 +49,7 @@ namespace AspNetCoreAngular.Infrastructure.Services
                         clientId.Value);
                     clientParameters.TryGetValue("redirect_uri", out var clientRedirectUri);
                     var uri = new Uri(clientRedirectUri);
-                    var clientUrl = uri.AbsoluteUri.Substring(
-                        0,
-                        uri.AbsoluteUri.IndexOf("authentication"));
+                    var clientUrl = uri.AbsoluteUri[..uri.AbsoluteUri.IndexOf("authentication")];
                     var clientInfo = new ClientInfo
                     {
                         ClientId = clientId.Value,

@@ -17,8 +17,8 @@ namespace AspNetCoreAngular.STS.Areas.Identity.Pages.Account.Manage
     public class ResetAuthenticatorModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> signInManager;
-        private UserManager<ApplicationUser> userManager;
-        private ILogger<ResetAuthenticatorModel> logger;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly ILogger<ResetAuthenticatorModel> logger;
 
         public ResetAuthenticatorModel(
             UserManager<ApplicationUser> userManager,

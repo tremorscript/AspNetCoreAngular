@@ -50,6 +50,24 @@ namespace AspNetCoreAngular.STS.Areas.Identity.Pages.Account.Manage
         [BindProperty]
         public InputModel Input { get; set; }
 
+        public static string FormatKey(string unformattedKey)
+        {
+            var result = new StringBuilder();
+            int currentPosition = 0;
+            while (currentPosition + 4 < unformattedKey.Length)
+            {
+                result.Append(unformattedKey.AsSpan(currentPosition, 4)).Append(' ');
+                currentPosition += 4;
+            }
+
+            if (currentPosition < unformattedKey.Length)
+            {
+                result.Append(unformattedKey.AsSpan(currentPosition));
+            }
+
+            return result.ToString().ToLowerInvariant();
+        }
+
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -124,28 +142,10 @@ namespace AspNetCoreAngular.STS.Areas.Identity.Pages.Account.Manage
                 unformattedKey = await this.userManager.GetAuthenticatorKeyAsync(user);
             }
 
-            this.SharedKey = this.FormatKey(unformattedKey);
+            this.SharedKey = FormatKey(unformattedKey);
 
             var email = await this.userManager.GetEmailAsync(user);
             this.AuthenticatorUri = this.GenerateQrCodeUri(email, unformattedKey);
-        }
-
-        private string FormatKey(string unformattedKey)
-        {
-            var result = new StringBuilder();
-            int currentPosition = 0;
-            while (currentPosition + 4 < unformattedKey.Length)
-            {
-                result.Append(unformattedKey.Substring(currentPosition, 4)).Append(" ");
-                currentPosition += 4;
-            }
-
-            if (currentPosition < unformattedKey.Length)
-            {
-                result.Append(unformattedKey.Substring(currentPosition));
-            }
-
-            return result.ToString().ToLowerInvariant();
         }
 
         private string GenerateQrCodeUri(string email, string unformattedKey)

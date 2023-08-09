@@ -32,6 +32,8 @@
   },
   "editor.formatOnSave": true,
   "omnisharp.enableRoslynAnalyzers": true,
-  "asciidoc.antora.enableAntoraSupport": true,
-  "dotnet.defaultSolution": "AspNetCoreAngular.sln"
+  "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true,
+    },
+  "eslint.workingDirectories": ["./src/Presentation/Web/ClientApp/"]
 }

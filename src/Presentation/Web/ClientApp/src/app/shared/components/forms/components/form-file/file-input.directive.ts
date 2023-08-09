@@ -15,12 +15,13 @@ const APP_FILE_INPUT_ACCESSOR = {
 };
 
 @Directive({
-  selector: '[appFileInput][type=file]',
+  selector: '[appcFileInput][type=file]',
   providers: [APP_FILE_INPUT_ACCESSOR],
-  host: {
-    '(focus)': 'focused = true',
-    '(blur)': 'focused = false',
-  },
+  // TODO: need to figure this out
+  // host: {
+  //   '(focus)': 'focused = true',
+  //   '(blur)': 'focused = false',
+  // },
 })
 export class AppFileInputDirective implements ControlValueAccessor {
   @Input() name: string;
@@ -35,6 +36,13 @@ export class AppFileInputDirective implements ControlValueAccessor {
     this._onTouched();
     this.file = file;
   }
+
+ /*  @HostListener('focus',[`$event`])
+  focus(evt){
+    focused = true;
+  }
+
+  @HostListener('blur',['$event'] ) */
 
   constructor(
     private _elementRef: ElementRef<HTMLInputElement>,

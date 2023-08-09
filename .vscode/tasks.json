@@ -12,7 +12,9 @@
         "/consoleloggerparameters:NoSummary"
       ],
       "problemMatcher": "$msCompile",
-      "dependsOn": ["buildsts"]
+      "dependsOn": [
+        "buildsts"
+      ]
     },
     {
       "label": "publish",
@@ -40,7 +42,9 @@
         "/consoleloggerparameters:NoSummary"
       ],
       "problemMatcher": "$msCompile",
-      "dependsOn": ["watchsts"]
+      "dependsOn": [
+        "watchsts"
+      ]
     },
     {
       "label": "buildsts",
@@ -98,7 +102,10 @@
         "owner": "typescript",
         "source": "ts",
         "applyTo": "closedDocuments",
-        "fileLocation": ["relative", "${cwd}"],
+        "fileLocation": [
+          "relative",
+          "${cwd}"
+        ],
         "pattern": "$tsc",
         "background": {
           "activeOnStart": true,
@@ -110,7 +117,17 @@
           }
         }
       },
-      "dependsOn": ["build"]
+      "dependsOn": [
+        "build"
+      ]
+    },
+    {
+      "type": "npm",
+      "script": "lint",
+      "path": "src/Presentation/Web/ClientApp",
+      "problemMatcher": ["$eslint-stylish"],
+      "label": "npm: lint - src/Presentation/Web/ClientApp",
+      "detail": "ng lint"
     }
   ]
 }

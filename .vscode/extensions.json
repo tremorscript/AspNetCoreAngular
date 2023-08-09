@@ -1,0 +1,12 @@
+{
+    "recommendations": [
+        "dbaeumer.vscode-eslint",
+        "ms-dotnettools.csharp",
+        "firefox-devtools.vscode-firefox-debug",
+        "github.vscode-pull-request-github",
+        "github.codespaces",
+        "qwtel.sqlite-viewer",
+        "vscodevim.vim",
+        "ms-vscode-remote.remote-wsl"
+    ]
+}

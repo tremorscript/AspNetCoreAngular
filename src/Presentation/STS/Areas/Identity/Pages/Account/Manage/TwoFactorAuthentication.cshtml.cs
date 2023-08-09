@@ -16,20 +16,15 @@ namespace AspNetCoreAngular.STS.Areas.Identity.Pages.Account.Manage
 
     public class TwoFactorAuthenticationModel : PageModel
     {
-        private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}";
-
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
-        private readonly ILogger<TwoFactorAuthenticationModel> logger;
 
         public TwoFactorAuthenticationModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
-            ILogger<TwoFactorAuthenticationModel> logger)
+            SignInManager<ApplicationUser> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
-            this.logger = logger;
         }
 
         public bool HasAuthenticator { get; set; }

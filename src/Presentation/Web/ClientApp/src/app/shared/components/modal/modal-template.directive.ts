@@ -8,14 +8,14 @@ import { ModalStateService } from '../../services';
  *
  * ```
  * <ng-template modal>
- *   <app-modal-component></app-modal-component>
+ *   <appc-modal-component></appc-modal-component>
  * </ng-template>
  * ```
  *
  * in order to register the modal template to the internal modal state
  */
 @Directive({
-  // tslint:disable-next-line:directive-selector
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'ng-template[modal]',
 })
 export class ModalTemplateDirective {

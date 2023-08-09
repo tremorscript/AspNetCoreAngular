@@ -56,7 +56,7 @@ namespace AspNetCoreAngular.Infrastructure.Persistence
         public DbSet<ContactUs> ContactUs { get; set; }
 
         public override Task<int> SaveChangesAsync(
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             foreach (var entry in this.ChangeTracker.Entries<AuditableEntity>())
             {

@@ -97,13 +97,8 @@ namespace AspNetCoreAngular.STS.Areas.Identity.Pages.Account.Manage
             }
 
             var info = await this.signInManager.GetExternalLoginInfoAsync(
-                await this.userManager.GetUserIdAsync(user));
-            if (info == null)
-            {
-                throw new InvalidOperationException(
+                await this.userManager.GetUserIdAsync(user)) ?? throw new InvalidOperationException(
                     $"Unexpected error occurred loading external login info for user with ID '{user.Id}'.");
-            }
-
             var result = await this.userManager.AddLoginAsync(user, info);
             if (!result.Succeeded)
             {

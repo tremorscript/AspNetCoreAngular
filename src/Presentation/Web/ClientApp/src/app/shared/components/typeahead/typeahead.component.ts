@@ -1,16 +1,14 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-typeahead',
+  selector: 'appc-typeahead',
   templateUrl: './typeahead.component.html',
 })
-export class TypeaheadComponent implements OnInit {
+export class TypeaheadComponent {
   @Input() label: string;
   @Input() model: string;
 
   constructor() {}
-
-  ngOnInit(): void {}
 
   search(terms) {}
 }

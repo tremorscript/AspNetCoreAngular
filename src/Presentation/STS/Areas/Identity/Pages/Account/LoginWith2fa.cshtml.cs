@@ -40,14 +40,8 @@ namespace AspNetCoreAngular.STS.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnGetAsync(bool rememberMe, string returnUrl = null)
         {
             // Ensure the user has gone through the username & password screen first
-            var user = await this.signInManager.GetTwoFactorAuthenticationUserAsync();
-
-            if (user == null)
-            {
-                throw new InvalidOperationException(
+            _ = await this.signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new InvalidOperationException(
                     $"Unable to load two-factor authentication user.");
-            }
-
             this.ReturnUrl = returnUrl;
             this.RememberMe = rememberMe;
 
@@ -63,13 +57,8 @@ namespace AspNetCoreAngular.STS.Areas.Identity.Pages.Account
 
             returnUrl ??= this.Url.Content("~/");
 
-            var user = await this.signInManager.GetTwoFactorAuthenticationUserAsync();
-            if (user == null)
-            {
-                throw new InvalidOperationException(
+            var user = await this.signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new InvalidOperationException(
                     $"Unable to load two-factor authentication user.");
-            }
-
             var authenticatorCode = this.Input.TwoFactorCode
                 .Replace(" ", string.Empty)
                 .Replace("-", string.Empty);

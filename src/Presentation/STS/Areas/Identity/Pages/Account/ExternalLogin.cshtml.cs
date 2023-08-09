@@ -163,7 +163,7 @@ namespace AspNetCoreAngular.STS.Areas.Identity.Pages.Account
                         {
                             return this.RedirectToPage(
                                 "./RegisterConfirmation",
-                                new { Email = this.Input.Email });
+                                new { this.Input.Email });
                         }
 
                         await this.signInManager.SignInAsync(user, isPersistent: false);
@@ -176,8 +176,8 @@ namespace AspNetCoreAngular.STS.Areas.Identity.Pages.Account
                             values: new
                             {
                                 area = "Identity",
-                                userId = userId,
-                                code = code,
+                                userId,
+                                code,
                             },
                             protocol: this.Request.Scheme);
 
