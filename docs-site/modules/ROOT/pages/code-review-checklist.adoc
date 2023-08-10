@@ -1,4 +1,0 @@
-= Code Review Checklist
-:navtitle: Code Review Checklist
-:title: Code Review Checklist 
-:toclevels: 4
