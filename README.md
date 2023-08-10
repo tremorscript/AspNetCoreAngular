@@ -34,6 +34,10 @@ https://tremorscript.github.io/AspNetCoreAngular/ (In Progress)
 
 https://tremorscript.github.io/AspNetCoreAngular/homesite/current/pull-request-guidelines.html
 
+## Code Quality Guidelines
+
+https://tremorscript.github.io/AspNetCoreAngular/homesite/current/code-quality-guidelines.html
+
 
 ## Pre-requisites
 
@@ -53,21 +57,27 @@ https://tremorscript.github.io/AspNetCoreAngular/homesite/current/pull-request-g
 
    cd AspNetCoreAngular
 
-3. Restore packages:
+3. Update the local git config with:
+   
+   - [a default git commit message template](https://tremorscript.github.io/AspNetCoreAngular/homesite/current/pull-request-guidelines.html#_commit_message_guidelines).
+   
+   - [a list of alias commands](https://tremorscript.github.io/AspNetCoreAngular/homesite/current/pull-request-guidelines.html#_add_aliases_to_the_config_file_in_git).
+
+4. Restore packages:
 
    dotnet restore AspNetCoreAngular.sln
 
-4. Install npm packages:
+5. Install npm packages:
 
    - cd src/Presentation/Web/ClientApp:
 
    - npm install
 
-5. Start Frontend:
+6. Start Frontend:
 
    - npm start
 
-6. Run Backend:
+7. Run Backend:
 
    - Using [VSCode](https://code.visualstudio.com/):
 
@@ -83,7 +93,7 @@ https://tremorscript.github.io/AspNetCoreAngular/homesite/current/pull-request-g
    - Using [Visual Studio IDE](https://www.visualstudio.com/):
      - Run `Web` and `STS` projects either individually or by setting multiple projects in solutions properties and hit F5
 
-7. Target either Sqlite or Microsoft SQL Server
+8. Target either Sqlite or Microsoft SQL Server
 
 This project supports both databases OOTB.
 
@@ -95,7 +105,7 @@ This project supports both databases OOTB.
   - Delete `Migrations` folder from src/Infrastructure/Infrastructure/Persistence
   - Change setting in appsettings.json called `useSqLite` from `true` to `false` and change `Web` connection string to your local Sql Server connection string
 
-7. Once the project is running use following test users to login:
+9. Once the project is running use following test users to login:
 
    2 Test users:
    Username: admin@admin.com

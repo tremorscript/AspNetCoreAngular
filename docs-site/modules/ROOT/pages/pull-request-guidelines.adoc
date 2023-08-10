@@ -56,10 +56,10 @@ The project has a https://github.com/tremorscript/AspNetCoreAngular/blob/main/.g
 
 * Add the aliases from the `.gitconfig` file of the repository to your local `.git/config` file.
 * These aliases make working with `git` a bit easier.
-** `git publish` - Pushes the local branch updates to the current branch at origin. Rejects if the local branch is not up to date with the latest from origin.
-** `git synced` - Updates your local branch from `origin/main` i.e. Github. It performs a rebase, replaying your commits on top of the tip of main or master.
-** `git update1` - Updates your local branch with the latest from the same branch at origin. This fetches `origin/your-branch` and performs a rebase.
-** `git squash` - Shrinks the many commits in a branch to one commit. Useful just before merging.
+** `git publish-branch` - Pushes the local branch updates to the current branch at origin. Rejects if the local branch is not up to date with the latest from origin.
+** `git sync-from-main` - Updates your local branch from `origin/main` i.e. Github. It performs a rebase, replaying your commits on top of the tip of main or master.
+** `git update-branch` - Updates your local branch with the latest from the same branch at origin. This fetches `origin/your-branch` and performs a rebase.
+** `git squash-commits` - Shrinks the many commits in a branch to one commit. Useful just before merging.
 ** `git pr` - Opens the PR at github.com. Useful to see review comments, create a PR, or view a diff in Github.
 ** `git hub` - Opens the repository at github.com.
 ** `git amend` - Alias for `git commit --amend`

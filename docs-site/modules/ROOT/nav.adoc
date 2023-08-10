@@ -1,5 +1,5 @@
 * xref:index.adoc[]
-* xref:coding-guidelines.adoc[]
+* xref:code-quality-guidelines.adoc[]
 * xref:pull-request-guidelines.adoc[]
 * xref:version-control-policy.adoc[]
 * xref:authorization.adoc[]
