@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Code Quality Guidelines :: AspNetCoreAngular Developer Documentation</title>
+    <link rel="canonical" href="https://tremorscript.com/homesite/current/code-quality-guidelines.html">
+    <meta name="generator" content="Antora 3.1.4">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <script>var uiRootPath = '../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://tremorscript.com">AspNetCoreAngular Developer Documentation</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="homesite" data-version="1.0.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Home page</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Introduction</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="code-quality-guidelines.html">Code Quality Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="pull-request-guidelines.html">Pull Request Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="version-control-policy.html">Version Control Policy</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="authorization.html">Authentication and Authorization</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="content-security-policy.html">Content Security Policy</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="error-handling.html">Error Handling</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="internationalization.html">Internationalization</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="unit-testing.html">Performance Testing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="functional-testing.html">Functional Testing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="e2e-testing.html">End-to-End Testing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="property-based-testing.html">Property Based Testing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="performance-testing.html">Performance Testing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="owasp-top10.html">OWASP Top 10</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="threat-modeling.html">Threat Modeling</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="api-versioning.html">Api Versioning Policy</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="release-policy.html">Release Policy</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Home page</span>
+    <span class="version">1.0.0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="index.html">Home page</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">1.0.0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Home page</a></li>
+    <li><a href="code-quality-guidelines.html">Code Quality Guidelines</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/tremorscript/AspNetCoreAngular/edit/main/docs-site/modules/ROOT/pages/code-quality-guidelines.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Code Quality Guidelines</h1>
+<div class="sect1">
+<h2 id="_style_guides"><a class="anchor" href="#_style_guides"></a>Style Guides</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions" target="_blank" rel="noopener">C# Coding Guidelines</a></p>
+</li>
+<li>
+<p><a href="https://angular.io/guide/styleguide" target="_blank" rel="noopener">Angular Coding Guidelines</a></p>
+</li>
+<li>
+<p><a href="https://learn.microsoft.com/en-us/dotnet/standard/security/secure-coding-guidelines" target="_blank" rel="noopener">Secure Coding Guidelines</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_code_formatting"><a class="anchor" href="#_code_formatting"></a>Code Formatting</h3>
+<div class="paragraph">
+<p>The <code>.editorconfig</code> file is where the code formatting options are defined.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/overview#code-style-analysis" target="_blank" rel="noopener">Codestyle analyzers</a> use this file to analyze and fix the code.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/code-style-rule-options#example-editorconfig-file" target="_blank" rel="noopener">An example editorconfig file.</a></p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://github.com/tremorscript/AspNetCoreAngular/blob/main/.editorconfig" target="_blank" rel="noopener">.editorconfig</a> file used by the project.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://github.com/dotnet/format"><code>dotnet format</code></a> tool helps format all the code in a solution or a project.</p>
+</div>
+<div class="paragraph">
+<p>The tool reads the preferences from the <code>.editorconfig</code> file.</p>
+</div>
+<div class="paragraph">
+<p>Example Usage 1:<br>
+<code>dotnet format analyzers .\AspNetCoreAngular.sln -v detailed</code><br>
+- executes third party analyzers and fixes the analyzer issues.</p>
+</div>
+<div class="paragraph">
+<p>Example Usage 2:<br>
+<code>dotnet format style .\AspNetCoreAngular.sln -v detailed</code><br>
+- executes the code style analyzers and fixes code style issues.</p>
+</div>
+<div class="paragraph">
+<p>Example Usage 3:<br>
+<code>dotnet format whitespace .\AspNetCoreAngular.sln -v detailed</code><br>
+- executes the code style analyzers and fixes whitespace.</p>
+</div>
+<div class="paragraph">
+<p>Example Usage 4:<br>
+<code>dotnet format .\AspNetCoreAngular.sln -v detailed</code><br>
+- runs all the previous 3 options.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_linters_and_analyzers"><a class="anchor" href="#_linters_and_analyzers"></a>Linters and Analyzers</h3>
+<div class="paragraph">
+<p>The project uses <a href="https://github.com/DotNetAnalyzers/StyleCopAnalyzers" target="_blank" rel="noopener">StyleCop Analyzers</a> and <a href="https://github.com/dotnet/roslyn-analyzers" target="_blank" rel="noopener">RoslynAnalyzers</a> to analyze the code for style, quality, and maintainability, design and other issues.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://github.com/tremorscript/AspNetCoreAngular/blob/main/common.props" target="_blank" rel="noopener">common.props</a> file is where the analyzers are defined:-</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;Project&gt;
+  &lt;PropertyGroup&gt;
+    &lt;TargetFramework&gt;net7.0&lt;/TargetFramework&gt;
+    &lt;RunCodeAnalysis&gt;true&lt;/RunCodeAnalysis&gt;
+    &lt;TreatWarningsAsErrors&gt;false&lt;/TreatWarningsAsErrors&gt;
+    &lt;CodeAnalysisRuleSet&gt;$(MSBuildThisFileDirectory)StyleCop.ruleset&lt;/CodeAnalysisRuleSet&gt;
+  &lt;/PropertyGroup&gt;
+  &lt;ItemGroup&gt;
+      &lt;AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" /&gt;
+      &lt;AdditionalFiles Include="$(MSBuildThisFileDirectory).editorconfig" /&gt;
+  &lt;/ItemGroup&gt;
+  &lt;ItemGroup&gt;
+      &lt;PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" /&gt;
+    &lt;PackageReference Include="StyleCop.Analyzers" /&gt;
+  &lt;/ItemGroup&gt;
+&lt;/Project&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>csproj</code> files are where you can reference this to ensure a consistent setup.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;Project Sdk="Microsoft.NET.Sdk.Web"&gt;
+  &lt;Import Project="..\common.props" /&gt;
+&lt;/Project&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The angular app uses <a href="https://github.com/angular-eslint/angular-eslint" target="_blank" rel="noopener">angular-eslint</a> for linting the typescript and html code.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_code_review_checklist"><a class="anchor" href="#_code_review_checklist"></a>Code Review Checklist</h3>
+<div class="sect3">
+<h4 id="_general_code_review_checklist"><a class="anchor" href="#_general_code_review_checklist"></a>General Code Review Checklist</h4>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p>Focus on:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Correctness of the business logic</p>
+</li>
+<li>
+<p>Correctness of the tests.</p>
+</li>
+<li>
+<p>Readability and maintainability of the code</p>
+</li>
+<li>
+<p>Readability and maintainability of the overall design decisions.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Read every line changed.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Run the PR if it aids in your understanding of the code.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Does the PR description make sense?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Do all the changes logically fit in this PR? or are there unrelated changes?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> If necessary, are the changes reflected in the documentation?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Ensure UI changes look good and works as expected.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Do the interactions of the various pieces of code in the PR make sense?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Does the code recognize and incorporate architecture and coding patterns?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Are functions too complex?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Is the single responsibility principle followed? Function or class should do one thing?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Should a function be broken into multiple functions?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> If a method has greater than 3 arguments, is it potentially overly complex?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Does the code add functionality that isn’t needed?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Can the code be easily understood by code readers?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Do the function names, variable names make sense?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Are errors handled gracefully an explicitly where necessary?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Is there parallel programming in this PR that could cause race conditions? Carefully read through this logic.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Could the code be optimized? For example: are there more calls to the database than need be?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> How does the functionality fit in the bigger picture? Can it have negative effects to the overall system?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Are there security flaws?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Does a variable name reveal any customer specific information?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Is PII and EUII treated correctly? Are we logging any PII information?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Are there extraneous comments? If the code isn’t clear enough to explain itself, then the code should be made simpler. Comments may be there to explain why some code exists.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Tests should always be committed in the same PR as the code itself (`I’ll add tests next' is not acceptable).</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Make sure tests are sensible and valid assumptions are made.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Make sure edge cases are handled as well.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Tests can be a great source to understand the changes. It can be astrategy to look at tests first to help you understand the changes better.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_c_code_review_checklist"><a class="anchor" href="#_c_code_review_checklist"></a>C# Code Review Checklist</h4>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> Are internal vs private vs public classes and methods used the right way?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Are auto property set and get used the right way? In a model without constructor and for deserialization, it is ok to have all accessible. For other classes usually a private set or internal set is better.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Is dependency injection (DI) used? Is it setup correctly?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Are <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/index?view=aspnetcore-2.1&amp;tabs=aspnetcore2x">middleware</a> included in this project configured correctly?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Is the code creating a lot of short-lived objects. Could we optimize GC pressure?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Is the code written in a way that causes boxing operations to happen?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Does the code <a href="https://learn.microsoft.com/en-us/dotnet/standard/exceptions/best-practices-for-exceptions">handleexceptions correctly</a>?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Is proper exception handling set up? Catching the exception base class (<code>catch (Exception)</code>) is generally not the right pattern. Instead, catch the specific exceptions that can happen e.g., <code>IOException</code></p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Are resources released deterministically using the IDispose pattern? Are all disposable objects properly disposed (<a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/using-statement">using pattern</a>)?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Is the <code>using</code> pattern for streams and other disposable classes used? If not, better to have the <code>Dispose</code> method called explicitly.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Does this code properly validate arguments sanity(i.e. https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca1062[CA1062])?Consider leveraging extensions such as <a href="https://github.com/danielwertheim/Ensure.That">Ensure.That</a></p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Instead of using raw strings, are constants used in the main class? Or if these strings are used across files/classes, is there a static class for the constants?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Are magic numbers explained? There should be no number in the code without at least a comment of why this is here. If the number is repetitive, is there a constant/enum or equivalent?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Does this code make correct use of asynchronous programming constructs, including proper use of await and Task.WhenAll including CancellationTokens?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> If a method is asynchronous, is <code>Task.Delay</code> used instead of <code>Thread.Sleep</code>? <code>Task.Delay</code> is not blocking the current thread and creates a task that will complete without blocking the thread, so in a multi-threaded, multi-task environment, this is the one to prefer.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Is a cancellation token for asynchronous tasks needed rather than bool patterns?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Is the code subject to concurrency issues? Are shared objects properly protected?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Are the classes that maintain collections in memory, thread safe? When used under concurrency, use lock pattern.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Are tests arranged correctly with the <strong>Arrange/Act/Assert</strong> pattern and properly documented in this way?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Are pure functions used as much as possible?Look for impure functions. Functions mutating arguments. Preferably try to make as many classes in the domain layer static with static methods.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Select method or any Linq function should only be used with pure functions.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Unit tests - check if datetimes are properly tested. Make sure stubs are used in place of objects that perform I/O or side effects like Datetime.UtcNow or DbConnections.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Async all the way up. ConfigureAwait(false) all the way down.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Does this code include  (<a href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview">telemetry, metrics and tracing</a> and <a href="https://serilog.net/">logging</a>) instrumentation?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Is a minimum level of logging in place? Are the logging levels used sensibly?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Does this code leverage the <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-3.1">options design pattern</a> by using classes to provide strongly typed access to groups of related settings?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Is the use of #pragma fair?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Is package management being used (NuGet) instead of committing DLLs?</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_typescript_code_review_checklist"><a class="anchor" href="#_typescript_code_review_checklist"></a>Typescript Code Review Checklist</h4>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> No warnings or errors after running prettier and ESLint.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Is <code>use strict;</code> used to reduce errors with undeclared variables.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Does the change re-implement code better served by pulling in an existing module.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Are unit tests used when possible?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Are tests arranged correctly with the <em>Arrange/Act/Assert</em> pattern.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Are best practices for error handling followed, as well as <code>try catch finally</code> statements.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Are the <code>doWork().then(doSomething).then(checkSomething)</code> properly followed for async calls, including <code>expect</code>, <code>done</code>?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Instead of using raw strings, are constants used in the main class? Or if these strings are used across files/classes, is there a static class for the constants?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Are magic numbers explained? There should be no number in the code without at least a comment of why it is there. If the number is repetitive, is there a constant/enum or equivalent?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> If there is an asynchronous method, does the name of the method end with the <code>Async</code> suffix?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Is a minimum level of logging in place? Are the logging levels used sensibly?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Are heavy operations implemented in the backend, leaving the controller as thin as possible?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Is event handling on the html efficiently done?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Are promises correctly converted to observables?</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Are observables correctly subscribed and unsubscribed in components.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_code_inspections"><a class="anchor" href="#_code_inspections"></a>Code Inspections</h3>
+<div class="paragraph">
+<p>Occasionally, maybe before a release, perform a <a href="http://www.ganssle.com/inspections.pdf" target="_blank" rel="noopener">Code Inspections</a> activity over the solution.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_references"><a class="anchor" href="#_references"></a>References</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://microsoft.github.io/code-with-engineering-playbook/code-reviews/process-guidance/reviewer-guidance/" target="_blank" rel="noopener">Code Reviewer Guidance</a></p>
+</li>
+<li>
+<p><a href="https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/Configuration.md" target="_blank" rel="noopener">StyleCop Configuration</a></p>
+</li>
+<li>
+<p><a href="https://microsoft.github.io/code-with-engineering-playbook/code-reviews/recipes/csharp/" target="_blank" rel="noopener">C# Code Review Checklist</a></p>
+</li>
+<li>
+<p><a href="https://microsoft.github.io/code-with-engineering-playbook/code-reviews/recipes/javascript-and-typescript/" target="_blank" rel="noopener">TypeScript Code Review Checklist</a></p>
+</li>
+<li>
+<p><a href="http://www.ganssle.com/inspections.pdf" target="_blank" rel="noopener">Code Inspections</a></p>
+</li>
+<li>
+<p><a href="https://github.com/angular-eslint/angular-eslint" target="_blank" rel="noopener">angular-eslint</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

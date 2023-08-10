@@ -46,7 +46,7 @@
     <a class="nav-link" href="index.html">Introduction</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="coding-guidelines.html">Coding Guidelines</a>
+    <a class="nav-link" href="code-quality-guidelines.html">Code Quality Guidelines</a>
   </li>
   <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link" href="pull-request-guidelines.html">Pull Request Guidelines</a>
@@ -327,16 +327,16 @@
 <div class="ulist">
 <ul>
 <li>
-<p><code>git publish</code> - Pushes the local branch updates to the current branch at origin. Rejects if the local branch is not up to date with the latest from origin.</p>
+<p><code>git publish-branch</code> - Pushes the local branch updates to the current branch at origin. Rejects if the local branch is not up to date with the latest from origin.</p>
 </li>
 <li>
-<p><code>git synced</code> - Updates your local branch from <code>origin/main</code> i.e. Github. It performs a rebase, replaying your commits on top of the tip of main or master.</p>
+<p><code>git sync-from-main</code> - Updates your local branch from <code>origin/main</code> i.e. Github. It performs a rebase, replaying your commits on top of the tip of main or master.</p>
 </li>
 <li>
-<p><code>git update1</code> - Updates your local branch with the latest from the same branch at origin. This fetches <code>origin/your-branch</code> and performs a rebase.</p>
+<p><code>git update-branch</code> - Updates your local branch with the latest from the same branch at origin. This fetches <code>origin/your-branch</code> and performs a rebase.</p>
 </li>
 <li>
-<p><code>git squash</code> - Shrinks the many commits in a branch to one commit. Useful just before merging.</p>
+<p><code>git squash-commits</code> - Shrinks the many commits in a branch to one commit. Useful just before merging.</p>
 </li>
 <li>
 <p><code>git pr</code> - Opens the PR at github.com. Useful to see review comments, create a PR, or view a diff in Github.</p>
