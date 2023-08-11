@@ -51,14 +51,14 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="pull-request-guidelines.html">Pull Request Guidelines</a>
   </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="content-security-policy.html">Content Security Policy</a>
+  </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="version-control-policy.html">Version Control Policy</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="authorization.html">Authentication and Authorization</a>
-  </li>
-  <li class="nav-item is-current-page" data-depth="1">
-    <a class="nav-link" href="content-security-policy.html">Content Security Policy</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="error-handling.html">Error Handling</a>
@@ -130,13 +130,380 @@
   <div class="edit-this-page"><a href="https://github.com/tremorscript/AspNetCoreAngular/edit/main/docs-site/modules/ROOT/pages/content-security-policy.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
-<aside class="toc sidebar" data-title="Contents" data-levels="2">
+<aside class="toc sidebar" data-title="Contents" data-levels="4">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
 <h1 class="page">Content Security Policy</h1>
+<div class="sect1">
+<h2 id="_introduction"><a class="anchor" href="#_introduction"></a>Introduction</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>TBD</p>
+<p>Content Security Policy is delivered via a HTTP response header, much like HSTS, and defines approved sources of content that the browser may load.</p>
+</div>
+<div class="paragraph">
+<p>A CSP header allows you to define approved sources for content on your site that the browser can load.</p>
+</div>
+<div class="paragraph">
+<p>By specifying only those sources that you wish the browser to load content from, you can protect your visitors from a whole range of issues.</p>
+</div>
+<div class="paragraph">
+<p>These apply to only responses that return one of the following content-types:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>text/html</code></p>
+</li>
+<li>
+<p><code>text/javascript</code></p>
+</li>
+<li>
+<p><code>application/javascript</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_security_headers"><a class="anchor" href="#_security_headers"></a>Security Headers</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Content Security Policy headers are added using the <code>SecurityHeaderMiddleWare</code> class.</p>
+</div>
+<div class="paragraph">
+<p><code>AddFrameOptionsDeny</code> - Adds X-Frame-Options DENY to all requests. The page cannot be displayed in a frame, regardless of the site attempting to do so.</p>
+</div>
+<div class="paragraph">
+<p><code>AddXssProtectionBlock</code> - Adds X-XSS-Protection 1; mode=block to all requests. Enables XSS protections and instructs the user-agent to block the response in the event that script has been inserted from user input, instead of sanitizing.</p>
+</div>
+<div class="paragraph">
+<p><code>AddContentTypeOptionsNoSniff</code> - Add X-Content-Type-Options nosniff to all requests. Disables content sniffing. Can be set to protect against MIME type confusion attacks.</p>
+</div>
+<div class="paragraph">
+<p><code>AddStrictTransportSecurityMaxAge</code> - Add Strict-Transport-Security max-age=maxAge to all requests. Tells the user-agent to cache the domain in the STS list for the number of seconds provided.</p>
+</div>
+<div class="paragraph">
+<p><code>AddReferrerPolicyOriginWhenCrossOrigin</code> - The browser will send the full URL to requests to the same origin but only send the origin when requests are cross-origin.</p>
+</div>
+<div class="paragraph">
+<p><code>RemoveServerHeader</code> - Removes the Server header from all responses.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_content_security_policy_headers"><a class="anchor" href="#_content_security_policy_headers"></a>Content Security Policy Headers</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-csharp hljs" data-lang="csharp">builder.AddDefaultSrc().Self();</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>AddDefaultSrc</code> - The default-src directive serves as a fallback for the other CSP fetch directives.</p>
+</li>
+<li>
+<p>Valid sources include &#8216;self&#8217;, &#8216;unsafe-inline&#8217;, &#8216;unsafe-eval&#8217;, &#8216;none&#8217;, scheme such as http:, or internet hosts by name or IP address, as well as an optional URL scheme and/or port number.</p>
+</li>
+<li>
+<p>The site’s address may include an optional leading wildcard (the asterisk character, &#8216;<em>’), and you may use a wildcard (again, ’</em>&#8217;) as the port number, indicating that all legal ports are valid for the source.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-csharp hljs" data-lang="csharp">builder.AddConnectSrc().Self().From(stsUrl).From(socketUrl);</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>AddConnectSrc</code> - The &#8216;connect-src&#8217; directive restricts the URLs which can be loaded using script interfaces The APIs that are restricted are: <code>&lt;a&gt;</code>, <code>ping</code>, <code>Fetch</code>, <code>XMLHttpRequest</code>, <code>WebSocket</code>, and <code>EventSource</code>.</p>
+</li>
+<li>
+<p><code>Self</code> - Allow sources from the origin from which the protected document is being served, including the same URL scheme and port number.</p>
+</li>
+<li>
+<p><code>From</code> - Allow resources from the given uri. May be any non-empty value. In this case, we add the host url and the sts url to the list.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-csharp hljs" data-lang="csharp">builder
+    .AddFontSrc() // font-src 'self'
+    .Self()
+    .Data();</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>AddFontSrc</code> - The font-src directive specifies valid sources for fonts loaded using @font-face.</p>
+</li>
+<li>
+<p><code>Self</code> - Allow sources from the origin from which the protected document is being served, including the same URL scheme and port number.</p>
+</li>
+<li>
+<p><code>Data</code> - data: Allows data: URIs to be used as a content source.</p>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+This is insecure; an attacker can also inject arbitrary data. Use this sparingly and definitely not for scripts.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-csharp hljs" data-lang="csharp">builder
+    .AddObjectSrc() // object-src 'none'
+    .None();</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>AddObjectSrc</code> - The object-src directive specifies valid sources for the <code>&lt;object&gt;</code>, <code>&lt;embed&gt;</code>, and <code>&lt;applet&gt;</code> elements.</p>
+</li>
+<li>
+<p><code>None</code> - Block the resource (Refers to the empty set; that is, no URLs match)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-csharp hljs" data-lang="csharp">builder
+    .AddFormAction() // form-action 'self'
+    .Self();</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>AddFormAction</code> - The font-src directive specifies valid sources for fonts loaded using @font-face.</p>
+</li>
+<li>
+<p><code>Self</code> - Allow sources from the origin from which the protected document is being served, including the same URL scheme and port number.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-csharp hljs" data-lang="csharp">builder
+    .AddImgSrc() // img-src https:
+    .Self()
+    .Data();</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>AddImgSrc</code> - he img-src directive specifies valid sources of images and favicons.</p>
+</li>
+<li>
+<p><code>Self</code> - Allow sources from the origin from which the protected document is being served, including the same URL scheme and port number.</p>
+</li>
+<li>
+<p><code>Data</code> - data: Allows data: URIs to be used as a content source.</p>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+This is insecure; an attacker can also inject arbitrary data: URIs. Use this sparingly and definitely not for scripts.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-csharp hljs" data-lang="csharp"> builder.AddCustomDirective(
+                        "script-src",
+                        "'self' 'unsafe-inline' 'unsafe-eval'");
+                    builder.AddCustomDirective("style-src", "'self' 'unsafe-inline' 'unsafe-eval'");
+builder.AddCustomDirective("style-src", "'self' 'unsafe-inline' 'unsafe-eval'");</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>script-src</code> - The script-src directive specifies valid sources for sources for JavaScript.</p>
+</li>
+<li>
+<p><code>style-src</code> - The style-src directive specifies valid sources for sources for stylesheets.</p>
+</li>
+<li>
+<p><code>Self</code> - Allow sources from the origin from which the protected document is being served, including the same URL scheme and port number.</p>
+</li>
+<li>
+<p><code>UnsafeInline</code> - Allows the use of inline resources, such as inline <code>&lt;script&gt;</code> elements, inline event handlers, and inline <code>&lt;style&gt;</code> elements.</p>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+This source is insecure - you should not use this directive if at all possible.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p><code>UnsafeEval</code> - Allows the use of eval() and similar methods for creating code from strings.</p>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+This source is insecure - you should not use this directive if at all possible.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-csharp hljs" data-lang="csharp">builder.AddUpgradeInsecureRequests();</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The upgrade-insecure-requests directive instructs user agents to treat all of a site’s insecure URLs (those served over HTTP) as though they have been replaced with secure URLs (those served over HTTPS).</p>
+</li>
+<li>
+<p>This directive is intended for websites with large numbers of insecure legacy URLs that need to be rewritten.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-csharp hljs" data-lang="csharp">builder.AddMediaSrc().Self();</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>AddMediaSrc</code> - The media-src directive specifies valid sources for loading media using the <code>&lt;audio&gt;</code> and <code>&lt;video&gt;</code> elements.</p>
+</li>
+<li>
+<p><code>Self</code> - Allow sources from the origin from which the protected document is being served, including the same URL scheme and port number.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-csharp hljs" data-lang="csharp">builder.AddFrameAncestors().None();</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>AddFrameAncestors</code> - The frame-ancestors directive specifies valid parents that may embed a page using <code>&lt;frame&gt;</code>, <code>&lt;iframe&gt;</code>, <code>&lt;object&gt;</code>, <code>&lt;embed&gt;</code>, or <code>&lt;applet&gt;</code>.</p>
+</li>
+<li>
+<p>Setting this directive to &#8216;none&#8217; is similar to X-Frame-Options: DENY (which is also supported in older browsers).</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-csharp hljs" data-lang="csharp">builder.AddFrameSrc().From(stsUrl);</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>AddFrameSrc</code> - The frame-src directive specifies valid sources for nested browsing contexts loading using elements such as <code>&lt;frame&gt;</code> and <code>&lt;iframe&gt;</code>.</p>
+</li>
+<li>
+<p><code>From</code> - Allow resources from the given uri. May be any non-empty value.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_references"><a class="anchor" href="#_references"></a>References</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/andrewlock/NetEscapades.AspNetCore.SecurityHeaders">NetEscapades.AspNetCore.SecurityHeaders</a></p>
+</li>
+<li>
+<p><a href="https://scotthelme.co.uk/content-security-policy-an-introduction/">Content
+Security Policy</a></p>
+</li>
+<li>
+<p><a href="https://scotthelme.co.uk/csp-cheat-sheet/?ref=scotthelme.co.uk">CSP
+Cheatsheet</a></p>
+</li>
+<li>
+<p><a href="https://scotthelme.co.uk/goodbye-feature-policy-and-hello-permissions-policy/">Permissions
+Policy</a></p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </article>
   </div>
