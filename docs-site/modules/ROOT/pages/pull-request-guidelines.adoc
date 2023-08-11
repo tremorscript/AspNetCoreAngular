@@ -1,7 +1,7 @@
 = Pull Request Guidelines 
 :navtitle: Pull Request Guidelines 
 :title: Pull Request Guidelines  
-:toclevels: 4
+:page-toclevels: 4
 :source-language: bash
 
 A pull request (PR) is a way to notify a task is finished and ready to be merged into the main working branch (source of truth).

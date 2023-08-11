@@ -10,6 +10,7 @@ namespace AspNetCoreAngular.Infrastructure
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.HttpOverrides;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Options;
@@ -51,7 +52,7 @@ namespace AspNetCoreAngular.Infrastructure
             app.UseRequestLocalization(locOptions.Value);
             app.UseCookiePolicy();
 
-            // app.AddCustomSecurityHeaders();
+            // app.AddCustomSecurityHeaders(configuration, env);
             app.UseCustomExceptionHandler();
             app.UseHealthChecks("/health");
             app.UseHttpsRedirection();

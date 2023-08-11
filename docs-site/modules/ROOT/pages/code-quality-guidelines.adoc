@@ -1,7 +1,7 @@
 = Code Quality Guidelines 
 :navtitle: Code Quality Guidelines 
 :title: Code Quality Guidelines 
-:toclevels: 4
+:page-toclevels: 4
 :source-language: bash
 
 
