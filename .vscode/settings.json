@@ -32,8 +32,5 @@
   },
   "editor.formatOnSave": true,
   "omnisharp.enableRoslynAnalyzers": true,
-  "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true,
-    },
   "eslint.workingDirectories": ["./src/Presentation/Web/ClientApp/"]
 }

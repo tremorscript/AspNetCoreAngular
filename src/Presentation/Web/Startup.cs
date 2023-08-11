@@ -4,6 +4,7 @@ using AspNetCoreAngular.Application.Abstractions;
 using AspNetCoreAngular.Common;
 using AspNetCoreAngular.Infrastructure;
 using AspNetCoreAngular.Infrastructure.Localization;
+using AspNetCoreAngular.Infrastructure.Middlewares;
 using AspNetCoreAngular.Infrastructure.Persistence;
 using AspNetCoreAngular.Web.Services;
 using AspNetCoreAngular.Web.SignalR;
@@ -25,7 +26,7 @@ namespace AspNetCoreAngular.Web
             Configuration = configuration;
         }
 
-        public static IConfiguration Configuration { get; set; }
+        public IConfiguration Configuration { get; set; }
 
         // Order to run
         // 1) Constructor
@@ -76,6 +77,7 @@ namespace AspNetCoreAngular.Web
 
         public void Configure(IApplicationBuilder app)
         {
+            app.AddCustomSecurityHeaders(Configuration, HostingEnvironment);
             app.UseInfrastructure(HostingEnvironment);
 
             if (!HostingEnvironment.IsDevelopment())
