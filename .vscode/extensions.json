@@ -8,6 +8,7 @@
         "qwtel.sqlite-viewer",
         "vscodevim.vim",
         "ms-vscode-remote.remote-wsl",
-        "asciidoctor.asciidoctor-vscode"
+        "asciidoctor.asciidoctor-vscode",
+        "ms-azuretools.vscode-docker"
     ]
 }
