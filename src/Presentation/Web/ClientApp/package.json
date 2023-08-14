@@ -10,8 +10,8 @@
     "angular-cli",
     "typescript"
   ],
-  "repository": "git+https://github.com/asadsahi/AspNetCoreAngular.git",
-  "author": "Asad Sahi <asadazmat@gmail.com>",
+  "repository": "https://github.com/tremorscript/AspNetCoreAngular.git",
+  "author": "TremorScript <tremorscript@gmail.com>",
   "scripts": {
     "ng": "ng",
     "clean:install": "rimraf node_modules & yarn",
