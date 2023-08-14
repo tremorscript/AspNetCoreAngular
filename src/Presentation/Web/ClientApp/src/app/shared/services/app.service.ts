@@ -2,6 +2,7 @@ import { TransferState, makeStateKey } from '@angular/platform-browser';
 import { Injectable, Inject } from '@angular/core';
 
 import { DataService } from './data.service';
+import { Observable, of, tap } from 'rxjs';
 
 const APP_DATA_KEY = makeStateKey<IApplicationConfig>('appData');
 
@@ -14,19 +15,15 @@ export class AppService {
   public get appData(): IApplicationConfig {
     return this.transferState.get<IApplicationConfig>(APP_DATA_KEY, null as IApplicationConfig);
   }
-  getAppData(): Promise<IApplicationConfig> {
+  getAppData(): Observable<IApplicationConfig> {
     const transferredAppData = this.transferState.get<IApplicationConfig>(APP_DATA_KEY, null as IApplicationConfig);
     if (!transferredAppData) {
       return this.dataService
         .get('app/getapplicationdata')
-        .toPromise()
-        .then((data: IApplicationConfig) => {
-          this.transferState.set<IApplicationConfig>(APP_DATA_KEY, data);
-          return data;
-        });
+        .pipe(
+          tap((data: IApplicationConfig) => this.transferState.set<IApplicationConfig>(APP_DATA_KEY, data))
+        )
     }
-    return new Promise((resolve, reject) => {
-      resolve(transferredAppData);
-    });
+     return of(transferredAppData);
   }
 }
