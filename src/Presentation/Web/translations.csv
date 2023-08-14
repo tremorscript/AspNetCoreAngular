@@ -1,7 +1,7 @@
 ContentKey,en-US,en-GB,fr-FR
 app_title,AspNetCoreAngular,AspNetCoreAngular,fr-AspNetCoreAngular
 app_description,Single page application using ASP.NET Core and Angular,Single page application using ASP.NET Core and Angular,fr-Single page application using ASP.NET Core and Angular
-app_repo_url,https://github.com/asadsahi/AspNetCoreAngular,https://github.com/asadsahi/AspNetCoreAngular,https://github.com/asadsahi/AspNetCoreAngular
+app_repo_url,https://github.com/tremorscript/AspNetCoreAngular,https://github.com/tremorscript/AspNetCoreAngular,https://github.com/tremorscript/AspNetCoreAngular
 app_nav_home,Home,Home,fr-Home
 app_nav_examples,Examples,Examples,fr-Examples
 app_nav_register,Register,Register,fr-Register

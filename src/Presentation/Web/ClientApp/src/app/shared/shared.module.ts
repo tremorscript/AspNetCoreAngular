@@ -66,8 +66,9 @@ import {
 import { ApplicationPaths } from './constants';
 // Pipes
 import { UppercasePipe, TranslatePipe, GroupByPipe, SafePipe } from './pipes';
+import { Observable } from 'rxjs';
 
-export function appServiceFactory(appService: AppService): () => Promise<any> {
+export function appServiceFactory(appService: AppService): () => Observable<any> {
     return () => appService.getAppData();
 }
 @NgModule({

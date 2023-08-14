@@ -51,7 +51,7 @@ https://tremorscript.github.io/AspNetCoreAngular/homesite/current/code-quality-g
 
 1. Clone the repo:
 
-   git clone https://github.com/asadsahi/AspNetCoreAngular
+   git clone https://github.com/tremorscript/AspNetCoreAngular
 
 2. Change directory:
 
