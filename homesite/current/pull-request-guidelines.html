@@ -55,7 +55,7 @@
     <a class="nav-link" href="content-security-policy.html">Content Security Policy</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="version-control-policy.html">Version Control Policy</a>
+    <a class="nav-link" href="#version-control-policy.adoc">version-control-policy.adoc</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="authorization.html">Authentication and Authorization</a>
@@ -381,7 +381,7 @@
 <p>Create a Pull request with a <code>WIP</code> in the title.</p>
 </li>
 <li>
-<p>Ensure PR is linked to Work Item. In github, it is <code>#123</code>.</p>
+<p>Ensure PR is linked to Work Item.</p>
 </li>
 </ul>
 </div>
@@ -393,7 +393,7 @@
 <p>Run the full test suite and ensure that all the tests pass.</p>
 </li>
 <li>
-<p>If you have multiple commits, squash your commits to one commit. Use <code>git squash</code>.</p>
+<p>If you have multiple commits, squash your commits to one commit. Use <code>git squash-commits</code>.</p>
 </li>
 <li>
 <p>Commit your changes using a descriptive commit message that follows the <a href="#_commit_message_guideline">commit message guidelines</a>.</p>
@@ -423,7 +423,7 @@
 <p>Re-run the tests to ensure all the tests are still passing.</p>
 </li>
 <li>
-<p>Rebase your branch and force push to your GitHub repository (thiswill update your Pull Request):</p>
+<p>Rebase your branch and force push to your GitHub repository (this will update the Pull Request):</p>
 <div class="ulist">
 <ul>
 <li>
@@ -472,13 +472,7 @@ pull the changes from the main (upstream) repository:</p>
 <h2 id="_commit_message_guidelines"><a class="anchor" href="#_commit_message_guidelines"></a>Commit Message Guidelines</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The repository has a git commit message that gets added automatically when you try to merge commit.</p>
-</div>
-<div class="paragraph">
-<p><a href="https://github.com/tremorscript/AspNetCoreAngular/blob/main/gitcommitmessage.txt" class="bare">https://github.com/tremorscript/AspNetCoreAngular/blob/main/gitcommitmessage.txt</a></p>
-</div>
-<div class="paragraph">
-<p>Locally, run the command:- <code>git config --local commit.template gitcommitmsg.txt</code></p>
+<p>The repository is setup to use <a href="https://github.com/conventional-changelog/commitlint" target="_blank" rel="noopener">commitlint</a> as a pre-commit hook and follows the <a href="https://github.com/conventional-changelog/commitlint/blob/master/%40commitlint/config-conventional/README.md" target="_blank" rel="noopener">conventional-changelog rules</a> for commit messages.</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -506,12 +500,53 @@ pull the changes from the main (upstream) repository:</p>
 <code>chore:</code> types would all be valid, in addition to any other <em>type</em>.</p>
 </li>
 <li>
-<p>Others: commit <em>types</em> other than <code>fix:</code> and <code>feat:</code> are allowed, for example <a href="https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional" target="_blank" rel="noopener">@commitlint/config-conventional</a>
-(based on the <a href="https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines" target="_blank" rel="noopener">the Angular convention</a>) recommends <code>chore:</code>, <code>docs:</code>, <code>style:</code>,<code>refactor:</code>, <code>perf:</code>, <code>test:</code>, and others.</p>
+<p>Commit <em>types</em> other than <code>fix:</code> and <code>feat:</code> are allowed.</p>
 </li>
 <li>
-<p>A scope may be provided to a commit’s type, to provide additional contextual information and is contained within parenthesis, e.g., <code>feat(parser): add ability to parse arrays</code>. Sample scopes used by angular.
-<a href="https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#scope" target="_blank" rel="noopener">Angular Scopes</a>.</p>
+<p>Common types according to <a href="https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional#type-enum" target="_blank" rel="noopener">commitlint-config-conventional (based on the Angular convention)</a> can be:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>build</p>
+</li>
+<li>
+<p>chore</p>
+</li>
+<li>
+<p>ci</p>
+</li>
+<li>
+<p>docs</p>
+</li>
+<li>
+<p>feat</p>
+</li>
+<li>
+<p>fix</p>
+</li>
+<li>
+<p>perf</p>
+</li>
+<li>
+<p>refactor</p>
+</li>
+<li>
+<p>revert</p>
+</li>
+<li>
+<p>style</p>
+</li>
+<li>
+<p>test</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>A scope may be provided to a commit’s type, to provide additional contextual information and is contained within parenthesis, e.g., <code>feat(parser): add ability to parse arrays</code>.</p>
+</li>
+<li>
+<p>Sample scopes used by angular: <a href="https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#scope" target="_blank" rel="noopener">Angular Scopes</a>.</p>
 </li>
 </ul>
 </div>
@@ -553,15 +588,17 @@ fixes issue #12</pre>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_references"><a class="anchor" href="#_references"></a>References</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_references"><a class="anchor" href="#_references"></a>References</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p><a href="https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md" target="_blank" rel="noopener">Angular Contribution guidelines</a><br>
 <a href="https://www.conventionalcommits.org/en/v1.0.0-beta.2/#specification" target="_blank" rel="noopener">Conventional Commit Specification</a><br>
 <a href="https://microsoft.github.io/code-with-engineering-playbook/code-reviews/pull-requests/" target="_blank" rel="noopener">CSE Pull Requests</a><br>
 <a href="https://devtutorial.io/how-to-create-a-template-commit-message-git-p1244.html" target="_blank" rel="noopener">How to create a template commit message</a><br>
 <a href="https://seankilleen.com/2023/08/my-process-for-submitting-pull-requests/" target="_blank" rel="noopener">My process for submitting pull requests</a></p>
-</div>
 </div>
 </div>
 </div>
