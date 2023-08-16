@@ -101,11 +101,7 @@ pull the changes from the main (upstream) repository:
 
 == Commit Message Guidelines
 
-The repository has a git commit message that gets added automatically when you try to merge commit.
-
-https://github.com/tremorscript/AspNetCoreAngular/blob/main/gitcommitmessage.txt
-
-Locally, run the command:- `git config --local commit.template gitcommitmsg.txt`
+The repository is setup to use https://github.com/conventional-changelog/commitlint[commitlint^] as a pre-commit hook and follows the https://github.com/conventional-changelog/commitlint/blob/master/%40commitlint/config-conventional/README.md[conventional-changelog rules^] for commit messages.
 
 ....
 <type>[optional scope]: <description>
@@ -121,10 +117,21 @@ Locally, run the command:- `git config --local commit.template gitcommitmsg.txt`
 * *BREAKING CHANGE:* a commit that has the text `BREAKING CHANGE:` at the beginning of its optional body or footer section introduces a breaking API change (correlating with 
 http://semver.org/#summary[`MAJOR`] in semantic versioning). A breaking change can be part of commits of any _type_. e.g., a `fix:`, `feat:` &
 `chore:` types would all be valid, in addition to any other _type_.
-* Others: commit _types_ other than `fix:` and `feat:` are allowed, for example https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional[@commitlint/config-conventional^]
-(based on the https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines[the Angular convention^]) recommends `chore:`, `docs:`, `style:`,`refactor:`, `perf:`, `test:`, and others.
-* A scope may be provided to a commit’s type, to provide additional contextual information and is contained within parenthesis, e.g., `feat(parser): add ability to parse arrays`. Sample scopes used by angular.
-https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#scope[Angular Scopes^].
+* Commit _types_ other than `fix:` and `feat:` are allowed.
+* Common types according to https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional#type-enum[commitlint-config-conventional (based on the Angular convention)^] can be:
+** build
+** chore
+** ci
+** docs
+** feat
+** fix
+** perf
+** refactor
+** revert
+** style
+** test
+* A scope may be provided to a commit’s type, to provide additional contextual information and is contained within parenthesis, e.g., `feat(parser): add ability to parse arrays`. 
+* Sample scopes used by angular: https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#scope[Angular Scopes^].
 
 === Commit message with description and breaking change in body
 
@@ -156,7 +163,7 @@ see the issue for details on the typos fixed
 fixes issue #12
 ....
 
-=== References
+== References
 
 https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md[Angular Contribution guidelines^] +
 https://www.conventionalcommits.org/en/v1.0.0-beta.2/#specification[Conventional Commit Specification^] +
