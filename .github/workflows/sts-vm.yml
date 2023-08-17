@@ -3,16 +3,17 @@ name: VM-STS
 on:
   push:
     branches:
-      - master
-
+      - main
+  workflow_dispatch:
+  
 jobs:
-  build-test-publish-ftp:
+  build-test:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 7.0.100
       - name: Build
