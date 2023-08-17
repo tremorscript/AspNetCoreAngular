@@ -55,10 +55,10 @@
     <a class="nav-link" href="content-security-policy.html">Content Security Policy</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#version-control-policy.adoc">version-control-policy.adoc</a>
+    <a class="nav-link" href="authorization.html">Authentication and Authorization</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="authorization.html">Authentication and Authorization</a>
+    <a class="nav-link" href="configuration-management.html">Configuration Management</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="error-handling.html">Error Handling</a>
@@ -357,7 +357,7 @@
 <p><i class="fa fa-square-o"></i> Is dependency injection (DI) used? Is it setup correctly?</p>
 </li>
 <li>
-<p><i class="fa fa-square-o"></i> Are <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/index?view=aspnetcore-2.1&amp;tabs=aspnetcore2x">middleware</a> included in this project configured correctly?</p>
+<p><i class="fa fa-square-o"></i> Are <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/index?view=aspnetcore-2.1&amp;tabs=aspnetcore2x" target="_blank" rel="noopener">middleware</a> included in this project configured correctly?</p>
 </li>
 <li>
 <p><i class="fa fa-square-o"></i> Is the code creating a lot of short-lived objects. Could we optimize GC pressure?</p>
@@ -366,19 +366,19 @@
 <p><i class="fa fa-square-o"></i> Is the code written in a way that causes boxing operations to happen?</p>
 </li>
 <li>
-<p><i class="fa fa-square-o"></i> Does the code <a href="https://learn.microsoft.com/en-us/dotnet/standard/exceptions/best-practices-for-exceptions">handleexceptions correctly</a>?</p>
+<p><i class="fa fa-square-o"></i> Does the code <a href="https://learn.microsoft.com/en-us/dotnet/standard/exceptions/best-practices-for-exceptions" target="_blank" rel="noopener">handle exceptions correctly</a>?</p>
 </li>
 <li>
 <p><i class="fa fa-square-o"></i> Is proper exception handling set up? Catching the exception base class (<code>catch (Exception)</code>) is generally not the right pattern. Instead, catch the specific exceptions that can happen e.g., <code>IOException</code></p>
 </li>
 <li>
-<p><i class="fa fa-square-o"></i> Are resources released deterministically using the IDispose pattern? Are all disposable objects properly disposed (<a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/using-statement">using pattern</a>)?</p>
+<p><i class="fa fa-square-o"></i> Are resources released deterministically using the IDispose pattern? Are all disposable objects properly disposed (<a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/using-statement" target="_blank" rel="noopener">using pattern</a>)?</p>
 </li>
 <li>
 <p><i class="fa fa-square-o"></i> Is the <code>using</code> pattern for streams and other disposable classes used? If not, better to have the <code>Dispose</code> method called explicitly.</p>
 </li>
 <li>
-<p><i class="fa fa-square-o"></i> Does this code properly validate arguments sanity(i.e. https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca1062[CA1062])?Consider leveraging extensions such as <a href="https://github.com/danielwertheim/Ensure.That">Ensure.That</a></p>
+<p><i class="fa fa-square-o"></i> Does this code properly validate arguments sanity(i.e. <a href="https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca1062" target="_blank" rel="noopener">CA1062</a>)?Consider leveraging extensions such as <a href="https://github.com/danielwertheim/Ensure.That" target="_blank" rel="noopener">Ensure.That</a></p>
 </li>
 <li>
 <p><i class="fa fa-square-o"></i> Instead of using raw strings, are constants used in the main class? Or if these strings are used across files/classes, is there a static class for the constants?</p>
@@ -417,13 +417,13 @@
 <p><i class="fa fa-square-o"></i> Async all the way up. ConfigureAwait(false) all the way down.</p>
 </li>
 <li>
-<p><i class="fa fa-square-o"></i> Does this code include  (<a href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview">telemetry, metrics and tracing</a> and <a href="https://serilog.net/">logging</a>) instrumentation?</p>
+<p><i class="fa fa-square-o"></i> Does this code include  (<a href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview" target="_blank" rel="noopener">telemetry, metrics and tracing</a> and <a href="https://serilog.net/" target="_blank" rel="noopener">logging</a>) instrumentation?</p>
 </li>
 <li>
 <p><i class="fa fa-square-o"></i> Is a minimum level of logging in place? Are the logging levels used sensibly?</p>
 </li>
 <li>
-<p><i class="fa fa-square-o"></i> Does this code leverage the <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-3.1">options design pattern</a> by using classes to provide strongly typed access to groups of related settings?</p>
+<p><i class="fa fa-square-o"></i> Does this code leverage the <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-3.1" target="_blank" rel="noopener">options design pattern</a> by using classes to provide strongly typed access to groups of related settings?</p>
 </li>
 <li>
 <p><i class="fa fa-square-o"></i> Is the use of #pragma fair?</p>

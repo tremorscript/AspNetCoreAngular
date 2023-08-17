@@ -55,10 +55,10 @@
     <a class="nav-link" href="content-security-policy.html">Content Security Policy</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#version-control-policy.adoc">version-control-policy.adoc</a>
+    <a class="nav-link" href="authorization.html">Authentication and Authorization</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="authorization.html">Authentication and Authorization</a>
+    <a class="nav-link" href="configuration-management.html">Configuration Management</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="error-handling.html">Error Handling</a>
@@ -369,7 +369,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Checkout the main branch.</p>
+<p>Checkout the main branch : <code>git checkout main</code>.</p>
 </li>
 <li>
 <p>Create a new git branch: <code>git checkout -b IssueNumber_description-text main</code>.</p>
@@ -396,7 +396,7 @@
 <p>If you have multiple commits, squash your commits to one commit. Use <code>git squash-commits</code>.</p>
 </li>
 <li>
-<p>Commit your changes using a descriptive commit message that follows the <a href="#_commit_message_guideline">commit message guidelines</a>.</p>
+<p>Commit your changes using a descriptive commit message that follows the <a href="#_commit_message_guidelines">commit message guidelines</a>.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -406,7 +406,7 @@
 </div>
 </li>
 <li>
-<p>Push your branch to GitHub: <code>git publish</code>.</p>
+<p>Push your branch to GitHub: <code>git publish-branch</code>.</p>
 </li>
 <li>
 <p>Send a pull request to <code>main</code>.</p>
@@ -427,7 +427,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p><code>git rebase master -i &amp;&amp; git push -f</code></p>
+<p><code>git rebase main -i &amp;&amp; git push -f</code></p>
 </li>
 </ul>
 </div>
@@ -456,13 +456,13 @@ pull the changes from the main (upstream) repository:</p>
 <p>Delete the remote branch on GitHub either through the GitHub web UI or your local shell as follows: <code>git push origin --delete my-fix-branch</code>.</p>
 </li>
 <li>
-<p>Check out the main branch: <code>git checkout master -f</code>.</p>
+<p>Check out the main branch: <code>git checkout main -f</code>.</p>
 </li>
 <li>
 <p>Delete the local branch: <code>git branch -D my-fix-branch</code>.</p>
 </li>
 <li>
-<p>Update your local main branch with the latest: <code>git update</code>.</p>
+<p>Update your local main branch with the latest: <code>git update-branch</code>.</p>
 </li>
 </ul>
 </div>
