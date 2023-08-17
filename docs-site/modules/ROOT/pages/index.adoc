@@ -13,13 +13,15 @@ The repository is to be used as the starting point for any project in your organ
 * http://www.dot.net/[ASP.NET Core 7^] 
 * https://docs.efproject.net/en/latest/[Entity Framework Core 7^]
 * http://identityserver.io/[Identity Server 4^]
-* https://angular.io/[Angular 15^]
+* https://angular.io/[Angular 16^]
 * https://cli.angular.io/[Angular CLI^]
 * http://sass-lang.com/[SASS^]
+* Secure - with https://github.com/andrewlock/NetEscapades.AspNetCore.SecurityHeaders[Custom Security Policy (CSP) and custom security headers^].
 * Best https://angular.io/docs/ts/latest/guide/style-guide.html[practices^] for Angular Code generation.
-* https://github.com/jasontaylordev/CleanArchitecture[Clean Architecture^] inspired from Jason Taylor.
+* Angular application inspired from https://github.com/asadsahi/AspNetCoreSpa[asadsahi^] and https://github.com/gothinkster/realworld[gothinkster^].
 * https://developers.google.com/web/progressive-web-apps/[PWA support^]
 * Unit Testing with https://facebook.github.io/jest/[Jest^].
 * E2E Testing with https://playwright.dev/[Playwright^].
 * https://compodoc.github.io/compodoc/[Compodoc^] for angular documentation.
+* http://swagger.io/[Swagger^] as the Api explorer.
 

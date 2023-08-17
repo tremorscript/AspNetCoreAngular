@@ -5,22 +5,25 @@
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
  -->
 
+[![Actions Status Web](https://github.com/tremorscript/aspnetcoreangular/workflows/Web/badge.svg)](https://github.com/tremorscript/aspnetcoreangular/actions?query=workflow%3AWEB)
+[![Actions Status STS](https://github.com/tremorscript/aspnetcoreangular/workflows/STS/badge.svg)](https://github.com/tremorscript/aspnetcoreangular/actions?query=workflow%3ASTS)
+[![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)
+
 ## Features
 
 - [ASP.NET Core 7.0](http://www.dot.net/)
 - [Entity Framework Core 7.0](https://docs.efproject.net/en/latest/)
   - Both Sql Server and Sql lite databases are supported (Check installation instrcutions for more details)
 - [Identity Server 4](http://identityserver.io/)
-- [Angular 15](https://angular.io/)
-- [Angular CLI 15](https://cli.angular.io/)
+- [Angular 16](https://angular.io/)
+- [Angular CLI 16](https://cli.angular.io/)
 - Secure - with [Custom Security Policy (CSP) and custom security headers](https://github.com/andrewlock/NetEscapades.AspNetCore.SecurityHeaders)
-- [SignalR](https://github.com/aspnet/SignalR/)
 - [SASS](http://sass-lang.com/)
 - Best [practices](https://angular.io/docs/ts/latest/guide/style-guide.html) for Angular code organisation.
 - [Clean Architecture](https://github.com/jasontaylordev/CleanArchitecture) inspired from Jason Taylor.
 - Angular application inspired from [asadsahi](https://github.com/asadsahi/AspNetCoreSpa) and [gothinkster](https://github.com/gothinkster/realworld).
 - [PWA support](https://developers.google.com/web/progressive-web-apps/)
-- Fast Unit Testing with [Jest](https://facebook.github.io/jest/).
+- Unit Testing with [Jest](https://facebook.github.io/jest/).
 - E2E testing with [Playwright](https://playwright.dev/).
 - [Compodoc](https://compodoc.github.io/compodoc/) for Angular documentation
 - Angular dynamic forms for reusable and DRY code.
@@ -39,15 +42,7 @@ https://tremorscript.github.io/AspNetCoreAngular/homesite/current/pull-request-g
 https://tremorscript.github.io/AspNetCoreAngular/homesite/current/code-quality-guidelines.html
 
 
-## Pre-requisites
-
-1. [.Net 7.0 SDK](https://www.microsoft.com/net/core#windows)
-2. [Visual studio 2019](https://www.visualstudio.com/) OR [VSCode](https://code.visualstudio.com/) with [C#](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp) extension
-3. [NodeJs](https://nodejs.org/en/) (Latest LTS)
-4. [Microsoft SQL Server](https://www.microsoft.com/en-us/sql-server) (Optional: If MS SQL server required instead of Sqlite during development)
-5. [Docker](https://www.docker.com/) (Optional: If application will run inside docker container)
-
-## Installation
+## Getting Started 
 
 1. Clone the repo:
 
@@ -58,8 +53,6 @@ https://tremorscript.github.io/AspNetCoreAngular/homesite/current/code-quality-g
    cd AspNetCoreAngular
 
 3. Update the local git config with:
-   
-   - [a default git commit message template](https://tremorscript.github.io/AspNetCoreAngular/homesite/current/pull-request-guidelines.html#_commit_message_guidelines).
    
    - [a list of alias commands](https://tremorscript.github.io/AspNetCoreAngular/homesite/current/pull-request-guidelines.html#_add_aliases_to_the_config_file_in_git).
 
@@ -89,6 +82,7 @@ https://tremorscript.github.io/AspNetCoreAngular/homesite/current/code-quality-g
 
      - From debug menu select `Web` profile to run api application
      - From debug menu select `STS` profile to run Identity Server application
+     - From debug menu select `Firefox\Web\STS` profile to run the angular application, the api application and the Identity Server application.
 
    - Using [Visual Studio IDE](https://www.visualstudio.com/):
      - Run `Web` and `STS` projects either individually or by setting multiple projects in solutions properties and hit F5
@@ -107,10 +101,10 @@ This project supports both databases OOTB.
 
 9. Once the project is running use following test users to login:
 
-   2 Test users:
-   Username: admin@admin.com
-   Password: P@ssw0rd!
-   OR
+  - Test user1:  
+    Username: admin@admin.com
+    Password: P@ssw0rd!
+  - Testu user2:  
    Username: user@user.com
    Password: P@ssw0rd!
 

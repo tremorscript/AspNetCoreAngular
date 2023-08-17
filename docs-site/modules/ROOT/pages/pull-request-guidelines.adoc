@@ -69,7 +69,7 @@ The project has a https://github.com/tremorscript/AspNetCoreAngular/blob/main/.g
 
 == Steps to follow while creating a Pull Request(PR)
 
-* Checkout the main branch.
+* Checkout the main branch : `git checkout main`.
 * Create a new git branch: `git checkout -b IssueNumber_description-text main`.
 * Make a single commit - or an empty commit using `git commit -m "my message" --allow-empty`.
 * Create a Pull request with a `WIP` in the title.
@@ -79,15 +79,15 @@ The project has a https://github.com/tremorscript/AspNetCoreAngular/blob/main/.g
 
 * Run the full test suite and ensure that all the tests pass.
 * If you have multiple commits, squash your commits to one commit. Use `git squash-commits`.
-* Commit your changes using a descriptive commit message that follows the xref:#_commit_message_guideline[commit message guidelines].
+* Commit your changes using a descriptive commit message that follows the xref:#_commit_message_guidelines[commit message guidelines].
 ** `git commit -a` => `-a` will automatically `add` and `rm` edited files.
-* Push your branch to GitHub: `git publish`.
+* Push your branch to GitHub: `git publish-branch`.
 * Send a pull request to `main`.
 ** If changes are suggested then:
 *** Make the required updates.
 *** Re-run the tests to ensure all the tests are still passing.
 *** Rebase your branch and force push to your GitHub repository (this will update the Pull Request):
-**** `git rebase master -i && git push -f`
+**** `git rebase main -i && git push -f`
 
 == Steps after merging a Pull Request (PR)
 
@@ -95,9 +95,9 @@ After your pull request is merged, you can safely delete your branch and
 pull the changes from the main (upstream) repository:
 
 * Delete the remote branch on GitHub either through the GitHub web UI or your local shell as follows: `git push origin --delete my-fix-branch`.
-* Check out the main branch: `git checkout master -f`.
+* Check out the main branch: `git checkout main -f`.
 * Delete the local branch: `git branch -D my-fix-branch`.
-* Update your local main branch with the latest: `git update`.
+* Update your local main branch with the latest: `git update-branch`.
 
 == Commit Message Guidelines
 

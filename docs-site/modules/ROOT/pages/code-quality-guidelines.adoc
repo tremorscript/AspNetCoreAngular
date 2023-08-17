@@ -118,14 +118,14 @@ The angular app uses https://github.com/angular-eslint/angular-eslint[angular-es
 * [ ] Are internal vs private vs public classes and methods used the right way?
 * [ ] Are auto property set and get used the right way? In a model without constructor and for deserialization, it is ok to have all accessible. For other classes usually a private set or internal set is better.
 * [ ] Is dependency injection (DI) used? Is it setup correctly?
-* [ ] Are https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/index?view=aspnetcore-2.1&tabs=aspnetcore2x[middleware] included in this project configured correctly?
+* [ ] Are https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/index?view=aspnetcore-2.1&tabs=aspnetcore2x[middleware^] included in this project configured correctly?
 * [ ] Is the code creating a lot of short-lived objects. Could we optimize GC pressure?
 * [ ] Is the code written in a way that causes boxing operations to happen?
-* [ ] Does the code https://learn.microsoft.com/en-us/dotnet/standard/exceptions/best-practices-for-exceptions[handleexceptions correctly]?
+* [ ] Does the code https://learn.microsoft.com/en-us/dotnet/standard/exceptions/best-practices-for-exceptions[handle exceptions correctly^]?
 * [ ] Is proper exception handling set up? Catching the exception base class (`catch (Exception)`) is generally not the right pattern. Instead, catch the specific exceptions that can happen e.g., `IOException`
-* [ ] Are resources released deterministically using the IDispose pattern? Are all disposable objects properly disposed (https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/using-statement[using pattern])?
+* [ ] Are resources released deterministically using the IDispose pattern? Are all disposable objects properly disposed (https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/using-statement[using pattern^])?
 * [ ] Is the `using` pattern for streams and other disposable classes used? If not, better to have the `Dispose` method called explicitly.
-* [ ] Does this code properly validate arguments sanity(i.e. https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca1062[CA1062])?Consider leveraging extensions such as https://github.com/danielwertheim/Ensure.That[Ensure.That]
+* [ ] Does this code properly validate arguments sanity(i.e. https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca1062[CA1062^])?Consider leveraging extensions such as https://github.com/danielwertheim/Ensure.That[Ensure.That^]
 * [ ] Instead of using raw strings, are constants used in the main class? Or if these strings are used across files/classes, is there a static class for the constants?
 * [ ] Are magic numbers explained? There should be no number in the code without at least a comment of why this is here. If the number is repetitive, is there a constant/enum or equivalent?
 * [ ] Does this code make correct use of asynchronous programming constructs, including proper use of await and Task.WhenAll including CancellationTokens? 
@@ -138,9 +138,9 @@ The angular app uses https://github.com/angular-eslint/angular-eslint[angular-es
 * [ ] Select method or any Linq function should only be used with pure functions.
 * [ ] Unit tests - check if datetimes are properly tested. Make sure stubs are used in place of objects that perform I/O or side effects like Datetime.UtcNow or DbConnections.
 * [ ] Async all the way up. ConfigureAwait(false) all the way down.
-* [ ] Does this code include  (https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview[telemetry, metrics and tracing] and https://serilog.net/[logging]) instrumentation?
+* [ ] Does this code include  (https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview[telemetry, metrics and tracing^] and https://serilog.net/[logging^]) instrumentation?
 * [ ] Is a minimum level of logging in place? Are the logging levels used sensibly?
-* [ ] Does this code leverage the https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-3.1[options design pattern] by using classes to provide strongly typed access to groups of related settings?
+* [ ] Does this code leverage the https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-3.1[options design pattern^] by using classes to provide strongly typed access to groups of related settings?
 * [ ] Is the use of #pragma fair?
 * [ ] Is package management being used (NuGet) instead of committing DLLs?
 
