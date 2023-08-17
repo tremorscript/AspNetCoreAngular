@@ -5,8 +5,8 @@
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
  -->
 
-[![Actions Status Web](https://github.com/tremorscript/aspnetcoreangular/workflows/Web/badge.svg)](https://github.com/tremorscript/aspnetcoreangular/actions?query=workflow%3AWEB)
-[![Actions Status STS](https://github.com/tremorscript/aspnetcoreangular/workflows/STS/badge.svg)](https://github.com/tremorscript/aspnetcoreangular/actions?query=workflow%3ASTS)
+[![Actions Status Web](https://github.com/tremorscript/aspnetcoreangular/actions/workflows/web-vm.yml/badge.svg)](https://github.com/tremorscript/AspNetCoreAngular/actions/workflows/web-vm.yml)
+[![Actions Status STS](https://github.com/tremorscript/aspnetcoreangular/actions/workflows/sts-vm.yml/badge.svg)](https://github.com/tremorscript/AspNetCoreAngular/actions/workflows/sts-vm.yml)
 [![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)
 
 ## Features
