@@ -14,7 +14,6 @@ Please include a summary of the change and which issue is fixed. Please also inc
 If this is a breaking change, please describe the impact and migration path for existing applications below.
 
 # Checklist:
-
 - [ ] My code follows the style guidelines of this project
 - [ ] I have performed a self-review of my own code
 - [ ] I have commented my code, particularly in hard-to-understand areas
@@ -27,3 +26,4 @@ If this is a breaking change, please describe the impact and migration path for 
 # References
 
 [Writing a great code review description](https://www.pullrequest.com/blog/writing-a-great-pull-request-description/)
+[Code Review Checklist](https://tremorscript.github.io/AspNetCoreAngular/homesite/current/code-quality-guidelines.html#_code_review_checklist)
