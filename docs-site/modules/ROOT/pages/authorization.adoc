@@ -1,13 +1,112 @@
 = Authentication and Authorization 
 :navtitle: Authentication and Authorization 
 :title: Authentication and Authorization 
-:toclevels: 4
+:page-toclevels: 4
+:source-language: typescript,ts,csharp,cs
 
-== Source Code
+== Introduction
+
+There are 3 actors involved when it comes to authentication and authorization.
+
+. The angular application (the client)
+. The webapi (the resource)
+. IdentityServer4 (the Identity Provider also the Secure Token Service)
+
+== STS Project
+
+First, we see how the client is configured in the STS project.
+
+In the `ConfigureServices` method of `Startup.cs`, the `AddStsServer` extension method of `IServiceCollection` is called.
+
+[source, cs]
+----
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddTransient<IProfileService, CustomProfileService>();
+    services.AddTransient<IIdentitySeedData, IdentitySeedData>();
+
+    services
+        .AddApplication()
+        .AddInfrastructure(Configuration, this.HostingEnvironment)
+        .AddHealthChecks()
+        .AddDbContextCheck<IdentityServerDbContext>();
+
+    services.AddStsServer(Configuration, this.HostingEnvironment);
+}
+----
+
+The `AddStsServer` method is defined in the `ServicesExtensions.cs` class in the project.
+
+Here, the angular client is configured as a valid client with access to the WebApi resource.
+
+For now, the clientid and the resource name are the same. Need to change that.
+
+[source,cs]
+----
+var clientId = client.clientId;
+var host = client.corsOrigin;
+var spaClient = options.Clients.AddSPA(
+    clientId,
+    spa =>
+        spa.WithRedirectUri($"{host}/authentication/login-callback")
+            .WithScopes(new string[] { clientId })
+            .WithLogoutRedirectUri($"{host}/authentication/logout-callback"));
+
+spaClient.AlwaysIncludeUserClaimsInIdToken = true;
+
+options.ApiResources.AddApiResource(
+    clientId,
+    resource =>
+    {
+        resource.WithScopes(
+            clientId,
+            IdentityServerConstants.StandardScopes.Email);
+    });
+----
+
+== Web Project
+
+In the `Startup.cs` class of the web api services, we configure the authentication to use JWT tokens.
+
+[source,cs]
+----
+services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        // base-address of your identity server
+        options.Authority = Configuration["Auth:Authority"];
+
+        // name of the API resource
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidAudiences = Configuration
+
+                // the name of the resource as configured in the STS project
+                .GetSection("Auth:Audiences")
+                .Get<List<string>>(),
+        };
+        options.RequireHttpsMetadata = false;
+    });
+----
+
+All the `ApiControllers` in the application inherit from the `BaseController` which has the `[Authorize]` attribute.
+
+If you need an `ApiController` that does not need authorization, then add `[AllowAnonymous]` attrbute to the controller class. See `AppController.cs` as an example.
+
+== The ClientApp(Angular) application
+
+There are two main actors involved:
+
+. AuthInterceptor.ts
+. login.component.ts
+. AuthorizeService.ts
 
 === AuthInterceptor
 
-The `AuthInterceptor` is quite simple. If it receives an error response, it navigates to the `LoginComponent`.
+The `AuthInterceptor` looks for  is quite simple. If it receives a response with status code '401 - Unauthorized', it navigates to the `LoginComponent`.
 
 [source,ts]
 ----
@@ -28,6 +127,12 @@ export class AuthInterceptor implements HttpInterceptor {
 ----
 <1> Check for error status 401.
 <2> Navigate to `LoginComponent`. The route is defined in `shared.module.ts`.
+
+=== LoginComponent
+
+The `ngInit` method of the `LoginComponent` checks to see which url was called and calls the appropriate method in `AuthorizeService.ts`.
+
+
 
 === AuthorizeService
 
