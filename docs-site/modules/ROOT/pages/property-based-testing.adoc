@@ -1,4 +1,0 @@
-= Property Based Testing 
-:navtitle: Property Based Testing 
-:title: Property Based Testing 
-:toclevels: 4

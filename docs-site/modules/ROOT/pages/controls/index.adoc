@@ -1,6 +1,0 @@
-= Controls 
-:navtitle: Controls
-:title: Controls
-
-This is active controls.
-

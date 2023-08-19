@@ -1,5 +1,0 @@
-= End-to-End Testing 
-:navtitle: End-to-End Testing
-:title: End-to-End Testing 
-
-TBD
