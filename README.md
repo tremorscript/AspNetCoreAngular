@@ -31,15 +31,15 @@
 
 ## Developer Documentation
 
-https://tremorscript.github.io/AspNetCoreAngular/ (In Progress)
+https://tremorscript.github.io/AspNetCoreAngular.Docs/ (In Progress)
 
 ## Pull Request Guidelines
 
-https://tremorscript.github.io/AspNetCoreAngular/homesite/current/pull-request-guidelines.html
+https://tremorscript.github.io/AspNetCoreAngular.Docs/homesite/current/pull-request-guidelines.html
 
 ## Code Quality Guidelines
 
-https://tremorscript.github.io/AspNetCoreAngular/homesite/current/code-quality-guidelines.html
+https://tremorscript.github.io/AspNetCoreAngular.Docs/homesite/current/code-quality-guidelines.html
 
 
 ## Getting Started 
@@ -54,7 +54,7 @@ https://tremorscript.github.io/AspNetCoreAngular/homesite/current/code-quality-g
 
 3. Update the local git config with:
    
-   - [a list of alias commands](https://tremorscript.github.io/AspNetCoreAngular/homesite/current/pull-request-guidelines.html#_add_aliases_to_the_config_file_in_git).
+   - [a list of alias commands](https://tremorscript.github.io/AspNetCoreAngular.Docs/homesite/current/pull-request-guidelines.html#_add_aliases_to_the_config_file_in_git).
 
 4. Restore packages:
 
