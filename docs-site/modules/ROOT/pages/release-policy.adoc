@@ -1,4 +1,0 @@
-= Release Policy 
-:navtitle: Release Policy 
-:title: Release Policy
-:toclevels: 4
