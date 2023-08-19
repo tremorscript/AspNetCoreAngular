@@ -59,9 +59,11 @@ namespace AspNetCoreAngular.Web
                     // name of the API resource
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuer = false,
-                        ValidateAudience = false,
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
                         ValidAudiences = Configuration
+
+                            // the name of the resource as configured in the STS project
                             .GetSection("Auth:Audiences")
                             .Get<List<string>>(),
                     };
