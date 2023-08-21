@@ -42,7 +42,7 @@ namespace AspNetCoreAngular.STS
             services.AddStsServer(Configuration, this.HostingEnvironment);
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
             app.UseInfrastructure(this.HostingEnvironment);
             app.UseRouting();

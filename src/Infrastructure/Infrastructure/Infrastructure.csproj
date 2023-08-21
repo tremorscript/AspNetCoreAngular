@@ -47,7 +47,7 @@
     <PackageReference Include="NSwag.AspNetCore" />
     <PackageReference Include="NSwag.Core" />
     <PackageReference Include="CsvHelper" />
-
+    <PackageReference Include="Serilog.AspNetCore" />
   </ItemGroup>
 
   <ItemGroup>

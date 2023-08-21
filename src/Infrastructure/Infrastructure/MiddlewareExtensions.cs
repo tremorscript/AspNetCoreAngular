@@ -45,15 +45,14 @@ namespace AspNetCoreAngular.Infrastructure
                 app.UseHsts();
                 app.UseResponseCompression();
             }
+            app.UseMiddleware<CustomExceptionHandler>();
 
-            var locOptions = app.ApplicationServices.GetService<
-                IOptions<RequestLocalizationOptions>
-            >();
+            var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(locOptions.Value);
             app.UseCookiePolicy();
 
             // app.AddCustomSecurityHeaders(configuration, env);
-            app.UseCustomExceptionHandler();
+            // app.UseCustomExceptionHandler();
             app.UseHealthChecks("/health");
             app.UseHttpsRedirection();
 

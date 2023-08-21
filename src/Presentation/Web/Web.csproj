@@ -36,6 +36,8 @@
     <PackageReference Include="NSwag.AspNetCore" />
     <PackageReference Include="NSwag.Core" />
     <PackageReference Include="NSwag.MSBuild" />
+    <PackageReference Include="Serilog.AspNetCore" />
+    <PackageReference Include="Serilog.Sinks.SQLite" />
   </ItemGroup>
 
 
