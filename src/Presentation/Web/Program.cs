@@ -47,7 +47,7 @@ namespace AspNetCoreAngular.Web
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError("Error creating/seeding API database - " + ex);
+                    logger.LogError($"Error creating/seeding API database - {ex}");
                 }
             }
 

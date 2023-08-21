@@ -14,7 +14,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 
 namespace AspNetCoreAngular.Web
 {
@@ -28,16 +30,24 @@ namespace AspNetCoreAngular.Web
 
         public IConfiguration Configuration { get; set; }
 
-        // Order to run
-        // 1) Constructor
-        // 2) Configure services
-        // 3) Configure
         private IWebHostEnvironment HostingEnvironment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            var builder = new ConfigurationBuilder()
+                                .SetBasePath(this.HostingEnvironment.ContentRootPath)
+                                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                                .AddJsonFile($"appsettings.{this.HostingEnvironment.EnvironmentName}.json", optional: true)
+                                .AddEnvironmentVariables();
+
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(builder.Build())
+                .CreateLogger();
+
+            Log.Information("Starting up");
+
             services.AddTransient<IApplicationService, ApplicationService>();
 
             services
@@ -77,8 +87,9 @@ namespace AspNetCoreAngular.Web
             });
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddSerilog();
             app.AddCustomSecurityHeaders(Configuration, HostingEnvironment);
             app.UseInfrastructure(HostingEnvironment);
 
@@ -97,17 +108,17 @@ namespace AspNetCoreAngular.Web
             app.UseCors(Constants.DefaultCorsPolicy);
             app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
 
-                endpoints.MapHub<Chat>("/chathub");
+                // endpoints.MapRazorPages();
+                // endpoints.MapHub<Chat>("/chathub");
                 endpoints.MapHub<ShapeHub>("/shapeHub");
             });
-
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";

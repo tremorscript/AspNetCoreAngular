@@ -84,7 +84,6 @@ namespace AspNetCoreAngular.Infrastructure
             return services;
         }
 
-        [Obsolete("TODO: to be updated")]
         public static IIdentityServerBuilder AddStsServer(
             this IServiceCollection services,
             IConfiguration configuration,
