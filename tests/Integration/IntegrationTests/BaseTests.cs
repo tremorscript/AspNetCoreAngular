@@ -2,13 +2,13 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System.Threading.Tasks;
+using AspNetCoreAngular.Web;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Xunit;
+
 namespace AspNetCoreAngular.Integration.Tests.IntegrationTests
 {
-    using System.Threading.Tasks;
-    using AspNetCoreAngular.Web;
-    using Microsoft.AspNetCore.Mvc.Testing;
-    using Xunit;
-
     public class BasicTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
         private readonly WebApplicationFactory<Startup> factory;

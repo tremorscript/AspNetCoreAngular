@@ -2,12 +2,12 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
+
 namespace AspNetCoreAngular.Infrastructure.Identity.Entities
 {
-    using System;
-    using System.Collections.Generic;
-    using Microsoft.AspNetCore.Identity;
-
     public class ApplicationRole : IdentityRole<Guid>
     {
         public string Description { get; set; }

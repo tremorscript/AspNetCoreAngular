@@ -2,20 +2,20 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using AspNetCoreAngular.Application;
+using AspNetCoreAngular.Common;
+using AspNetCoreAngular.Infrastructure;
+using AspNetCoreAngular.Infrastructure.Identity;
+using AspNetCoreAngular.Infrastructure.Services;
+using AspNetCoreAngular.STS.Seed;
+using Duende.IdentityServer.Services;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
 namespace AspNetCoreAngular.STS
 {
-    using AspNetCoreAngular.Application;
-    using AspNetCoreAngular.Common;
-    using AspNetCoreAngular.Infrastructure;
-    using AspNetCoreAngular.Infrastructure.Identity;
-    using AspNetCoreAngular.Infrastructure.Services;
-    using AspNetCoreAngular.STS.Seed;
-    using Duende.IdentityServer.Services;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-
     public class Startup
     {
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)

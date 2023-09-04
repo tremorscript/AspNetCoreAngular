@@ -2,11 +2,11 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System;
+using AspNetCoreAngular.Common;
+
 namespace AspNetCoreAngular.Infrastructure.Services
 {
-    using System;
-    using AspNetCoreAngular.Common;
-
     public class MachineDateTime : IDateTime
     {
         public static int CurrentYear => DateTime.Now.Year;

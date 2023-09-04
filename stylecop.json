@@ -19,7 +19,9 @@
       "tupleElementNameCasing": "camelCase"
     },
     "orderingRules": {
-      "usingDirectivesPlacement": "preserve"
+      "usingDirectivesPlacement": "outsideNamespace",
+      "systemUsingDirectivesFirst": true,
+      "blankLinesBetweenUsingGroups": "allow"
     }
   }
 }

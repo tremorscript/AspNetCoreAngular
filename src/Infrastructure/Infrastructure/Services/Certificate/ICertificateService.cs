@@ -2,10 +2,10 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System.Security.Cryptography.X509Certificates;
+
 namespace AspNetCoreAngular.Infrastructure.Services.Certificate
 {
-    using System.Security.Cryptography.X509Certificates;
-
     public interface ICertificateService
     {
         X509Certificate2 GetCertificateFromKeyVault(string vaultCertificateName);

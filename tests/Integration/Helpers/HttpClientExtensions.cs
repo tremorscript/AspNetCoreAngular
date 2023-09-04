@@ -2,15 +2,15 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
+using AngleSharp.Html.Dom;
+using Xunit;
+
 namespace AspNetCoreAngular.Integration.Tests.Helpers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Threading.Tasks;
-    using AngleSharp.Html.Dom;
-    using Xunit;
-
     public static class HttpClientExtensions
     {
         public static Task<HttpResponseMessage> SendAsync(

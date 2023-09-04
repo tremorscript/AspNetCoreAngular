@@ -23,7 +23,7 @@
 - Clean Architecture inspired from [Jason Taylor](https://github.com/jasontaylordev/CleanArchitecture) and [Steve Smith](https://github.com/ardalis/CleanArchitecture).
 - Angular application inspired from [asadsahi](https://github.com/asadsahi/AspNetCoreSpa) and [gothinkster](https://github.com/gothinkster/realworld).
 - [PWA support](https://developers.google.com/web/progressive-web-apps/)
-- Unit Testing with [Jest](https://facebook.github.io/jest/).
+- Unit Testing with [Jest](https://facebook.github.io/jest/) and [xUnit](https://xunit.net/).
 - E2E testing with [Playwright](https://playwright.dev/).
 - [Compodoc](https://compodoc.github.io/compodoc/) for Angular documentation
 - Angular dynamic forms for reusable and DRY code.

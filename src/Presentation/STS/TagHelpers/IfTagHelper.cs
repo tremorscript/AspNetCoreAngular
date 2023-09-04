@@ -2,10 +2,10 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using Microsoft.AspNetCore.Razor.TagHelpers;
+
 namespace AspNetCoreAngular.STS.TagHelpers
 {
-    using Microsoft.AspNetCore.Razor.TagHelpers;
-
     public class IfTagHelper : TagHelper
     {
         [HtmlAttributeName("show")]

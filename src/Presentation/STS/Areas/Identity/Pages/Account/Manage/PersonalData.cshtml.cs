@@ -2,15 +2,15 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System.Threading.Tasks;
+using AspNetCoreAngular.Infrastructure.Identity.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
+
 namespace AspNetCoreAngular.STS.Areas.Identity.Pages.Account.Manage
 {
-    using System.Threading.Tasks;
-    using AspNetCoreAngular.Infrastructure.Identity.Entities;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.RazorPages;
-    using Microsoft.Extensions.Logging;
-
     public class PersonalDataModel : PageModel
     {
         private readonly UserManager<ApplicationUser> userManager;

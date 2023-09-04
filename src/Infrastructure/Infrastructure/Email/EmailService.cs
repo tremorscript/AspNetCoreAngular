@@ -2,22 +2,22 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System;
+using System.IO;
+using System.Net;
+using System.Net.Mail;
+using System.Reflection;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
+using AspNetCoreAngular.Application.Abstractions;
+using AspNetCoreAngular.Application.Features.Notifications.Models;
+using AspNetCoreAngular.Application.Settings;
+using Microsoft.AspNetCore.Routing.Template;
+using Microsoft.Extensions.Logging;
+
 namespace AspNetCoreAngular.Infrastructure.Email
 {
-    using System;
-    using System.IO;
-    using System.Net;
-    using System.Net.Mail;
-    using System.Reflection;
-    using System.Text;
-    using System.Text.Encodings.Web;
-    using System.Threading.Tasks;
-    using AspNetCoreAngular.Application.Abstractions;
-    using AspNetCoreAngular.Application.Features.Notifications.Models;
-    using AspNetCoreAngular.Application.Settings;
-    using Microsoft.AspNetCore.Routing.Template;
-    using Microsoft.Extensions.Logging;
-
     public class EmailService : IEmailService
     {
         private readonly EmailSettings emailSettings;

@@ -2,12 +2,12 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System;
+using AspNetCoreAngular.Application.Abstractions;
+using Microsoft.Extensions.Localization;
+
 namespace AspNetCoreAngular.Infrastructure.Localization.EFLocalizer
 {
-    using System;
-    using AspNetCoreAngular.Application.Abstractions;
-    using Microsoft.Extensions.Localization;
-
     public class EFStringLocalizerFactory : IStringLocalizerFactory
     {
         private readonly ILocalizationDbContext context;

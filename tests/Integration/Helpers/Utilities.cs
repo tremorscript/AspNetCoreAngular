@@ -2,10 +2,10 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using AspNetCoreAngular.Infrastructure.Persistence;
+
 namespace AspNetCoreAngular.Integration.Tests.Helpers
 {
-    using AspNetCoreAngular.Infrastructure.Persistence;
-
     public static class Utilities
     {
         public static void InitializeDbForTests(ApplicationDbContext db)

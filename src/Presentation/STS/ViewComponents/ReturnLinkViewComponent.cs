@@ -2,11 +2,11 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using AspNetCoreAngular.Application.Abstractions;
+using Microsoft.AspNetCore.Mvc;
+
 namespace AspNetCoreAngular.STS.ViewComponents
 {
-    using AspNetCoreAngular.Application.Abstractions;
-    using Microsoft.AspNetCore.Mvc;
-
     public class ReturnLinkViewComponent : ViewComponent
     {
         private readonly IClientInfoService clientInfoService;

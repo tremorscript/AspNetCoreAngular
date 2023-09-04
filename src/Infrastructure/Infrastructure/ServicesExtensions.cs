@@ -2,48 +2,48 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using AspNetCoreAngular.Application.Abstractions;
+using AspNetCoreAngular.Application.Extensions;
+using AspNetCoreAngular.Application.Settings;
+using AspNetCoreAngular.Common;
+using AspNetCoreAngular.Infrastructure.Email;
+using AspNetCoreAngular.Infrastructure.Environment;
+using AspNetCoreAngular.Infrastructure.Files;
+using AspNetCoreAngular.Infrastructure.Identity;
+using AspNetCoreAngular.Infrastructure.Identity.Entities;
+using AspNetCoreAngular.Infrastructure.Localization;
+using AspNetCoreAngular.Infrastructure.Localization.EFLocalizer;
+using AspNetCoreAngular.Infrastructure.Persistence;
+using AspNetCoreAngular.Infrastructure.Services;
+using AspNetCoreAngular.Infrastructure.Services.Certificate;
+using Duende.IdentityServer;
+using Duende.IdentityServer.AspNetIdentity;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Localization;
+using Microsoft.Identity.Web;
+using Microsoft.IdentityModel.Tokens;
+using NSwag;
+using NSwag.Generation.Processors.Security;
+
 namespace AspNetCoreAngular.Infrastructure
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.IO;
-    using System.Linq;
-    using System.Security.Cryptography.X509Certificates;
-    using AspNetCoreAngular.Application.Abstractions;
-    using AspNetCoreAngular.Application.Extensions;
-    using AspNetCoreAngular.Application.Settings;
-    using AspNetCoreAngular.Common;
-    using AspNetCoreAngular.Infrastructure.Email;
-    using AspNetCoreAngular.Infrastructure.Environment;
-    using AspNetCoreAngular.Infrastructure.Files;
-    using AspNetCoreAngular.Infrastructure.Identity;
-    using AspNetCoreAngular.Infrastructure.Identity.Entities;
-    using AspNetCoreAngular.Infrastructure.Localization;
-    using AspNetCoreAngular.Infrastructure.Localization.EFLocalizer;
-    using AspNetCoreAngular.Infrastructure.Persistence;
-    using AspNetCoreAngular.Infrastructure.Services;
-    using AspNetCoreAngular.Infrastructure.Services.Certificate;
-    using Duende.IdentityServer;
-    using Duende.IdentityServer.AspNetIdentity;
-    using Microsoft.AspNetCore.Authentication;
-    using Microsoft.AspNetCore.Authentication.AzureAD.UI;
-    using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Localization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
-    using Microsoft.Extensions.Localization;
-    using Microsoft.Identity.Web;
-    using Microsoft.IdentityModel.Tokens;
-    using NSwag;
-    using NSwag.Generation.Processors.Security;
-
     public record Clients(string clientId, string corsOrigin);
 
     public static class ServicesExtensions

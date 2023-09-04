@@ -2,14 +2,14 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
+using Microsoft.Azure.KeyVault;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+
 namespace AspNetCoreAngular.Infrastructure.Services.Certificate
 {
-    using System;
-    using System.Security.Cryptography.X509Certificates;
-    using System.Threading.Tasks;
-    using Microsoft.Azure.KeyVault;
-    using Microsoft.IdentityModel.Clients.ActiveDirectory;
-
     public class KeyVaultCertificateService : ICertificateService
     {
         private readonly string vaultAddress;
