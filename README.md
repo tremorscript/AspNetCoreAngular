@@ -20,7 +20,7 @@
 - Secure - with [Custom Security Policy (CSP) and custom security headers](https://github.com/andrewlock/NetEscapades.AspNetCore.SecurityHeaders)
 - [SASS](http://sass-lang.com/)
 - Best [practices](https://angular.io/docs/ts/latest/guide/style-guide.html) for Angular code organisation.
-- [Clean Architecture](https://github.com/jasontaylordev/CleanArchitecture) inspired from Jason Taylor.
+- Clean Architecture inspired from [Jason Taylor](https://github.com/jasontaylordev/CleanArchitecture) and [Steve Smith](https://github.com/ardalis/CleanArchitecture).
 - Angular application inspired from [asadsahi](https://github.com/asadsahi/AspNetCoreSpa) and [gothinkster](https://github.com/gothinkster/realworld).
 - [PWA support](https://developers.google.com/web/progressive-web-apps/)
 - Unit Testing with [Jest](https://facebook.github.io/jest/).
