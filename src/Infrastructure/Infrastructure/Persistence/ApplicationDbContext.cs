@@ -2,15 +2,15 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System.Threading;
+using System.Threading.Tasks;
+using AspNetCoreAngular.Application.Abstractions;
+using AspNetCoreAngular.Common;
+using AspNetCoreAngular.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+
 namespace AspNetCoreAngular.Infrastructure.Persistence
 {
-    using System.Threading;
-    using System.Threading.Tasks;
-    using AspNetCoreAngular.Application.Abstractions;
-    using AspNetCoreAngular.Common;
-    using AspNetCoreAngular.Domain.Entities;
-    using Microsoft.EntityFrameworkCore;
-
     public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         private readonly ICurrentUserService currentUserService;

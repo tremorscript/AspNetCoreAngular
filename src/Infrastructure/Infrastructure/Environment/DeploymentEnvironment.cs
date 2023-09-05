@@ -2,15 +2,15 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using AspNetCoreAngular.Application.Abstractions;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
+
 namespace AspNetCoreAngular.Infrastructure.Environment
 {
-    using System;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using AspNetCoreAngular.Application.Abstractions;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.Logging;
-
     public class DeploymentEnvironment : IDeploymentEnvironment
     {
         private readonly IWebHostEnvironment hostingEnv;

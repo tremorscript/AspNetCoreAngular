@@ -2,13 +2,13 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
+
 namespace AspNetCoreAngular.Infrastructure.Identity.Entities
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using Microsoft.AspNetCore.Identity;
-
     public class ApplicationUser : IdentityUser<Guid>
     {
         public string Mobile { get; set; }

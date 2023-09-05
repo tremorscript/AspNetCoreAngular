@@ -2,14 +2,14 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+
 namespace AspNetCoreAngular.STS.Middlewares
 {
-    using System.Linq;
-    using System.Net;
-    using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Logging;
-
     public class AdminSafeListMiddleware
     {
         private readonly RequestDelegate next;

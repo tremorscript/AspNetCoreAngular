@@ -2,18 +2,18 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System;
+using AspNetCoreAngular.Infrastructure.Persistence;
+using AspNetCoreAngular.Integration.Tests.Helpers;
+using AspNetCoreAngular.Web;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+
 namespace AspNetCoreAngular.Integration.Tests
 {
-    using System;
-    using AspNetCoreAngular.Infrastructure.Persistence;
-    using AspNetCoreAngular.Integration.Tests.Helpers;
-    using AspNetCoreAngular.Web;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Mvc.Testing;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
-
     public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup>
         where TStartup : class
     {

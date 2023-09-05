@@ -2,12 +2,12 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using AspNetCoreAngular.Application.Abstractions;
+using AspNetCoreAngular.Domain.Entities.Localization;
+using Microsoft.EntityFrameworkCore;
+
 namespace AspNetCoreAngular.Infrastructure.Localization
 {
-    using AspNetCoreAngular.Application.Abstractions;
-    using AspNetCoreAngular.Domain.Entities.Localization;
-    using Microsoft.EntityFrameworkCore;
-
     public class LocalizationDbContext : DbContext, ILocalizationDbContext
     {
         public LocalizationDbContext(DbContextOptions<LocalizationDbContext> options)

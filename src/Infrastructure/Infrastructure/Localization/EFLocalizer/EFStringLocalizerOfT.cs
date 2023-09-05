@@ -2,15 +2,15 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using AspNetCoreAngular.Application.Abstractions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
+
 namespace AspNetCoreAngular.Infrastructure.Localization.EFLocalizer
 {
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using AspNetCoreAngular.Application.Abstractions;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Localization;
-
     public class EFStringLocalizer<T> : IStringLocalizer<T>
     {
         private readonly ILocalizationDbContext context;

@@ -2,11 +2,11 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using AspNetCoreAngular.Application.Features.Products.Queries.GetProductsFile;
+using CsvHelper.Configuration;
+
 namespace AspNetCoreAngular.Infrastructure.Files
 {
-    using AspNetCoreAngular.Application.Features.Products.Queries.GetProductsFile;
-    using CsvHelper.Configuration;
-
     public sealed class ProductFileRecordMap : ClassMap<ProductRecordDto>
     {
         public ProductFileRecordMap()

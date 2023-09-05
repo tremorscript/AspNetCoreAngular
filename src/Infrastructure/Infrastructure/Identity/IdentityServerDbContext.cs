@@ -2,19 +2,19 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System;
+using System.Threading.Tasks;
+using AspNetCoreAngular.Infrastructure.Identity.Entities;
+using Duende.IdentityServer.EntityFramework.Entities;
+using Duende.IdentityServer.EntityFramework.Extensions;
+using Duende.IdentityServer.EntityFramework.Interfaces;
+using Duende.IdentityServer.EntityFramework.Options;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+
 namespace AspNetCoreAngular.Infrastructure.Identity
 {
-    using System;
-    using System.Threading.Tasks;
-    using AspNetCoreAngular.Infrastructure.Identity.Entities;
-    using Duende.IdentityServer.EntityFramework.Entities;
-    using Duende.IdentityServer.EntityFramework.Extensions;
-    using Duende.IdentityServer.EntityFramework.Interfaces;
-    using Duende.IdentityServer.EntityFramework.Options;
-    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Options;
-
     public class IdentityServerDbContext
         : IdentityDbContext<
             ApplicationUser,

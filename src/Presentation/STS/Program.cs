@@ -2,22 +2,22 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using AspNetCoreAngular.Application;
+using AspNetCoreAngular.Application.Abstractions;
+using AspNetCoreAngular.Application.Features.System.Commands.SeedLocalizationData;
+using AspNetCoreAngular.STS.Seed;
+using MediatR;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+
 namespace AspNetCoreAngular.STS
 {
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using AspNetCoreAngular.Application;
-    using AspNetCoreAngular.Application.Abstractions;
-    using AspNetCoreAngular.Application.Features.System.Commands.SeedLocalizationData;
-    using AspNetCoreAngular.STS.Seed;
-    using MediatR;
-    using Microsoft.AspNetCore;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
-
     public class Program
     {
         public static async Task Main(string[] args)

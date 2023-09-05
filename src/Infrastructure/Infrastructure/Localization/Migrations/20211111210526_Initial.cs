@@ -2,12 +2,12 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using Microsoft.EntityFrameworkCore.Migrations;
+
 #nullable disable
 
 namespace AspNetCoreAngular.Infrastructure.Localization.Migrations
 {
-    using Microsoft.EntityFrameworkCore.Migrations;
-
     public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

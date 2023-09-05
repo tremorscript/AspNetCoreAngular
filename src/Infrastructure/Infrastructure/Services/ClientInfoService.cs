@@ -2,16 +2,16 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System;
+using System.Linq;
+using AspNetCoreAngular.Application.Abstractions;
+using AspNetCoreAngular.Application.Models;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+
 namespace AspNetCoreAngular.Infrastructure.Services
 {
-    using System;
-    using System.Linq;
-    using AspNetCoreAngular.Application.Abstractions;
-    using AspNetCoreAngular.Application.Models;
-    using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Configuration;
-
     public class ClientInfoService : IClientInfoService
     {
         private readonly IHttpContextAccessor httpContextAccessor;

@@ -2,16 +2,16 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System.Linq;
+using System.Threading.Tasks;
+using AspNetCoreAngular.Infrastructure.Identity.Entities;
+using Duende.IdentityServer.Extensions;
+using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Services;
+using Microsoft.AspNetCore.Identity;
+
 namespace AspNetCoreAngular.Infrastructure.Services
 {
-    using System.Linq;
-    using System.Threading.Tasks;
-    using AspNetCoreAngular.Infrastructure.Identity.Entities;
-    using Duende.IdentityServer.Extensions;
-    using Duende.IdentityServer.Models;
-    using Duende.IdentityServer.Services;
-    using Microsoft.AspNetCore.Identity;
-
     public class CustomProfileService : IProfileService
     {
         private readonly IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory;

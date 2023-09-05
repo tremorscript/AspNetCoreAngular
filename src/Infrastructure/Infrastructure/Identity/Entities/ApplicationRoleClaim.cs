@@ -2,11 +2,11 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System;
+using Microsoft.AspNetCore.Identity;
+
 namespace AspNetCoreAngular.Infrastructure.Identity.Entities
 {
-    using System;
-    using Microsoft.AspNetCore.Identity;
-
     public class ApplicationRoleClaim : IdentityRoleClaim<Guid>
     {
         public virtual ApplicationRole Role { get; set; }

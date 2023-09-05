@@ -2,16 +2,16 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
+using AngleSharp;
+using AngleSharp.Html.Dom;
+using AngleSharp.Io;
+
 namespace AspNetCoreAngular.Integration.Tests.Helpers
 {
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using AngleSharp;
-    using AngleSharp.Html.Dom;
-    using AngleSharp.Io;
-
     public class HtmlHelpers
     {
         public static async Task<IHtmlDocument> GetDocumentAsync(HttpResponseMessage response)

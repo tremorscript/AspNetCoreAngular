@@ -2,13 +2,13 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
 #nullable disable
 
 namespace AspNetCoreAngular.Infrastructure.Persistence.Migrations
 {
-    using System;
-    using Microsoft.EntityFrameworkCore.Migrations;
-
     public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

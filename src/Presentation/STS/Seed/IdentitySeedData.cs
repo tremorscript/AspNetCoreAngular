@@ -2,19 +2,19 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using AspNetCoreAngular.Infrastructure.Identity;
+using AspNetCoreAngular.Infrastructure.Identity.Entities;
+using Duende.IdentityServer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
 namespace AspNetCoreAngular.STS.Seed
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Security.Claims;
-    using AspNetCoreAngular.Infrastructure.Identity;
-    using AspNetCoreAngular.Infrastructure.Identity.Entities;
-    using Duende.IdentityServer;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.DependencyInjection;
-
     public class IdentitySeedData : IIdentitySeedData
     {
         private readonly UserManager<ApplicationUser> userManager;

@@ -2,17 +2,17 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using AspNetCoreAngular.Application.Abstractions;
+using AspNetCoreAngular.Application.Common.Models;
+using AspNetCoreAngular.Infrastructure.Identity;
+using AspNetCoreAngular.Infrastructure.Identity.Entities;
+using Microsoft.AspNetCore.Identity;
+
 namespace AspNetCoreAngular.Infrastructure.Services
 {
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using AspNetCoreAngular.Application.Abstractions;
-    using AspNetCoreAngular.Application.Common.Models;
-    using AspNetCoreAngular.Infrastructure.Identity;
-    using AspNetCoreAngular.Infrastructure.Identity.Entities;
-    using Microsoft.AspNetCore.Identity;
-
     public class UserManagerService : IUserManager
     {
         private readonly UserManager<ApplicationUser> userManager;
