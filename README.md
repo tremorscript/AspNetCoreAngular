@@ -29,10 +29,6 @@
 - Angular dynamic forms for reusable and DRY code.
 - [Swagger](http://swagger.io/) as Api explorer.
 
-## Developer Documentation
-
-https://tremorscript.github.io/AspNetCoreAngular.Docs/ (In Progress)
-
 ## Pull Request Guidelines
 
 https://tremorscript.github.io/AspNetCoreAngular.Docs/homesite/current/pull-request-guidelines.html
@@ -41,74 +37,13 @@ https://tremorscript.github.io/AspNetCoreAngular.Docs/homesite/current/pull-requ
 
 https://tremorscript.github.io/AspNetCoreAngular.Docs/homesite/current/code-quality-guidelines.html
 
+## Getting Started
 
-## Getting Started 
+https://tremorscript.github.io/AspNetCoreAngular.Docs/AspNetCoreAngular/current/getting-started.html
 
-1. Clone the repo:
+## Developer Documentation
 
-   git clone https://github.com/tremorscript/AspNetCoreAngular
-
-2. Change directory:
-
-   cd AspNetCoreAngular
-
-3. Update the local git config with:
-   
-   - [a list of alias commands](https://tremorscript.github.io/AspNetCoreAngular.Docs/homesite/current/pull-request-guidelines.html#_add_aliases_to_the_config_file_in_git).
-
-4. Restore packages:
-
-   dotnet restore AspNetCoreAngular.sln
-
-5. Install npm packages:
-
-   - cd src/Presentation/Web/ClientApp:
-
-   - npm install
-
-6. Start Frontend:
-
-   - npm start
-
-7. Run Backend:
-
-   - Using [VSCode](https://code.visualstudio.com/):
-
-     - If you are running for the first time, install dev certificates using command:
-
-     ```
-     dotnet dev-certs https --trust
-     ```
-
-     - From debug menu select `Web` profile to run api application
-     - From debug menu select `STS` profile to run Identity Server application
-     - From debug menu select `Firefox\Web\STS` profile to run the angular application, the api application and the Identity Server application.
-
-   - Using [Visual Studio IDE](https://www.visualstudio.com/):
-     - Run `Web` and `STS` projects either individually or by setting multiple projects in solutions properties and hit F5
-
-8. Target either Sqlite or Microsoft SQL Server
-
-This project supports both databases OOTB.
-
-- Run with Sqlite: (Already configured to quickly run the project)
-
-  - Project is already setup with Sqlite specific database migrations
-
-- Run with Microsoft SQL Server:
-  - Delete `Migrations` folder from src/Infrastructure/Infrastructure/Persistence
-  - Change setting in appsettings.json called `useSqLite` from `true` to `false` and change `Web` connection string to your local Sql Server connection string
-
-9. Once the project is running use following test users to login:
-
-  - Test user1:  
-    Username: admin@admin.com
-    Password: P@ssw0rd!
-  - Testu user2:  
-   Username: user@user.com
-   Password: P@ssw0rd!
-
-   Note: For production use Identity server hosted with appropriate configuration.
+https://tremorscript.github.io/AspNetCoreAngular.Docs/ (In Progress)
 
 # Managing Migrations
 
